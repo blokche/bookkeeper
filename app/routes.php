@@ -7,7 +7,7 @@
 
 
 		['GET', '/book/page/[i:page]', 'Default#allBooks', 'public.book'],
-		['GET', '/book/[i:id]', 'Default#bookById', 'public.book'],
+		['GET', '/book/[i:id]', 'Default#bookById', 'public.view'],
 		['GET|POST', '/search', 'Default#searchBook', 'public.search'],
 		['GET', '/libraries', 'Default#libraries', 'public.libraries'],
 
