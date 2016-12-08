@@ -198,7 +198,7 @@ abstract class Model
 	 * @param boolean $stripTags Active le strip_tags automatique sur toutes les valeurs
 	 * @return mixed false si erreur, le résultat de la recherche sinon
 	 */
-	public function search(array $search, $operator = 'OR', $stripTags = true){
+	public function search(array $search, $operator = 'OR', $stripTags = true) {
 
 		// Sécurisation de l'opérateur
 		$operator = strtoupper($operator);

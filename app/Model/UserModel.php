@@ -4,7 +4,6 @@ namespace Model;
 
 use W\Model\UsersModel;
 
-class User extends UsersModel {
+class UserModel extends UsersModel {
 
 }
-
