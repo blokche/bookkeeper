@@ -2,9 +2,24 @@
 
 namespace Controller;
 
+use Model\Book;
+use Model\Quote;
 use W\Controller\Controller;
 
 class AdminController extends Controller {
+
+
+    private $User;
+    private $Book;
+    private $Quote;
+
+
+    public function __construct()
+    {
+        $this->User  = new User();
+        $this->Book  = new Book();
+        $this->Quote = new Quote();
+    }
 
     public function index () {
         // Retourner une vue pour afficher différentes stats

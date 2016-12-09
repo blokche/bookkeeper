@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- version 4.1.4
+-- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 08 Décembre 2016 à 13:34
--- Version du serveur :  5.7.14
--- Version de PHP :  7.0.10
+-- Généré le :  Jeu 08 Décembre 2016 à 21:10
+-- Version du serveur :  5.6.15-log
+-- Version de PHP :  5.5.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de données :  `bookkeeper`
@@ -26,15 +26,16 @@ SET time_zone = "+00:00";
 -- Structure de la table `books`
 --
 
-CREATE TABLE `books` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `books` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `author` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  `cover` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `cover` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -42,9 +43,11 @@ CREATE TABLE `books` (
 -- Structure de la table `books_categories`
 --
 
-CREATE TABLE `books_categories` (
+CREATE TABLE IF NOT EXISTS `books_categories` (
   `book_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL
+  `category_id` int(11) NOT NULL,
+  KEY `book_id` (`book_id`,`category_id`),
+  KEY `category_id` (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -53,10 +56,11 @@ CREATE TABLE `books_categories` (
 -- Structure de la table `categories`
 --
 
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `label` varchar(255) COLLATE utf8mb4_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -64,15 +68,18 @@ CREATE TABLE `categories` (
 -- Structure de la table `quotes`
 --
 
-CREATE TABLE `quotes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `quotes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `book_id` int(11) DEFAULT NULL,
   `content` text COLLATE utf8mb4_bin NOT NULL,
   `author` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`,`book_id`),
+  KEY `book_id` (`book_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -80,10 +87,11 @@ CREATE TABLE `quotes` (
 -- Structure de la table `reading_list`
 --
 
-CREATE TABLE `reading_list` (
+CREATE TABLE IF NOT EXISTS `reading_list` (
   `book_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `read_status` tinyint(1) NOT NULL DEFAULT '0'
+  `read_status` tinyint(1) NOT NULL DEFAULT '0',
+  KEY `book_id` (`book_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -92,85 +100,20 @@ CREATE TABLE `reading_list` (
 -- Structure de la table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `username` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `role` varchar(20) COLLATE utf8mb4_bin NOT NULL DEFAULT 'user',
   `status` tinyint(1) NOT NULL DEFAULT '1',
+  `token` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin AUTO_INCREMENT=1 ;
 
---
--- Index pour les tables exportées
---
-
---
--- Index pour la table `books`
---
-ALTER TABLE `books`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `books_categories`
---
-ALTER TABLE `books_categories`
-  ADD KEY `book_id` (`book_id`,`category_id`),
-  ADD KEY `category_id` (`category_id`);
-
---
--- Index pour la table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `quotes`
---
-ALTER TABLE `quotes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`,`book_id`),
-  ADD KEY `book_id` (`book_id`);
-
---
--- Index pour la table `reading_list`
---
-ALTER TABLE `reading_list`
-  ADD KEY `book_id` (`book_id`,`user_id`);
-
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `books`
---
-ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `quotes`
---
-ALTER TABLE `quotes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Contraintes pour les tables exportées
 --
