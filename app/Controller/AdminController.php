@@ -2,12 +2,15 @@
 
 namespace Controller;
 
+
 use Model\BookModel;
 use Model\QuoteModel;
+
 use W\Controller\Controller;
 use W\Model\UsersModel;
 
 class AdminController extends Controller {
+
 
     private $user;
     private $quote;
@@ -21,6 +24,7 @@ class AdminController extends Controller {
         $this->book = new BookModel();
         $this->book->setTable('books');
         $this->quote->setTable('quotes');
+
     }
 
     public function index () {
