@@ -15,7 +15,7 @@
 
 		// Authentification
 		['POST', '/login', 'AuthentificationController#login', 'auth.login'],
-		['POST', '/logout', 'AuthentificationController#logout', 'auth.logout'],
+		['GET', '/logout', 'AuthentificationController#logout', 'auth.logout'],
 		['POST', '/register', 'AuthentificationController#register', 'auth.register'],
 		['GET|POST', '/forget-password', 'AuthentificationController#forgetPassword', 'auth.forgetpassword'],
 		['GET|POST', '/reset-password', 'AuthentificationController#resetPassword','auth.resetpassword'],
