@@ -31,19 +31,25 @@ class DefaultController extends Controller
 	 */
 	public function allBooks($page = 1)
 	{
+
+		$perPage = 2;
+
+		$total = count($this->book->findAll());
+		$nbPages = (int) ceil($total / $perPage);
+
 		if ($page <= 0) {
 			$page = 1;
 		}
 
-		$p = $page - 1;
-		$perPage = 2;
-		$offset = $perPage * $p;
+		if ($page > $nbPages) {
+			$page = $nbPages;
+		}
 
+		$offset = $perPage * ($page - 1);
 		$books = $this->book->findAll('id', 'DESC', $perPage, $offset);
-		$nbBooks = count($books);
-		$nbPages = floor($nbBooks / $perPage);
 
-		$this->show('default/books', ['books' => $books]);
+		$this->show('default/books', ['books' => $books, 'nbpages' => $nbPages, 'page' => $page]);
+
 	}
 
 	/**
