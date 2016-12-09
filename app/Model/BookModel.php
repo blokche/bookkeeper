@@ -4,6 +4,6 @@ namespace Model;
 
 use W\Model\Model;
 
-class Book extends Model {
+class BookModel extends Model {
 
 }

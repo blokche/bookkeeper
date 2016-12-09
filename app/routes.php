@@ -43,7 +43,7 @@
 		['POST', '/admin/category/[i:id]/delete', 'AdminController#deleteCategory', 'category.delete'],
 
 
-		
+
 		// Profile
 		['GET', '/profile', 'ProfileController#index', 'profile.home'],
 		['GET|POST', '/profile/edit', 'ProfileController#editProfile', 'profile.edit'],
