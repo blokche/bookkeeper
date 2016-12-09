@@ -25,14 +25,14 @@
 		// Admin
 		['GET', '/admin', 'AdminController#index', 'admin.home'],
 
-		['GET', '/admin/user/page/[i:page]', 'AdminController#allUsers', 'admin.user'],
+		['GET', '/admin/user', 'AdminController#allUsers', 'admin.user'],
 		['GET', '/admin/user/[i:id]', 'AdminController#viewUser', 'admin.user.view'],
 		['GET|POST', '/admin/user/[i:id]/edit', 'AdminController#editUser', 'admin.user.edit'],
 		['POST', '/admin/user/[i:id]/delete', 'AdminController#deleteUser', 'admin.user.delete'],
 		['POST', '/admin/user/[i:id]/togglestatus', 'AdminController#toggleStatus', 'admin.user.togglestatus'],
 
 
-		['GET', '/admin/book/page/[i:page]', 'AdminController#allBooks', 'admin.book'],
+		['GET', '/admin/book', 'AdminController#allBooks', 'admin.book'],
 		['GET', '/admin/book/[i:id]', 'AdminController#viewBook', 'admin.book.view'],
 		['GET|POST', '/admin/book/add', 'AdminController#addBook', 'admin.book.add'],
 		['GET|POST', '/admin/book/[i:id]/edit', 'AdminController#editBook', 'admin.book.edit'],
