@@ -5,7 +5,7 @@ $this->start('main_content');?>
 <?php if (count($users) > 0) : ?>
     <ul>
         <?php foreach($users as $user) : ?>
-            <li><?php $user['username'] ;?> <a href="<?php echo $this->url('admin.user.edit', ['id' => $user['id']]) ?>" class="btn">Editer</a></li>
+            <li><?php echo $user['username'] ;?> <small>(<?php echo $user['email'] ;?>)</small> <a href="<?php echo $this->url('admin.user.edit', ['id' => $user['id']]) ?>" class="btn">Editer</a></li>
         <?php endforeach; ?>
     </ul>
 <?php else : ?>

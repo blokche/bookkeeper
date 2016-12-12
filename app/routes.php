@@ -39,6 +39,7 @@
 		['POST', '/admin/book/[i:id]/delete', 'AdminController#deleteBook', 'admin.book.delete'],
 
 		['GET', '/admin/category', 'AdminController#allCategories', 'category.home'],
+		['GET|POST', '/admin/category/add', 'AdminController#addCategory', 'category.add'],
 		['GET|POST', '/admin/category/[i:id]/edit', 'AdminController#editCategory', 'category.edit'],
 		['POST', '/admin/category/[i:id]/delete', 'AdminController#deleteCategory', 'category.delete'],
 
