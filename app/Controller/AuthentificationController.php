@@ -6,7 +6,7 @@ use W\Security\AuthentificationModel;
 use Model\AuthentificationModel as AuthModel;
 use \W\Security\StringUtils;
 use \W\Controller\Controller;
-use Model\User;
+use Model\UserModel;
 
 
 
@@ -20,7 +20,7 @@ class AuthentificationController extends Controller
     public function __construct()
     {
         $this->auth = new AuthentificationModel();
-        $this->User = new User();
+        $this->User = new UserModel();
     }
 
 
