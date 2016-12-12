@@ -8,8 +8,6 @@ use \W\Security\StringUtils;
 use \W\Controller\Controller;
 use Model\UserModel;
 
-
-
 class AuthentificationController extends Controller
 {
 
