@@ -1,7 +1,17 @@
 <?php $this->layout('layout', ['title' => 'Accueil']) ?>
 
+
 <?php $this->start('main_content') ?>
 	<h1></h1>
+	<?php
+
+	var_dump($_SESSION['errors']);
+	var_dump($_SESSION['message']);
+	//unset($_SESSION['errors']);
+	unset($_SESSION['message']);
+
+
+?>
 	<form action="<?= $this->url('auth.login') ?>" method="POST">
 		<div class="form-group">
 			<label for="email">Email :</label>
