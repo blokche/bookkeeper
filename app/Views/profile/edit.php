@@ -8,6 +8,10 @@
             <input value="<?= $w_user['email'] ?>" id="email" name="email" class="form-control" type="text">
         </div>
         <div class=" form-group">
+            <label for="username">Modifier le Pseudo :</label>
+            <input value="<?= $w_user['username'] ?>" id="username" name="username" class="form-control" type="text">
+        </div>
+        <div class=" form-group">
             <label for="avatar">Modifier l'avatar :</label>
             <input id="avatar" name="avatar" class="form-control" type="file">
         </div>
@@ -26,5 +30,8 @@
         <button name="editUsers" class="btn btn-default">Modifier mon profil</button>
     </form>
 
+<?= $message ?>
+
+<div><a href="<?php echo $this->url('profile.home') ?>">Retour au profil</a></div>
 
 <?php $this->stop('main_content') ?>
