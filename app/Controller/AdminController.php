@@ -12,7 +12,6 @@ use W\Model\UsersModel;
 
 class AdminController extends Controller {
 
-
     private $user;
     private $quote;
     private $book;
@@ -20,18 +19,16 @@ class AdminController extends Controller {
 
     public function __construct()
     {
-        //$this->allowTo('admin');
+        $this->allowTo('admin');
         $this->user = new UsersModel();
         $this->quote = new QuoteModel();
         $this->book = new BookModel();
         $this->category = new CategoryModel();
-        $this->category->setTable('categories');
-        $this->book->setTable('books');
-        $this->quote->setTable('quotes');
-
+        $this->allowTo('admin');
     }
 
-    public function index () {
+    public function index ()
+    {
         $totalUsers = count($this->user->findAll());
         $totalQuotes = count($this->quote->findAll());
         $totalBooks = count($this->book->findAll());
@@ -42,6 +39,8 @@ class AdminController extends Controller {
             'totalBooks' => $totalBooks
         ]);
     }
+
+    // USERS MANAGEMENT
 
     /**
      * Lister l'ensemble des utilisateurs
@@ -73,11 +72,33 @@ class AdminController extends Controller {
     public function editUser($userid)
     {
         $user = $this->user->find($userid);
-        if ($user) {
-            if (isset($_POST['edit'])) {
+
+        if ($user)
+        {
+            if (isset($_POST['edit']) && isset($_POST['role']))
+            {
+                $status = 0;
+
+                if (isset($_POST['active'])) {
+                    $status = 1;
+                }
+
+                // Requête
+                if (
+                    $this->user->update([
+                        'status' => $status,
+                        'role' => $_POST['role']
+                    ], $user['id'])
+                )
+                {
+                    $_SESSION['message'] = ['message' => 'Modifications effectuées avec succès', 'type' => 'success'];
+                    $this->redirectToRoute('admin.user');
+                } else {
+                    $_SESSION['message'] = ['message' => "Une erreur est survenue lors de l'enregistrement des modifications.", 'type' => 'warning'];
+                }
 
             } else {
-                $this->show('admin.user.edit', ['user' => $user]);
+                $this->show('admin/edituser', ['user' => $user]);
             }
         } else {
             $this->showNotFound();
@@ -92,38 +113,20 @@ class AdminController extends Controller {
     {
         $user = $this->user->find($userid);
         if ($user) {
-            $this->user->delete($userid);
-            $this->redirectToRoute('admin.home');
-        } else {
-            $this->redirectToRoute('admin.user');
-        }
-    }
-
-    /**
-     * Désactiver un utilisateur
-     * @param $userid
-     */
-    public function toggleStatus ($userid)
-    {
-        $user = $this->user->find($userid);
-        if ($user)
-        {
-            if ($user['status'])
-            {
-                $this->user->update([
-                    'status' => 0
-                ], $user['id']);
+            if ($this->user->delete($userid)) {
+                $_SESSION['message'] = ['message' => 'Suppression effectuée avec succès.', 'type' => 'success'];
+                $this->redirectToRoute('admin.home');
             } else {
-                $this->user->update([
-                    'status' => 1
-                ], $user['id']);
+                $_SESSION['message'] = ['message' => 'Erreur lors de la suppression de l\'utilisateur.', 'type' => 'warning'];
+                $this->redirectToRoute('admin.user.edit', ['id' => $user['id']]);
             }
+
         } else {
             $this->redirectToRoute('admin.user');
         }
     }
 
-    // Books Management
+    // BOOKS MANAGEMENT
 
     /**
      * Retourner la liste de tous les livres sur le site
@@ -158,7 +161,6 @@ class AdminController extends Controller {
      */
     public function editBook ($bookid)
     {
-
         $book = $this->book->find($bookid);
 
         if ($book)
@@ -166,8 +168,8 @@ class AdminController extends Controller {
             $categoriesAll = $this->category->findAll();
             // Récupération de toutes les catégories
             $categoriesIds = $this->book->getCategoriesIds($book['id']);
-            // Ids des catégories du livre consulté
 
+            // Ids des catégories du livre consulté (flat array)
             $categoriesIds =  array_map(function($arr) {
                 return $arr['category_id'];
             }, $categoriesIds);
@@ -275,7 +277,7 @@ class AdminController extends Controller {
 
             $this->redirectToRoute('admin.book.view', ['id' => $book['id']]);
         } else {
-            
+            // GET request
             $this->show('admin/addbook', ['categories' => $categories]);
         }
     }
@@ -292,15 +294,18 @@ class AdminController extends Controller {
         {
             if ($book)
             {
+                // Le livre existe en base de données
                 $this->book->deleteCategories($book['id']);
                 if ($this->book->delete($book['id'])) {
-
+                    $_SESSION['message'] = ['message' => 'Le livre a été supprimé avec succès.', 'type' => 'success'];
                     $this->redirectToRoute('admin.book');
                 } else {
+                    $_SESSION['message'] = ['message' => 'Une erreur est survenue lors de la suppression du livre.', 'type' => 'warning'];
                     $this->redirectToRoute('admin.book.edit', ['id' => $book['id']]);
                 }
             }
             else {
+                // Le livre n'existe pas en base de données.
                 $this->redirectToRoute('admin.book');
             }
         }
@@ -309,7 +314,7 @@ class AdminController extends Controller {
         }
     }
 
-    // Category management
+    // CATEGORY MANAGEMENT
 
     /**
      *  Récupérer l'ensemble des catégories
@@ -331,9 +336,9 @@ class AdminController extends Controller {
             if ($this->category->insert([
                 'label' => $label
             ])) {
+                $_SESSION['message'] = ['message' => 'Catégorie ajoutée avec succès.', 'type' => 'success'];
                 $this->redirectToRoute('category.home');
             }
-
         }
         $this->show('admin/addcategory');
     }
@@ -349,12 +354,17 @@ class AdminController extends Controller {
         {
             if (isset($_POST['editcategory']))
             {
-                if (isset($_POST['label']) && strlen($_POST['label']) > 0) {
+                if (isset($_POST['label']) && strlen($_POST['label']) > 0) 
+                {
                     if ($this->category->update([
                         'label' => $_POST['label']
                     ], $category['id']))
                     {
+                        $_SESSION['message'] = ['message' => 'Catégorie éditée avec succès.', 'type' => 'success'];
                         $this->redirectToRoute("category.home");
+                    } else {
+                        $_SESSION['message'] = ['message' => 'Une erreur est survenue lors de la mise à jour de la catégorie.', 'type' => 'warning'];
+                        $this->redirectToRoute("category.edit", ['id' => $category['id']]);
                     }
                 }
             } else {
@@ -379,7 +389,11 @@ class AdminController extends Controller {
             {
                 if ($this->category->delete($category['id']))
                 {
+                    $_SESSION['message'] = ['message' => 'Catégorie supprimée avec succès.', 'type' => 'success'];
                     $this->redirectToRoute('category.home');
+                } else {
+                    $_SESSION['message'] = ['message' => 'Une erreur est survenue lors de la suppression de la catégorie.', 'type' => 'warning'];
+                    $this->redirectToRoute('category.edit', ['id' => $category['id']]);
                 }
             } else {
                 $this->redirectToRoute('category.home');
@@ -388,6 +402,4 @@ class AdminController extends Controller {
             $this->redirectToRoute('category.home');
         }
     }
-
-
 }

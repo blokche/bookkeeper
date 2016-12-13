@@ -7,7 +7,13 @@ use W\Model\UsersModel;
 class UserModel extends UsersModel {
 
 
-    /**
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setTable("users");
+    }
+
+     /**
      * @param $userId
      * @param $status 0:livre non lu ou 1:livre lu
      * @param $nbBook nombre de livre à afficher
@@ -28,5 +34,4 @@ class UserModel extends UsersModel {
         return $q->fetchAll();
 
     }
-
 }
