@@ -29,7 +29,6 @@
 		['GET', '/admin/user/[i:id]', 'AdminController#viewUser', 'admin.user.view'],
 		['GET|POST', '/admin/user/[i:id]/edit', 'AdminController#editUser', 'admin.user.edit'],
 		['POST', '/admin/user/[i:id]/delete', 'AdminController#deleteUser', 'admin.user.delete'],
-		['POST', '/admin/user/[i:id]/togglestatus', 'AdminController#toggleStatus', 'admin.user.togglestatus'],
 
 
 		['GET', '/admin/book', 'AdminController#allBooks', 'admin.book'],
