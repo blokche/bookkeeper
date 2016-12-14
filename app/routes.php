@@ -1,5 +1,7 @@
 <?php
-	
+
+define('__ROOT__', dirname(__DIR__) );
+
 	$w_routes = array(
 
 		// Public
@@ -68,3 +70,4 @@
 
 
 	);
+
