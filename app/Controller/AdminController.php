@@ -24,7 +24,6 @@ class AdminController extends Controller {
         $this->quote = new QuoteModel();
         $this->book = new BookModel();
         $this->category = new CategoryModel();
-        $this->allowTo('admin');
     }
 
     public function index ()

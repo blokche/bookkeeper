@@ -35,3 +35,7 @@
 <div><a href="<?php echo $this->url('profile.home') ?>">Retour au profil</a></div>
 
 <?php $this->stop('main_content') ?>
+
+<?php $this->start('js') ?>
+<script src="<?php echo $this->assetUrl('scripts/quoteForm.js'); ?>"></script>
+<?php $this->stop('js'); ?>
