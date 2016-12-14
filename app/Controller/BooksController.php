@@ -4,20 +4,25 @@ namespace Controller;
 
 use W\Controller\Controller;
 use Model\BookModel;
+use W\Security\AuthentificationModel;
 
 
 
 class BooksController extends Controller
 {
     private $book;
+    private $auth;
     private $errors = [];
     private $message = [];
+
+
 
 
     public function __construct()
     {
         $this->book = new BookModel();
         $this->book->setTable("books");
+        $this->auth = new AuthentificationModel();
     }
 
 
@@ -46,36 +51,45 @@ class BooksController extends Controller
      */
     public function addBook ()
     {
+        $user = $this->auth->getLoggedUser();
+
+        $message = [];
 
         if (isset($_POST['addBook'])) {
+
+
 
             if (!empty($_POST['title']) && !empty($_POST['author'])) {
                 $title = trim($_POST['title']);
                 $author = trim($_POST['author']);
 
+                //$name = strstr($_FILES['cover']['name'], '.', true);
+                $name = (!empty($_FILES['cover']['name'])) ? strstr($_FILES['cover']['name'], '.', true) : 'default.png';
+                $type = (!empty($_FILES['cover']['name'])) ? str_replace("/",".",strstr($_FILES['cover']['type'], '/')):'';
+                $timestamp = (!empty($_FILES['cover']['name'])) ? "-".time() : '';
+                $cover = $name.$timestamp.$type;
 
-                if (isset($_POST['cover'])) {
-                    $cover = trim($_POST['cover']);
-                }else{
-                    $cover="";
-                }
-
-                var_dump($_POST);
-
-
-
+               if (isset($_FILES['cover']['type']) && !empty($_FILES['cover']['name'])) {
+                    $extentions = ["image/png", "image/gif", "image/jpg", "image/jpeg"];
+                     if (in_array($_FILES['cover']['type'], $extentions)) {
+                         if(!is_dir(__ROOT__ . "/public/upload/cover")){
+                             mkdir(__ROOT__. "/public/upload/cover", 0755, true);
+                         }
+                         move_uploaded_file($_FILES['cover']['tmp_name'], __ROOT__ . "/public/upload/cover/" . $name.$timestamp.$type);
+                     } else {
+                         $message[] = "Extention invalide !";
+                     }
+               }
                 $newBook=$this->book->insert(
                     [
                         'title'   => $title,
                         'author'    => $author,
-                        'created_by'   => $_SESSION['user']['id'],
+                        'created_by'   => $user['id'],
                         'status' => 1,
-                        'cover' => $cover
+                        'cover' => $cover,
                     ]
                 );
-
-                var_dump($newBook);
-                
+                $message[] = "Le livre a bien été ajouté à votre de liste de lecture";
 
                 if (isset($_POST['optionsRadios'])) {
 
@@ -84,23 +98,21 @@ class BooksController extends Controller
                     $retour = $this->book->addToReadingList($newBook['id'], $read_status);
 
                     if ($retour) {
-                        $this->message['toggleRead'] = "Le livre a bien été ajouté à votre de liste de lecture";
-                        $_SESSION['message'] = $this->message['toggleRead'];
+                        $message[] = "Le livre a bien été ajouté à votre de liste de lecture";
                     } else {
-                        $this->errors['toggleRead'] = "Une erreur s'est produite, veuillez ré-essayér";
-                        $_SESSION['errors'] = $this->errors['toggleRead'];
+                        $message[] = "Une erreur s'est produite, veuillez ré-essayér";
                     }
                 }
 
             } else {
 
-                $this->errors['add-book'] = "l'auteur ou le contenue sont vide.";
-                $_SESSION['errors'] = $this->errors['add-book'];
+                $message[] = "l'auteur ou le contenue sont vide.";
+
                 $this->show("book/add-book");
             }
         }
 
-        $this->show("book/add-book");
+        $this->show("book/add-book", ['message' => $message]);
 
     }
 

@@ -12,7 +12,8 @@
 <ul>
 <?php
 foreach ($bookRead as $book){ ?>
-        <li><img src="<?php echo $book['cover'] ?>" alt="cover de <?php echo $book['title'] ?>"> <?php echo $book['title'] ?> <?php echo $book['author'] ?></li>
+    <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
+        <li><img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>"> <?php echo $book['title'] ?> <?php echo $book['author'] ?></li>
 <?php } ?>
 </ul>
 
@@ -20,7 +21,8 @@ foreach ($bookRead as $book){ ?>
 <ul>
     <?php
     foreach ($bookNoRead as $book){ ?>
-        <li><img src="<?php echo $book['cover'] ?>" alt="cover de <?php echo $book['title'] ?>"> <?php echo $book['title'] ?> <?php echo $book['author'] ?></li>
+        <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
+        <li><img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>"> <?php echo $book['title'] ?> <?php echo $book['author'] ?></li>
     <?php } ?>
 </ul>
 
