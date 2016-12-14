@@ -71,11 +71,11 @@ class ProfileController extends Controller
             if (isset($_FILES['avatar']['type']) && !empty($_FILES['avatar']['name'])) {
                 $extentions = ["image/png", "image/gif", "image/jpg", "image/jpeg"];
                 if (in_array($_FILES['avatar']['type'], $extentions)) {
-                    if(!is_dir(__ROOT__ . "/public/upload/avatar")){
-                        mkdir(__ROOT__ . "/public/upload/avatar", 0755, true);
+                    if(!is_dir(dirname(__DIR__) . "/public/upload/avatar")){
+                        mkdir(dirname(__DIR__). "/public/upload/avatar", 0755, true);
                     }
                     $post['avatar'] = str_replace("/",".",strstr($_FILES['avatar']['type'], '/'));
-                    move_uploaded_file($_FILES['avatar']['tmp_name'], __ROOT__ . "/public/upload/avatar/" . $user['id'].$post['avatar']);
+                    move_uploaded_file($_FILES['avatar']['tmp_name'], dirname(__DIR__) . "/public/upload/avatar/" . $user['id'].$post['avatar']);
                 } else {
                     $message .= "Extention invalide !";
                 }
