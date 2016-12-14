@@ -19,6 +19,7 @@
 		['POST', '/register', 'AuthentificationController#register', 'auth.register'],
 		['GET|POST', '/forget-password', 'AuthentificationController#forgetPassword', 'auth.forgetpassword'],
 		['GET|POST', '/reset-password', 'AuthentificationController#resetPassword','auth.resetpassword'],
+		['GET', '/activate-account', 'AuthentificationController#activateAccount','auth.activateaccount'],
 
 
 
@@ -48,18 +49,22 @@
 		['GET', '/profile', 'ProfileController#index', 'profile.home'],
 		['GET|POST', '/profile/edit', 'ProfileController#editProfile', 'profile.edit'],
 		['POST', '/profile/delete', 'ProfileController#deleteProfile', 'profile.delete'],
-
-		['GET', '/profile/book/[i:page]', 'ProfileController#viewBooks', 'profile.book'],
-		['GET|POST', '/profile/book/add', 'ProfileController#addBook', 'profile.book.add'],
-		['POST', '/profile/book/[i:id]/delete', 'ProfileController#deleteBook', 'profile.book.delete'],
-		['POST', '/profile/book/[i:id]/toggleread', 'ProfileController#toggleRead', 'profile.book.toggleread'],
-
-		['GET', '/profile/quote/page/[i:page]', 'ProfileController#allQuotes', 'profile.quote'],
-		['GET|POST', '/profile/quote/add', 'ProfileController#addQuote', 'profile.quote.add'],
-		['GET|POST', '/profile/quote/[i:id]/edit', 'ProfileController#editQuote', 'profile.quote.edit'],
-		['POST', '/profile/quote/[i:id]/delete', 'ProfileController#deleteQuote', 'profile.quote.delete'],
-
 		['GET|POST', '/profile/search', 'ProfileController#search', 'profile.search'],
+
+
+		//BookControler
+		['GET', '/profile/book/[i:page]', 'BooksController#viewBooks', 'profile.book'],
+		['GET|POST', '/profile/book/add', 'BooksController#addBook', 'profile.book.add'],
+		['GET', '/profile/book/[i:id]/delete', 'BooksController#deleteBook', 'profile.book.delete'],
+		['GET', '/profile/book/[i:id]/toggleread/[i:status]', 'BooksController#toggleRead', 'profile.book.toggleread'],
+
+
+		//QuoteController
+		['GET', '/profile/quote/page/[i:page]', 'QuotesController#allQuotes', 'profile.quote'],
+		['GET|POST', '/profile/quote/add', 'QuotesController#addQuote', 'profile.quote.add'],
+		['GET|POST', '/profile/quote/[i:id]/edit', 'QuotesController#editQuote', 'profile.quote.edit'],
+		['POST', '/profile/quote/[i:id]/delete', 'QuotesController#deleteQuote', 'profile.quote.delete'],
+
 
 
 	);

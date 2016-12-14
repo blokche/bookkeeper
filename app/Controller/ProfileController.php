@@ -11,12 +11,25 @@ use W\Security\AuthentificationModel;
 
 class ProfileController extends Controller
 {
+    private $auth;
+    private $user;
+    private $errors = [];
+    private  $message = [];
+
+
+    public function __construct()
+    {
+        $this->auth = new AuthentificationModel();
+        $this->user = new UserModel();
+    }
+
+       
 
     /**
      *
      */
     public function index () {
-        $this->allowTo(['user'], ['admin']);
+        $this->allowTo(['user','admin']);
         $user = $this->getUser();
         $userModel = new UserModel();
         $avatar = (!empty($user['avatar'])) ? $user['id'].$user['avatar'] : 'default.png';
@@ -102,14 +115,29 @@ class ProfileController extends Controller
      */
     public function deleteProfile () {
 
+        if (isset($_SESSION['id'])) {
+            if ($this->user->delete($_SESSION['id'])) {
+                $this->auth->logUserOut();
+                $this->message['delete-profil']="Votre profil a bien eté supprimé.";
+                $_SESSION['message']=$this->message['delete-profil'];
+                $this->redirectToRoute('home');
+            }
+            else{
+                $this->errors['delete-profil']="Une erreur s'est produite, veuillez re-essayéer.";
+                $_SESSION['errors']=$this->errors['delete-profil'];
+                $this->redirectToRoute('profile.home');
+            }
+        }
     }
+    
+
 
     /**
      * Consulter les livres dans la reading list
      * @param int $page
      */
     public function viewBooks ($page = 1) {
-        $this->allowTo(['user'], ['admin']);
+        $this->allowTo(['user','admin']);
         $user = $this->getUser();
         $userModel = new UserModel();
         $offset='';
@@ -121,67 +149,10 @@ class ProfileController extends Controller
     }
 
     /**
-     * Ajouter un livre
-     */
-    public function addBook () {
-
-    }
-
-    /**
-     * Marquer un livre comme lu/non en fonction de son id
-     * @param $bookid
-     */
-    public function toggleRead ($bookid) {
-
-    }
-
-    /**
-     * Supprimer un livre de sa liste de lecture
-     * @param $bookid
-     */
-    public function deleteBook($bookid) {
-
-    }
-
-    // Quotes
-
-    /**
-     * Récupérer les citations
-     * @param int $page
-     */
-    public function allQuotes ($page = 1) {
-
-    }
-
-    /**
-     * Ajouter une citation
-     */
-    public function addQuote () {
-
-    }
-
-    /**
-     * Editer une citation
-     * @param $quoteid
-     */
-    public function editQuote ($quoteid) {
-        
-    }
-
-    /**
-     * Supprimer une citation
-     * @param $quoteid
-     */
-    public function deleteQuote ($quoteid) {
-
-    }
-
-    /**
      * Recherche parmi les quotes, livres
      */
     public function search () {
 
     }
     
-
 }
