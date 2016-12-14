@@ -74,10 +74,7 @@ class DefaultController extends Controller
 			$searchTerm = strip_tags($_POST['q']);
 			if (strlen($searchTerm) > 0)
 			{
-				$results = $this->book->search([
-					'title' => $searchTerm,
-					'author' => $searchTerm
-				]);
+				$results = $this->book->searchBook($searchTerm);
 
 				$this->show('default/search', [
 					'searchTerm' => $searchTerm,

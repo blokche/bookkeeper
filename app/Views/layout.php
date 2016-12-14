@@ -19,5 +19,6 @@
 		<footer>
 		</footer>
 	</div>
+	<?php echo $this->section('js'); ?>
 </body>
 </html>

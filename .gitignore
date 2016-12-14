@@ -3,4 +3,5 @@ app/config.php
 /phpDocumentor.phar
 *.log
 /.idea
-/public/upload/cover/*
+/public/upload/cover/
+/public/upload/avatar/

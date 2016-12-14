@@ -85,8 +85,6 @@ class BookModel extends Model {
     }
     private $category;
 
-
-
     /**
      * @param $bookid ID du livre
      * @param $categorieId Catégorie associée au livre
@@ -132,5 +130,49 @@ class BookModel extends Model {
             $categories[] = $this->category->find($categoryId['category_id']);
         }
         return $categories;
+    }
+
+    /**
+     * Effectuer une recherche sur un livre en fonction de son titre ou de son auteur
+     * @param $term Titre ou auteur recherché
+     * @return array Résultats de la recherche
+     */
+    public function searchBook ($term)
+    {
+        $sql = "SELECT * FROM books WHERE LOWER(books.title) RLIKE LOWER(:term) OR LOWER(books.author) RLIKE LOWER(:term)";
+        $query = $this->dbh->prepare($sql);
+        $query->bindValue(':term', $term, \PDO::PARAM_STR);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getBooksByIds($ids = [])
+    {
+        $books = [];
+        $query = $this->dbh->prepare('SELECT * FROM books WHERE id = :id');
+        foreach ($ids as $id) {
+            $query->bindValue(":id", $id, \PDO::PARAM_INT);
+            $query->execute();
+            $books[] = $query->fetch();
+        }
+        return $books;
+    }
+
+    /**
+     * Retourner les livres présents dans la liste de lecture d'un utilisateur
+     * @param int $userid
+     * @return array
+     */
+    public function getBooksInReadingList ($userid = 0)
+    {
+        $query = $this->dbh->prepare('SELECT * FROM reading_list WHERE user_id = :userid');
+        $query->bindValue(":userid", $userid, \PDO::PARAM_INT);
+        $query->execute();
+        $books = $query->fetchAll();
+        $books = array_map(function($book) {
+            return $book['book_id'];
+        }, $books);
+        $books = $this->getBooksByIds($books);
+        return $books;
     }
 }
