@@ -30,7 +30,6 @@
 		['GET', '/admin/user/[i:id]', 'AdminController#viewUser', 'admin.user.view'],
 		['GET|POST', '/admin/user/[i:id]/edit', 'AdminController#editUser', 'admin.user.edit'],
 		['POST', '/admin/user/[i:id]/delete', 'AdminController#deleteUser', 'admin.user.delete'],
-		['POST', '/admin/user/[i:id]/togglestatus', 'AdminController#toggleStatus', 'admin.user.togglestatus'],
 
 
 		['GET', '/admin/book', 'AdminController#allBooks', 'admin.book'],
@@ -40,6 +39,7 @@
 		['POST', '/admin/book/[i:id]/delete', 'AdminController#deleteBook', 'admin.book.delete'],
 
 		['GET', '/admin/category', 'AdminController#allCategories', 'category.home'],
+		['GET|POST', '/admin/category/add', 'AdminController#addCategory', 'category.add'],
 		['GET|POST', '/admin/category/[i:id]/edit', 'AdminController#editCategory', 'category.edit'],
 		['POST', '/admin/category/[i:id]/delete', 'AdminController#deleteCategory', 'category.delete'],
 

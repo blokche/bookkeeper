@@ -12,8 +12,6 @@ use W\Security\AuthentificationModel;
 use \W\Controller\Controller;
 use W\Model\Model;
 
-
-
 class AuthentificationController extends Controller
 {
 

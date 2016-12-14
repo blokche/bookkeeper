@@ -65,7 +65,6 @@ class DefaultController extends Controller
 		} else {
 			$this->showNotFound();
 		}
-
 	}
 
 	public function searchBook () {
