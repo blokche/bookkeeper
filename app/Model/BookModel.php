@@ -6,14 +6,15 @@ use W\Model\Model;
 use Model\CategoryModel;
 
 class BookModel extends Model {
-  
-      public function __construct()
+
+    private $category;
+
+    public function __construct()
     {
         parent::__construct();
         $this->setTable('books');
         $this->category = new CategoryModel();
     }
-  
   
     public function viewFromReadingList($page){
 
@@ -83,7 +84,6 @@ class BookModel extends Model {
 
         return $q->execute();
     }
-    private $category;
 
     /**
      * @param $bookid ID du livre

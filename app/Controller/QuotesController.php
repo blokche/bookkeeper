@@ -33,6 +33,7 @@ class QuotesController extends Controller
     /**
      * Récupérer les citations
      */
+
     public function allQuotes ()
     {
         $currentUser = $this->getUser();
@@ -54,6 +55,7 @@ class QuotesController extends Controller
             if (!empty($_POST['content']))
             {
                 $content = trim($_POST['content']);
+
 
                 /* ID du livre =  */
                 if ($_POST['linkedbook'] != 0)
@@ -130,7 +132,7 @@ class QuotesController extends Controller
             // Méthode POST
             if (isset($_POST['editQuote']))
             {
-                var_dump($_POST);
+                //var_dump($_POST);
 
                 if ( !empty($_POST['content']) )
                 {
