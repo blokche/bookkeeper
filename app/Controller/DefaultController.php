@@ -3,18 +3,26 @@
 namespace Controller;
 
 use Model\BookModel;
+use Model\UserModel;
 use \W\Controller\Controller;
+use W\Security\AuthentificationModel;
+
 
 class DefaultController extends Controller
 {
 
 	private $book;
 	private $quote;
+	private $auth;
+	private $user;
 
 	public function __construct()
 	{
+		$this->user = new UserModel();
 		$this->book = new BookModel();
 		$this->book->setTable('books');
+		$this->auth = new AuthentificationModel();
+
 	}
 
 	/**
@@ -58,11 +66,26 @@ class DefaultController extends Controller
 	 */
 	public function bookById($id)
 	{
+		$user=$this->getUser();
+
+		//var_dump($user);
+
+		//die();
+
+		if($user){
+
+			$ReadingList=$this->user->getFromReadingListByBookId($id,$user);
+		}
+
+		//var_dump($ReadingList);
+
 		$book = $this->book->find($id);
 
 		if ($book) {
-			$this->show('default/viewbook.php', ['book' => $book]);
+
+			$this->show('default/viewbook.php', ['book' => $book,'ReadingList' => $ReadingList]);
 		} else {
+
 			$this->showNotFound();
 		}
 	}

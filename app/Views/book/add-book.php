@@ -1,9 +1,15 @@
-<?php $this->layout('layout', ['title' => 'Liste de lecture']) ?>
+<?php $this->layout('layout', ['title' => 'Ajouter un livre 
+']) ?>
 
-<?php $this->start('main_content') ?>
+    <pre>
+<?php $this->start('main_content');
 
 
-<form action="<?php $this->url('profile.book.add') ?>" method="POST" >
+
+//var_dump($_SESSION);
+?>
+    </pre>
+    <form action="<?php $this->url('profile.book.add') ?>" method="POST" >
 
     <div class=" form-group">
         <label for="title">Titre :</label>

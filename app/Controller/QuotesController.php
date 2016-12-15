@@ -44,6 +44,8 @@ class QuotesController extends Controller
      */
     public function allQuotes ($page = 1) {
 
+        $this->allowTo(['user','admin']);
+
         $nb_quote_page=10;
         $offset=$page*$nb_quote_page;
         $quotes=$this->quote->findAll("id",'ASC',$nb_quote_page,$offset);
@@ -55,6 +57,8 @@ class QuotesController extends Controller
      * Ajouter une citation
      */
     public function addQuote () {
+
+        $this->allowTo(['user','admin']);
 
         $books=$this->book->findAll();
 
@@ -96,6 +100,8 @@ class QuotesController extends Controller
      * @param $quoteid
      */
     public function editQuote ($quoteid) {
+
+        $this->allowTo(['user','admin']);
 
         $quoteid=trim(strip_tags($quoteid));
 
@@ -143,6 +149,8 @@ class QuotesController extends Controller
      * @param $quoteid
      */
     public function deleteQuote ($quoteid) {
+
+        $this->allowTo(['user','admin']);
 
         $quote=$this->quote->find($quoteid);
 

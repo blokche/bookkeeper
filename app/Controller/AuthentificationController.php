@@ -233,9 +233,7 @@ class AuthentificationController extends Controller
 
     public function resetPassword () {
 
-
-
-
+        
         if (isset($_POST['reset-password'])) {
 
             if (!empty($_POST['password'])) {
