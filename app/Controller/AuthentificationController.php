@@ -19,7 +19,6 @@ class AuthentificationController extends Controller
     private $authmodel;
     private $user;
     private $mail;
-    private $errors = [];
     private  $message = [];
 
 
@@ -41,17 +40,18 @@ class AuthentificationController extends Controller
                 $currentUser = $this->user->find($userCheck);
                 if ($currentUser['status']) {
                     $this->auth->logUserIn($currentUser);
-                    $this->message['login']="Vous etez bien connecté.";
+
+                    $this->message[]=['type' => 'success', 'message' => 'Vous etez bien connecté.'];
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('profile.home');
                 } else {
-                    $this->errors['login']="Erreur cette utilisateur est actuellement desactivé ou n'as pas encore été activé.";
-                    $_SESSION['errors']=$this->errors['login'];
+                    $this->message[]=['type' => 'warning', 'message' => 'Cette utilisateur est actuellement desactivé ou n\'as pas encore été activé.'];
+                    $_SESSION['message']=$this->message;
                     $this->redirectToRoute('home');
                 }
             } else{
-                $this->errors['login']="Erreur l'email et le mot de passe saisie ne correspondent pas.";
-                $_SESSION['errors']=$this->errors['login'];
+                $this->message[]=['type' => 'warning', 'message' => 'L\'email et le mot de passe saisie ne correspondent pas.'];
+                $_SESSION['message']=$this->message;
                 $this->redirectToRoute('home');
             }
         }
@@ -59,9 +59,9 @@ class AuthentificationController extends Controller
 
 
     public function logout() {
-        $this->auth->logUserOut();
-        $this->message['logout']="Vous avez bien été déconnecté.";
 
+        $this->auth->logUserOut();
+        $this->message[]=['type' => 'success', 'message' => 'Vous avez bien été déconnecté.'];
         $_SESSION['message']=$this->message;
         $this->redirectToRoute('home');
     }
@@ -115,26 +115,36 @@ class AuthentificationController extends Controller
 
         // Inscription
         if(isset($_POST['register'])){
+            
+            if (empty($_POST['email'])) {
+                $this->message[] = ['type' => 'warning', 'message' => 'Le champ email est vide'];
+            }
 
-            $this->errors['email'] = (empty($_POST['email'])) ? "Erreur email vide" : null;
-            $this->errors['username'] = (empty($_POST['username'])) ? "Erreur username vide" : null;
-            $this->errors['password'] = (empty($_POST['password'])) ? "Erreur password vide" : null;
+
+            if (empty($_POST['password'])) {
+                $this->message[] = ['type' => 'warning', 'message' => 'Le champ mot de passe est vide'];
+            }
+            if (empty($_POST['username'])) {
+                $this->message[] = ['type' => 'warning', 'message' => 'Le champ username est vide'];
+            }
+
 
             if($_POST['password'] != $_POST['cf-password'])
             {
-                $this->errors['cf-password'] = "Erreur password et confirmation ne correspond pas";
+                $this->message[] = ['type' => 'warning', 'message' => 'Le mot de passe et la confirmation ne correspondent pas'];
             }
 
-            if($this->user->emailExists($_POST['email']) || $this->user->usernameExists($_POST['username'])){
-                $this->errors['validity'] = "Username or email exists.";
+            if($this->user->emailExists($_POST['email'])) {
+                $this->message[] = ['type' => 'warning', 'message' => "l'email saisie est déja pris par quelqu'un d'autre, veuillez en saisir un autre."];
             }
 
-            if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)==false){
-                $this->errors['email']="Erreur l'email saisie est invalide";
+            if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)==false) {
+                $this->message[] = ['type' => 'warning', 'message' => "l'email saisie est déja pris par quelqu'un d'autre, veuillez en saisir un autre."];
             }
 
 
-            if(count(array_unique($this->errors))== 1){
+            //if(count(array_unique($this->errors))== 1){
+            if(!isset($this->message[0])) {
 
                 $user_connected=[
                     'username' => $_POST['username'],
@@ -145,24 +155,25 @@ class AuthentificationController extends Controller
 
                 $user_connected=$this->user->insert($user_connected);
                 $this->auth->logUserIn($user_connected);
-                $this->message['register']="Vous etez bien inscrit.";
+                $this->message[]=['type' => 'success', 'message' => 'Vous etez bien inscrit.'];
                 $retour=$this->envoieMailActivation($user_connected);
 
-                var_dump(isset($retour['errors-mail']));
+                //var_dump(isset($retour['errors-mail']));
 
-                if (!isset($retour['errors-mail'])){
+                if ($retour['type']=="success") {
 
-                    $this->message['email'] = $retour['message-mail'];
+                    $this->message[]=$retour;
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('home');
 
                 } else{
 
-                    $this->errors['email'] = $retour['errors-mail'];
-                    $this->show('default/home',['errors' => $this->errors]);
+                    $this->message[]=$retour;
+                    $_SESSION['message']=$this->message;
+                    $this->redirectToRoute('home');
                 }
             } else{
-                $this->show('default/home',['errors' => $this->errors]);
+                $this->show('default/home');
             }
         }
     }
@@ -175,23 +186,24 @@ class AuthentificationController extends Controller
             //var_dump($user_token);
 
             if ($user_token) {
-                $this->message['activation']="Votre compte a bien été activée, vous etez maintenant connecté.";
+
                 $this->user->update(['token' => null],$user_token['id']);
-                $_SESSION['message']=$this->message['activation'];
+                $this->message[] = ['type' => 'success', 'message' => "Votre compte a bien été activée, vous etez maintenant connecté."];
+                $_SESSION['message']=$this->message;
                 $this->redirectToRoute('profile.home');
             } else {
-                $this->errors['token']=" Erreur le token est incorrect";
-
-                $_SESSION['errors']=$this->errors;
+                
+                $this->message[] = ['type' => 'warning', 'message' => "Le token est incorrect"];
+                $_SESSION['message']=$this->message;
                 $this->redirectToRoute('home');
             }
 
         }
 
         else{
-            $this->errors['token'] = "Erreur le token est manquant";
-
-            $_SESSION['errors']=$this->errors;
+            
+            $this->message[] = ['type' => 'warning', 'message' => "Le token est manquant"];
+            $_SESSION['message']=$this->message;
             $this->redirectToRoute('home');
         }
     }
@@ -208,23 +220,29 @@ class AuthentificationController extends Controller
 
                     $retour=$this->envoieMailResetPassword($this->user->getUserByUsernameOrEmail($email));
 
-                    if (!isset($retour['errors-mail'])){
+                    //if (!isset($retour['errors-mail'])){
+                    if ($retour['type']=="success") {
 
-                        $_SESSION['message']=$retour['message-mail'];
-
+                        $this->message[]=$retour;
+                        $_SESSION['message']=$this->message;
                         $this->redirectToRoute('home');
                     } else{
-                        $this->errors['email'] = $retour['errors-mail'];
-                        $this->show('Authentification/forget-password',['errors'=>$this->errors]);
+
+                        $this->message[]=$retour;
+                        $_SESSION['message']=$this->message;
+                        $this->show('Authentification/forget-password');
                     }
                 } else {
-                    $this->errors['email'] = "L'email saisie est incorrect !";
-                    $this->show('Authentification/forget-password',['errors'=>$this->errors]);
+
+                    $this->message[]=['type' => 'warning', 'message' => "L'email saisie est introuvable !"];
+                    $_SESSION['message']=$this->message;
+                    $this->show('Authentification/forget-password');
                 }
             } else {
-                $this->errors['email'] =  "Erreur email vide";
-                $this->show('Authentification/forget-password',['errors'=>$this->errors]);
 
+                $this->message[]=['type' => 'warning', 'message' => "Le champ email est vide !"];
+                $_SESSION['message']=$this->message;
+                $this->show('Authentification/forget-password');
             }
         }
 
@@ -239,22 +257,24 @@ class AuthentificationController extends Controller
             if (!empty($_POST['password'])) {
 
                 if ($_POST['password'] == $_POST['cf-password']) {
+
                     $id=strip_tags($_POST['id']);
                     $this->user->update(['password' => $this->auth->hashPassword($_POST['password']), 'token' => null],$id);
-                    $this->message="Le mot de passe a bien été mis a jour .";
-
+                    $this->message = ['type' => 'success', 'message' => "Le mot de passe a bien été mis a jour ."];
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('profile.home');
                 } else {
-                    $this->errors['password'] = "Erreur le password et la confirmation ne correspondent pas !";
-                    $_SESSION['errors']=$this->errors['token'];
-                    $this->show('Authentification/reset-password',['errors'=>$this->errors]);
+
+                    $this->message[]=['type' => 'warning', 'message' => "Le mot de passe et la confirmation ne correspondent pas !"];
+                    $_SESSION['message']=$this->message;
+                    $this->show('Authentification/reset-password');
                 }
 
             } else {
-                $this->errors['password'] = "Erreur le password est vide" ;
-                $_SESSION['errors']=$this->errors['token'];
-                $this->show('Authentification/reset-password',['errors'=>$this->errors]);
+
+                $this->message[]=['type' => 'warning', 'message' => "Le champ mot passe est vide !"];
+                $_SESSION['message']=$this->message;
+                $this->show('Authentification/reset-password');
             }
 
         }
@@ -263,23 +283,24 @@ class AuthentificationController extends Controller
         if (isset($_GET['token'])) {
 
             $user_token=$this->authmodel->findToken(strip_tags($_GET['token']));
-            //var_dump($user_token);
 
             if ($user_token) {
-                $this->show('Authentification/reset-password',['id' => $user_token['id']]);
+
+                $this->show('Authentification/reset-password');
             }
 
             else {
-                $errors['token']=" Erreur le token est incorrect";
-                $_SESSION['errors']=$this->errors['token'];
+
+                $this->message[]=['type' => 'warning', 'message' => "Le token est incorrect"];
+                $_SESSION['message']=$this->message;
                 $this->redirectToRoute('home');
             }
-
         }
 
         else{
-            $errors['token'] = "Erreur le token est manquant";
-            $_SESSION['errors']=$this->errors['token'];
+
+            $this->message[]=['type' => 'warning', 'message' => "Le token est manquant"];
+            $_SESSION['message']=$this->message;
             $this->redirectToRoute('home');
         }
 

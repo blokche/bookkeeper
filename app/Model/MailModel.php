@@ -7,10 +7,9 @@ use W\Model\Model;
 class MailModel extends Model {
     
     
-    public function envoieMail($to,$message,$message_html,$object,
+    public function envoieMail($to,$msg,$message_html,$object,
                                $username="",$username_sender="webforcelille2@gmail.com",$password="W3bforce",$from="webforcelille2@gmail.com",$smtp="smtp.gmail.com"){
 
-        $retour=[];
         $mail = new \PHPMailer();
 
         
@@ -32,19 +31,19 @@ class MailModel extends Model {
         $mail->Body = $message_html;
 
         $mail->Subject = $object;
-        $mail->AltBody = $message;
+        $mail->AltBody = $msg;
 
         var_dump($mail->AltBody);
 
         if(!$mail->send()) {
-            $retour['errors-mail']="Erreur une erreur inconnu s'est produite pendant l'envoie du mail, veuillez ré-essayér.";
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
+            $message= ['type' => 'warning', 'message' => "Une erreur inconnu s'est produite pendant l'envoie du mail, veuillez ré-essayér."];
         }
-        else {
-            $retour['message-mail']="Le mail a bien été envoyé, si vous le recevez pas veuillez verifier votre dossier de spam .";
+        else
+        {
+            $message = ['type' => 'success', 'message' => "Le mail a bien été envoyé, si vous le recevez pas veuillez verifier votre dossier de spam ."];
         }
 
-        return $retour;
+        return $message;
     }
 
 }

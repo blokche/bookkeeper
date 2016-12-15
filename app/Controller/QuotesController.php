@@ -17,7 +17,6 @@ class QuotesController extends Controller
     private $book;
     //private $user;
 
-    private $errors = [];
     private $message = [];
 
     public function __construct()
@@ -98,15 +97,20 @@ class QuotesController extends Controller
                 }
 
                 if ($result) {
-                    $_SESSION['message'] = ['type' => 'success', 'message' => 'Ajout de l\'extrait, de la citation effectué avec succès'];
+
+                    $this->message[] = ['type' => 'success', 'message' => 'Ajout de l\'extrait, de la citation effectué avec succès'];
+                    $_SESSION['message']=$this->message;
                     $this->redirectToRoute("profile.quote", ['page' => 0]);
                 } else {
-                    $_SESSION['message'] = ['type' => 'warning', 'message' => 'Une erreur est survenue lors de l\'ajout.'];
+
+                    $this->message[] = ['type' => 'warning', 'message' => 'Une erreur est survenue lors de l\'ajout.'];
+                    $_SESSION['message']=$this->message;
                 }
 
             } else {
                 // Cas du champ contenu vide
-                $_SESSION['message'] = ['type' =>'warning', 'Le message ainsi que l\'auteur ne peuvent être vides'];
+                $this->message[] = ['type' =>'warning', 'Le message ainsi que l\'auteur ne peuvent être vides'];
+                $_SESSION['message']=$this->message;
                 $this->show("quote/add-quote", ['books' => $books]);
             }
         } else {
@@ -168,15 +172,19 @@ class QuotesController extends Controller
 
                     if ($retour)
                     {
-                        $_SESSION['message'] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+                        $this->message[] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+                        $_SESSION['message']=$this->message;
                         $this->redirectToRoute("profile.quote");
                     } else {
-                        $_SESSION['message'] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+
+                        $this->message[] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+                        $_SESSION['message']=$this->message;
                         $this->show("quote/edit-quote", ['id' => $quoteid]);
                     }
                 }
                 else {
-                    $_SESSION['message'] = ['type' => 'warning', 'message' => 'La citation, l\extrait ne pas pas être vide.'];
+                    $this->message[] = ['type' => 'warning', 'message' => 'La citation, l\extrait ne pas pas être vide.'];
+                    $_SESSION['message']=$this->message;
                     $this->show("quote/edit-quote", ['quoteid'=>$quoteid]);
                 }
             } else {
@@ -200,9 +208,12 @@ class QuotesController extends Controller
         $quote = $this->quote->find($quoteid);
 
         if ($quote) {
+
             $this->quote->delete($quoteid);
-            $_SESSION['message'] = ['type' => "success", 'message' => 'Suppression de la citation, de l\'extrait effectué avec succès.'];
+            $this->message[] = ['type' => "success", 'message' => 'Suppression de la citation, de l\'extrait effectué avec succès.'];
+            $_SESSION['message']=$this->message;
         } else {
+            
             $this->redirectToRoute('profile.quote');
         }
 
