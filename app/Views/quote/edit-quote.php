@@ -8,27 +8,32 @@
             <textarea id="content" name="content" class="form-control" type="text"><?= $quote['content'] ?></textarea>
         </div>
 
+        <div class="form-group">
+            <label for="linkedbook">Associer l'extrait / la citation à un livre</label>
+            <select name="linkedbook" id="linkedbook">
+                <option value="0"></option>
+                <?php foreach ($books as $book) : ?>
+                    <option value="<?= $book['id'] ?>"<?php echo ($quote['book_id'] == $book['id']) ? "selected" : null; ?>><?= $book['title'] ?> - <?php echo $book['author']?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-        <select name="book" id="book">
-            <option value="-1">Pas de livre associé</option>
-            <?php
-            foreach ($books as $book)
-            {?>
-
-                <option value="<?= $book['id'] ?>"><?= $book['title'] ?></option>
-
-                <?php
-            }
-            ?>
-        </select>
-        
-        
         <div class=" form-group">
             <label for="author">Modifier l'auteur :</label>
-            <input value="<?= $quote['author'] ?>" id="author" name="author" class="form-control" type="text">
+            <input value="<?php echo isset($quote['book_id']) ? '' : $quote['author']; ?>" id="author" name="author" class="form-control" type="text">
         </div>
-        <button name="editQuote" class="btn btn-default">Modifier la citation</button>
+        <input type="submit" name="editQuote" class="btn btn-default" value="Modifier la citation" />
     </form>
 
+    <form method="POST" action="<?php echo $this->url('profile.quote.delete', ['id' => $quote['id']]); ?>">
+        <input type="submit" name="deleteQuote" value="Supprimer">
+    </form>
 
 <?php $this->stop('main_content') ?>
+<?php $this->start('js') ?>
+    <script>
+        var user = <?php echo $w_user['id']; ?>;
+        console.log(user);
+    </script>
+    <script src="<?php echo $this->assetUrl('scripts/quoteForm.js'); ?>"></script>
+<?php $this->stop('js') ?>

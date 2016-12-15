@@ -30,6 +30,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="<?php echo $this->url('profile.home'); ?>">Profil public <i class="fa fa-user-o" aria-hidden="true"></i></a></li>
                 <li><a href="<?php echo $this->url('auth.logout'); ?>">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
             </ul>
         </div><!--/.nav-collapse -->

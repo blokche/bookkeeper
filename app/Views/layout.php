@@ -37,6 +37,7 @@
 		</section>
 	</div>
 
+
 			<div class="container-fluid footer">
 				<div class="container">
 					<div class="row">
@@ -59,6 +60,9 @@
 					</div>
 				</div>
 			</div>
+
+
+	<?php echo $this->section('js'); ?>
 
 </body>
 </html>

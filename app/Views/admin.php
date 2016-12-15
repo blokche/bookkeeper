@@ -14,7 +14,7 @@
         <?php $this->insert('admin/menu') ;?>
     </div>
     <div class="container">
-        <?php if (isset($_SESSION['message'])) : ?>
+        <?php if ( isset($_SESSION['message']['type']) ) : ?>
             <div class="row">
                 <div class="col-sm-12">
                     <p class="alert alert-<?php echo $_SESSION['message']['type'] ?>"><?php echo $_SESSION['message']['message']; ?></p>
@@ -26,5 +26,6 @@
     </div>
     <script src="<?php echo $this->assetUrl('vendor/jquery/dist/jquery.min.js') ?>"></script>
     <script src="<?php echo $this->assetUrl('vendor/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
+    <?php echo $this->section('js') ?>
 </body>
 </html>

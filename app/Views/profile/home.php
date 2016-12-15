@@ -33,9 +33,29 @@
         </div>
 
 
+
         <div class="titre-liste row">
             <h1>Liste des livres à lire:</h1>
         </div>
+
+<p>Liste des livres lu:</p>
+<ul>
+<?php
+foreach ($bookRead as $book){ ?>
+    <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
+        <li><img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>"> <?php echo $book['title'] ?> <?php echo $book['author'] ?></li>
+<?php } ?>
+</ul>
+
+<p>Liste des livres à lire:</p>
+<ul>
+    <?php
+    foreach ($bookNoRead as $book){ ?>
+        <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
+        <li><img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>"> <?php echo $book['title'] ?> <?php echo $book['author'] ?></li>
+    <?php } ?>
+</ul>
+
 
         <div class="row">
             <?php
