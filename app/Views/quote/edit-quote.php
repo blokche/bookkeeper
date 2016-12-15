@@ -20,7 +20,7 @@
 
         <div class=" form-group">
             <label for="author">Modifier l'auteur :</label>
-            <input value="<?php echo isset($quote['book_id']) ? '' : $quote['author']; ?>" id="author" name="author" class="form-control" type="text">
+            <input value="<?php echo (isset($quote['book_id']) && $quote['book_id'] > 0) ? '' : $quote['author']; ?>" id="author" name="author" class="form-control" type="text">
         </div>
         <input type="submit" name="editQuote" class="btn btn-default" value="Modifier la citation" />
     </form>
@@ -31,9 +31,5 @@
 
 <?php $this->stop('main_content') ?>
 <?php $this->start('js') ?>
-    <script>
-        var user = <?php echo $w_user['id']; ?>;
-        console.log(user);
-    </script>
     <script src="<?php echo $this->assetUrl('scripts/quoteForm.js'); ?>"></script>
 <?php $this->stop('js') ?>

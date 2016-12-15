@@ -5,9 +5,6 @@ namespace Controller;
 use W\Controller\Controller;
 use Model\QuoteModel;
 use Model\BookModel;
-use Model\UserModel;
-
-
 
 
 
@@ -15,7 +12,6 @@ class QuotesController extends Controller
 {
     private $quote;
     private $book;
-    //private $user;
 
     private $errors = [];
     private $message = [];
@@ -25,7 +21,6 @@ class QuotesController extends Controller
         $this->allowTo(['user', 'admin']);
         $this->book = new BookModel();
         $this->quote = new QuoteModel();
-        //$this->user = new UserModel();
     }
 
     // QUOTES
@@ -37,7 +32,7 @@ class QuotesController extends Controller
     {
         $currentUser = $this->getUser();
         $quotes = $this->quote->quotesByUser($currentUser['id']);
-        $this->show("quote/quote",['quotes' => $quotes]);
+        $this->show("quote/quote", ['quotes' => $quotes]);
     }
 
     /**
@@ -71,7 +66,7 @@ class QuotesController extends Controller
                 if (!empty(trim($_POST['author'])))
                 {
                     $author = trim($_POST['author']);
-                } else if ($_POST['linkedbook'] != "0")
+                } else if ($_POST['linkedbook'] > 0)
                 {
                     $author = $this->book->find($_POST['linkedbook'])['author'];
                 }
@@ -130,7 +125,6 @@ class QuotesController extends Controller
             // Méthode POST
             if (isset($_POST['editQuote']))
             {
-                var_dump($_POST);
 
                 if ( !empty($_POST['content']) )
                 {
@@ -138,7 +132,7 @@ class QuotesController extends Controller
 
                     if ( !empty(trim($_POST['author'])) ) {
                         $author = trim($_POST['author']);
-                    } elseif ($_POST['linkedbook'] > 0) {
+                    } elseif ( (int) $_POST['linkedbook'] > 0) {
                         $author = $this->book->find($_POST['linkedbook'])['author'];
                     }
 
@@ -150,7 +144,7 @@ class QuotesController extends Controller
 
 
                     $book_id = -1;
-                    if ($_POST['linkedbook'] != "0")
+                    if ($_POST['linkedbook'] > 0)
                     {
                         $book_id = $_POST['linkedbook'];
                     }

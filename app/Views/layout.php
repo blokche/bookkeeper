@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title><?= $this->e($title) ?></title>
-
 	<link rel="stylesheet" href="<?= $this->assetUrl('css/style.css') ?>">
+	<?php echo $this->section('css') ?>
 </head>
 <body>
 	<div class="container">
