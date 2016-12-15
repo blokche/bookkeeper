@@ -29,7 +29,8 @@ class DefaultController extends Controller
 	 */
 	public function home()
 	{
-		$this->show('default/home');
+		$books = $this->book->findAll('id', "DESC", 10);
+		$this->show('default/home', ['books' => $books]);
 	}
 
 	

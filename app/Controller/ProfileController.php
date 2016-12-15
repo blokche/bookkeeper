@@ -35,11 +35,10 @@ class ProfileController extends Controller
         $user = $this->getUser();
         $userModel = new UserModel();
         $avatar = (!empty($user['avatar'])) ? $user['id'].$user['avatar'] : 'default.png';
-        $bookRead = $userModel->userReadBook($user['id'], 1, 5);
-        $bookNoRead = $userModel->userReadBook($user['id'], 0 , 5);
 
-       //$coverRead = (!empty($bookRead['cover'])) ? $bookRead['cover'] : 'default.png';
-        //$coverNoRead = (!empty($bookNoRead['cover'])) ? $bookNoRead['cover'] : 'default.png';
+        $bookRead = $userModel->userReadBook($user['id'], 1, 6);
+        $bookNoRead = $userModel->userReadBook($user['id'], 0 , 6);
+
         $this->show('profile/home', ['avatar' => $avatar, 'bookRead' => $bookRead, 'bookNoRead' => $bookNoRead]);
     }
 
@@ -294,7 +293,7 @@ class ProfileController extends Controller
                 $this->redirectToRoute('profile.book', ['page' => 0]);
             }else{
 
-                $this->message = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez ré-essayér"];
+                $this->message = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez réessayer"];
                 $_SESSION['message']=$this->message;
             }
 
