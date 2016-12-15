@@ -33,8 +33,8 @@ class ProfileController extends Controller
         $user = $this->getUser();
         $userModel = new UserModel();
         $avatar = (!empty($user['avatar'])) ? $user['id'].$user['avatar'] : 'default.png';
-        $bookRead = $userModel->userReadBook($user['id'], 1, 5);
-        $bookNoRead = $userModel->userReadBook($user['id'], 0 , 5);
+        $bookRead = $userModel->userReadBook($user['id'], 1, 6);
+        $bookNoRead = $userModel->userReadBook($user['id'], 0 , 6);
         $this->show('profile/home', ['avatar' => $avatar, 'bookRead' => $bookRead, 'bookNoRead' => $bookNoRead]);
     }
 

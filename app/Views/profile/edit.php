@@ -1,7 +1,7 @@
 <?php $this->layout('layout', ['title' => 'Modifier un profile']) ?>
 
 <?php $this->start('main_content') ?>
-
+<div class="container">
     <form action="<?php $this->url('profile.edit') ?>" method="POST" enctype="multipart/form-data">
         <div class=" form-group">
             <label for="email">Modifier l'email :</label>
@@ -29,6 +29,7 @@
         </div>
         <button name="editUsers" class="btn btn-default">Modifier mon profil</button>
     </form>
+</div>
 
 <?= $message ?>
 
