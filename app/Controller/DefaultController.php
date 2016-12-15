@@ -3,18 +3,25 @@
 namespace Controller;
 
 use Model\BookModel;
+use Model\UserModel;
 use \W\Controller\Controller;
+use W\Security\AuthentificationModel;
+
 
 class DefaultController extends Controller
 {
 
 	private $book;
 	private $quote;
+	private $auth;
+	private $user;
 
 	public function __construct()
 	{
+		$this->user = new UserModel();
 		$this->book = new BookModel();
 		$this->book->setTable('books');
+		$this->auth = new AuthentificationModel();
 	}
 
 	/**
@@ -26,6 +33,7 @@ class DefaultController extends Controller
 		$this->show('default/home', ['books' => $books]);
 	}
 
+	
 	/**
 	 * Récupérer la liste des livres
 	 * @param int $page
@@ -53,17 +61,39 @@ class DefaultController extends Controller
 
 	}
 
+	
 	/**
 	 * Voir la fiche d'un livre
 	 * @param $id
 	 */
 	public function bookById($id)
 	{
+		$user=$this->getUser();
+
+		//var_dump($user);
+
+		//die();
+
+		if($user){
+
+			$ReadingList=$this->user->getFromReadingListByBookId($id,$user);
+		}
+
+		//var_dump($ReadingList);
+
 		$book = $this->book->find($id);
 
 		if ($book) {
-			$this->show('default/viewbook.php', ['book' => $book]);
+
+			if ($user) {
+
+				$this->show('default/viewbook.php', ['book' => $book, 'ReadingList' => $ReadingList]);
+			} else {
+
+				$this->show('default/viewbook.php', ['book' => $book]);
+			}
 		} else {
+
 			$this->showNotFound();
 		}
 	}

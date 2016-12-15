@@ -47,18 +47,22 @@ define('__ROOT__', dirname(__DIR__) );
 
 
 
+
 		// Profile
 		['GET', '/profile', 'ProfileController#index', 'profile.home'],
 		['GET|POST', '/profile/edit', 'ProfileController#editProfile', 'profile.edit'],
 		['POST', '/profile/delete', 'ProfileController#deleteProfile', 'profile.delete'],
 		['GET|POST', '/profile/search', 'ProfileController#search', 'profile.search'],
 
+		//Reading List
+		['GET', '/profile/book/[i:page]', 'ProfileController#viewBooks', 'profile.book'],
+		['GET|POST', '/profile/book/add', 'ProfileController#addBook', 'profile.book.add'],
 
-		//BookControler
-		['GET', '/profile/book/[i:page]', 'BooksController#viewBooks', 'profile.book'],
-		['GET|POST', '/profile/book/add', 'BooksController#addBook', 'profile.book.add'],
-		['GET', '/profile/book/[i:id]/delete', 'BooksController#deleteBook', 'profile.book.delete'],
-		['GET', '/profile/book/[i:id]/toggleread/[i:status]', 'BooksController#toggleRead', 'profile.book.toggleread'],
+		['GET', '/profile/book/[i:id]/add/[i:status]', 'ProfileController#addBookToReadingList', 'profile.readinglist.add'],
+		['GET', '/profile/book/[i:id]/delete', 'ProfileController#deleteBook', 'profile.book.delete'],
+		['GET', '/profile/book/[i:id]/toggleread/[i:status]', 'ProfileController#toggleRead', 'profile.book.toggleread'],
+
+
 
 
 		//QuoteController
