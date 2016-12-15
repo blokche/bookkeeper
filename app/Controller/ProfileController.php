@@ -20,6 +20,7 @@ class ProfileController extends Controller
 
     public function __construct()
     {
+        $this->allowTo(['user','admin']);
         $this->auth = new AuthentificationModel();
         $this->user = new UserModel();
         $this->book = new BookModel();
@@ -31,15 +32,14 @@ class ProfileController extends Controller
      * 
      */
     public function index () {
-        $this->allowTo(['user','admin']);
         $user = $this->getUser();
         $userModel = new UserModel();
         $avatar = (!empty($user['avatar'])) ? $user['id'].$user['avatar'] : 'default.png';
         $bookRead = $userModel->userReadBook($user['id'], 1, 5);
         $bookNoRead = $userModel->userReadBook($user['id'], 0 , 5);
 
-       //$coverRead = (!empty($bookRead['cover'])) ? $bookRead['cover'] : 'default.jpg';
-        //$coverNoRead = (!empty($bookNoRead['cover'])) ? $bookNoRead['cover'] : 'default.jpg';
+       //$coverRead = (!empty($bookRead['cover'])) ? $bookRead['cover'] : 'default.png';
+        //$coverNoRead = (!empty($bookNoRead['cover'])) ? $bookNoRead['cover'] : 'default.png';
         $this->show('profile/home', ['avatar' => $avatar, 'bookRead' => $bookRead, 'bookNoRead' => $bookNoRead]);
     }
 
@@ -48,7 +48,6 @@ class ProfileController extends Controller
      */
     public function editProfile ()
     {
-        $this->allowTo(['user','admin']);
         $user = $this->getUser();
         $message =[];
         $authmodel = new AuthentificationModel();
@@ -119,8 +118,6 @@ class ProfileController extends Controller
      */
     public function deleteProfile () {
 
-        $this->allowTo(['user','admin']);
-
         if (isset($_SESSION['id'])) {
             if ($this->user->delete($_SESSION['id'])) {
                 $this->auth->logUserOut();
@@ -144,7 +141,6 @@ class ProfileController extends Controller
      */
     public function viewBooks ($page = 0) {
         
-        $this->allowTo(['user','admin']);
         $limit='10';
 
         $offset=$page*$limit;
@@ -173,7 +169,6 @@ class ProfileController extends Controller
      */
     public function addBook ()
     {
-        $this->allowTo(['user','admin']);
 
         if (isset($_POST['addBook'])) {
 
@@ -249,8 +244,6 @@ class ProfileController extends Controller
      */
     public function deleteBook($id) {
 
-        $this->allowTo(['user','admin']);
-
         $rl=$this->book->find($id);
 
         if ($rl) {
@@ -282,9 +275,7 @@ class ProfileController extends Controller
      * @param $bookid
      */
     public function toggleRead ($id, $status) {
-
-        $this->allowTo(['user','admin']);
-
+        
         $rl=$this->book->find($id);
 
         if ($rl) {

@@ -9,7 +9,7 @@ $this->start('main_content');
 //var_dump($ReadingList);
 
 
-$cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.jpg'); ?>
+$cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
 
     <img src="<?php echo $cover ?>" alt="cover de <?php echo $book['title'] ?>">
     <p>  <?php echo $book['title'] ?>, par <?php echo $book['author'] ?>    </p>
