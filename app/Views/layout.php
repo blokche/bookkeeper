@@ -3,10 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title><?= $this->e($title) ?></title>
-
-	<link rel="stylesheet" href="<?= $this->assetUrl('css/style.css') ?>">
 	<link rel="stylesheet" href="<?= $this->assetUrl('vendor/bootstrap/dist/css/bootstrap.min.css') ?>">
+  <link rel="stylesheet" href="<?= $this->assetUrl('css/style.css') ?>">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,400i,700" rel="stylesheet">
+  <?php echo $this->section('css') ?>
 </head>
 <body>
 			<div class="nav container-fluid">
