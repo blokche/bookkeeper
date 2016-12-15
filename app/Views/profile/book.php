@@ -12,7 +12,7 @@
     <ul>
         <?php
         foreach ($bookRead as $book){
-            $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.jpg'); ?>
+            $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
             <li>
 
                 <img src="<?php echo $cover ?>" alt="cover de <?php echo $book['title'] ?>">    
@@ -31,7 +31,7 @@
     <ul>
         <?php
         foreach ($bookNoRead as $book){
-            $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.jpg'); ?>
+            $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
             <li>
                 <img src="<?php echo $cover ?>" alt="cover de <?php echo $book['title'] ?>">   
                 <a href="   <?php echo $this->url('public.view', ['id' => $book['book_id']]) ?>    ">    <?php echo $book['title'] ?>, par <?php echo $book['author'] ?>   </a>
