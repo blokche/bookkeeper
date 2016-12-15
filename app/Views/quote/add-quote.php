@@ -4,34 +4,34 @@
 
     <form action="<?php $this->url('profile.quote.add') ?>" method="POST" >
         
-        <div class=" form-group">
-            <label for="content">Contenu :</label>
-            <textarea  id="content" name="content" class="form-control" type="text"></textarea>
+        <div class="form-group">
+            <label for="content">Citation / extrait :</label>
+            <textarea  id="content" name="content" class="form-control" type="text" required></textarea>
         </div>
 
+        <?php if (count($books) > 0) : ?>
+        <div class="form-group">
+            <label for="linkedbook">Associer un livre à l'extrait / la citation</label>
+            <select name="linkedbook" id="linkedbook" class="form-control">
+                <option value="0"></option>
+                <?php foreach ($books as $book) : ?>
+                    <option value="<?= $book['id'] ?>"><?= $book['title'] ?> - <?= $book['author'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <?php endif; ?>
 
-        <select name="book" id="book">
-            <option value="-1">Pas de livre associé</option>
-            <?php
-                foreach ($books as $book)
-                {?>
-
-                    <option value="<?= $book['id'] ?>"><?= $book['title'] ?></option>
-
-                <?php
-                }
-            ?>
-        </select>
-
-
-        <div class=" form-group">
+        <div class="form-group">
             <label for="author">Auteur :</label>
-            <input id="author" name="author" class="form-control" type="text">
+            <input id="author" name="author" class="form-control" type="text" placeholder="Auteur">
         </div>
 
-
-        <button name="addQuote" class="btn btn-default">Ajouter une citation</button>
+        <input type="submit" name="addQuote" class="btn btn-default" value="Ajouter une citation" />
     </form>
 
 
+
 <?php $this->stop('main_content') ?>
+<?php $this->start('js') ?>
+    <script src="<?php echo $this->assetUrl('scripts/quoteForm.js'); ?>"></script>
+<?php $this->stop('js'); ?>

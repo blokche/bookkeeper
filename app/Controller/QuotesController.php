@@ -17,83 +17,103 @@ class QuotesController extends Controller
     private $book;
     //private $user;
 
-
     private $errors = [];
     private $message = [];
 
-
     public function __construct()
     {
+        $this->allowTo(['user', 'admin']);
         $this->book = new BookModel();
-        $this->book->setTable('books');
         $this->quote = new QuoteModel();
-        $this->quote->setTable("quotes");
         //$this->user = new UserModel();
-
     }
 
-
-
-
-
-    // Quotes
+    // QUOTES
 
     /**
      * Récupérer les citations
-     * @param int $page
      */
-    public function allQuotes ($page = 1) {
 
-        $this->allowTo(['user','admin']);
-
-        $nb_quote_page=10;
-        $offset=$page*$nb_quote_page;
-        $quotes=$this->quote->findAll("id",'ASC',$nb_quote_page,$offset);
+    public function allQuotes ()
+    {
+        $currentUser = $this->getUser();
+        $quotes = $this->quote->quotesByUser($currentUser['id']);
         $this->show("quote/quote",['quotes' => $quotes]);
     }
-
 
     /**
      * Ajouter une citation
      */
-    public function addQuote () {
+    public function addQuote ()
+    {
+        $currentUser = $this->getUser();
+        $books = $this->book->getBooksInReadingList($currentUser['id']);
 
-        $this->allowTo(['user','admin']);
-
-        $books=$this->book->findAll();
-
-        var_dump($books);
-
-        if (isset($_POST['addQuote'])){
-            if (!empty($_POST['content']) && !empty($_POST['author'])) {
+        // Methode POST
+        if (isset($_POST['addQuote']))
+        {
+            if (!empty($_POST['content']))
+            {
                 $content = trim($_POST['content']);
-                $author = trim($_POST['author']);
-                $bookID=trim($_POST['book']);
-                if($bookID!=-1){
-                    $author=$this->book->find($bookID)['author'];
+
+
+                /* ID du livre =  */
+                if ($_POST['linkedbook'] != 0)
+                {
+                    $book_id = $_POST['linkedbook'];
+                } else {
+                    $book_id = null;
                 }
 
-                $this->quote->insert(
-                    [
-                        'user_id'   => $_SESSION['user']['id'],
-                        'book_id'   => $bookID,
-                        'content'   => $content,
-                        'author'    => $author
-                    ]
-                );
+                /* Auteur = anonyme par défaut. Si le champ auteur non vide, on redéfinit.
+                   Si associé à un livre, on prend cette valeur en compte */
 
-                $this->redirectToRoute("profile.quote", ['page' => 0]);
+                $author = "Anonyme";
+
+                if (!empty(trim($_POST['author'])))
+                {
+                    $author = trim($_POST['author']);
+                } else if ($_POST['linkedbook'] != "0")
+                {
+                    $author = $this->book->find($_POST['linkedbook'])['author'];
+                }
+
+                if ($book_id !== null) {
+                    $result = $this->quote->insert(
+                        [
+                            'user_id'   => $currentUser['id'],
+                            'book_id'   =>  $book_id,
+                            'content'   => $content,
+                            'author'    => $author
+                        ]
+                    );
+                } else {
+                    $result = $this->quote->insert(
+                        [
+                            'user_id'   => $currentUser['id'],
+                            'content'   => $content,
+                            'author'    => $author
+                        ]
+                    );
+                }
+
+                if ($result) {
+                    $_SESSION['message'] = ['type' => 'success', 'message' => 'Ajout de l\'extrait, de la citation effectué avec succès'];
+                    $this->redirectToRoute("profile.quote", ['page' => 0]);
+                } else {
+                    $_SESSION['message'] = ['type' => 'warning', 'message' => 'Une erreur est survenue lors de l\'ajout.'];
+                }
+
             } else {
-                $this->errors['add-quote'] = "l'auteur ou le contenue sont vide.";
-                $_SESSION['add-quote'] = $this->errors['add-quote'];
-                $this->show("quote/add-quote",['books' => $books]);
+                // Cas du champ contenu vide
+                $_SESSION['message'] = ['type' =>'warning', 'Le message ainsi que l\'auteur ne peuvent être vides'];
+                $this->show("quote/add-quote", ['books' => $books]);
             }
+        } else {
+            // Méthode GET
+            $this->show("quote/add-quote",['books' => $books]);
         }
-
-        $this->show("quote/add-quote",['books' => $books]);
     }
-
-
 
     /**
      * Editer une citation
@@ -101,48 +121,75 @@ class QuotesController extends Controller
      */
     public function editQuote ($quoteid) {
 
-        $this->allowTo(['user','admin']);
+        $quote = $this->quote->find($quoteid);
 
-        $quoteid=trim(strip_tags($quoteid));
+        // Si la quote existe en BDD
+        if ($quote)
+        {
+            $currentUser = $this->getUser();
+            $books = $this->book->getBooksInReadingList($currentUser['id']);
 
-        if (isset($_POST['editQuote'])){
+            // Méthode POST
+            if (isset($_POST['editQuote']))
+            {
+                //var_dump($_POST);
 
-            if (!empty($_POST['content'])&& !empty($_POST['author'])){
-                $content=trim($_POST['content']);
-                $author=trim($_POST['author']);
-                $bookID=trim($_POST['book']);
-                if($bookID!=-1){
-                    $author=$this->book->find($bookID)['author'];
+                if ( !empty($_POST['content']) )
+                {
+                    $author = 'Anonyme';
+
+                    if ( !empty(trim($_POST['author'])) ) {
+                        $author = trim($_POST['author']);
+                    } elseif ($_POST['linkedbook'] > 0) {
+                        $author = $this->book->find($_POST['linkedbook'])['author'];
+                    }
+
+                    $content = trim($_POST['content']);
+
+                    // Date de la modification
+                    $date = new \DateTime();
+                    $date = $date->format("Y-m-d H:i:s");
+
+
+                    $book_id = -1;
+                    if ($_POST['linkedbook'] != "0")
+                    {
+                        $book_id = $_POST['linkedbook'];
+                    }
+
+                    $retour = $this->quote->update(
+                        [
+                            'book_id'       => $book_id,
+                            'content'       => $content,
+                            'author'        => $author,
+                            'updated_at'    => $date
+                        ],
+                        $quoteid);
+
+                    if ($retour)
+                    {
+                        $_SESSION['message'] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+                        $this->redirectToRoute("profile.quote");
+                    } else {
+                        $_SESSION['message'] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+                        $this->show("quote/edit-quote", ['id' => $quoteid]);
+                    }
                 }
-
-                $date=new \DateTime();
-                $date=$date->format("Y-m-d H:i:s");
-
-                $this->quote->update(
-                    [
-                        'book_id'       => $bookID,
-                        'content'       => $content,
-                        'author'        => $author,
-                        'updated_at'    => $date
-                    ],
-                    $quoteid);
-                $this->redirectToRoute("profile.quote",['page'=> 0]);
+                else {
+                    $_SESSION['message'] = ['type' => 'warning', 'message' => 'La citation, l\extrait ne pas pas être vide.'];
+                    $this->show("quote/edit-quote", ['quoteid'=>$quoteid]);
+                }
+            } else {
+                // Méthode GET
+                $this->show("quote/edit-quote",['quote'=> $quote,'books'=>$books]);
             }
-            else{
-                $this->errors['edit-quote']="l'author ou le contenue sont vide.";
-                $_SESSION['edit-quote']=$this->errors['edit-quote'];
-                $this->show("quote/edit-quote",['quoteid'=>$quoteid]);
-            }
+
+        } else {
+            // Redirection si la quote n'existe pas
+            $this->showNotFound();
         }
 
-        $quote=$this->quote->find($quoteid);
-
-        //var_dump($quote);
-        $books=$this->book->findAll();
-        $this->show("quote/edit-quote",['quote'=> $quote,'books'=>$books]);
     }
-
-
 
     /**
      * Supprimer une citation
@@ -150,21 +197,15 @@ class QuotesController extends Controller
      */
     public function deleteQuote ($quoteid) {
 
-        $this->allowTo(['user','admin']);
-
-        $quote=$this->quote->find($quoteid);
+        $quote = $this->quote->find($quoteid);
 
         if ($quote) {
-
             $this->quote->delete($quoteid);
-            $this->message['toggleRead']="La citation a bien été supprimé";
-            $_SESSION['message']=$this->message['toggleRead'];
+            $_SESSION['message'] = ['type' => "success", 'message' => 'Suppression de la citation, de l\'extrait effectué avec succès.'];
         } else {
-
-            $this->errors['toggleRead']="La citation n'existe pas";
-            $_SESSION['errors']=$this->errors['toggleRead'];
+            $this->redirectToRoute('profile.quote');
         }
 
-        $this->redirectToRoute("profile.quote",['page'=> 0]);
+        $this->redirectToRoute("profile.quote");
     }
 }

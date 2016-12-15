@@ -1,5 +1,7 @@
 <?php
-	
+
+define('__ROOT__', dirname(__DIR__) );
+
 	$w_routes = array(
 
 		// Public
@@ -64,7 +66,7 @@
 
 
 		//QuoteController
-		['GET', '/profile/quote/page/[i:page]', 'QuotesController#allQuotes', 'profile.quote'],
+		['GET', '/profile/quote', 'QuotesController#allQuotes', 'profile.quote'],
 		['GET|POST', '/profile/quote/add', 'QuotesController#addQuote', 'profile.quote.add'],
 		['GET|POST', '/profile/quote/[i:id]/edit', 'QuotesController#editQuote', 'profile.quote.edit'],
 		['POST', '/profile/quote/[i:id]/delete', 'QuotesController#deleteQuote', 'profile.quote.delete'],
@@ -72,3 +74,4 @@
 
 
 	);
+

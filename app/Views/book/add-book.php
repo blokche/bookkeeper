@@ -4,12 +4,7 @@
     <pre>
 <?php $this->start('main_content');
 
-
-
-//var_dump($_SESSION);
-?>
-    </pre>
-    <form action="<?php $this->url('profile.book.add') ?>" method="POST" >
+<form action="<?php $this->url('profile.book.add') ?>" method="POST" enctype="multipart/form-data">
 
     <div class=" form-group">
         <label for="title">Titre :</label>
@@ -18,14 +13,14 @@
 
 
     <div class=" form-group">
-        <label for="cover">Auteur :</label>
-        <input id="cover" name="cover" class="form-control" type="text">
+        <label for="author">Auteur :</label>
+        <input id="author" name="author" class="form-control" type="text">
     </div>
 
 
     <div class=" form-group">
-        <label for="author">Couverture :</label>
-        <input id="author" name="author" class="form-control" type="text">
+        <label for="cover">Couverture :</label>
+        <input id="cover" name="cover" class="form-control" type="file">
     </div>
 
     <div class="radio">
@@ -43,6 +38,11 @@
     <button name="addBook" class="btn btn-default">Ajouter un livre</button>
 </form>
 
+    <ul>
+<?php foreach($message as $error){ ?>
 
+            <li><?= $error ?></li>
+  <?php  } ?>
+    </ul>
 
 <?php $this->stop('main_content') ?>

@@ -7,9 +7,7 @@ use Model\BookModel;
 use W\Security\AuthentificationModel;
 
 
-
-
 class BooksController extends Controller
 {
-
+  
 }
