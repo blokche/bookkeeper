@@ -42,33 +42,27 @@ class BooksController extends Controller
             $this->show("book/reading-list",['errors' => $this->errors]);
         }
     }
-
-    
-    
     
     /**
      * Ajouter un livre
      */
     public function addBook ()
     {
+        $this->allowTo(['user','admin']);
         $user = $this->auth->getLoggedUser();
 
         $message = [];
 
         if (isset($_POST['addBook'])) {
-
-
-
             if (!empty($_POST['title']) && !empty($_POST['author'])) {
                 $title = trim($_POST['title']);
                 $author = trim($_POST['author']);
 
-                //$name = strstr($_FILES['cover']['name'], '.', true);
-                $name = (!empty($_FILES['cover']['name'])) ? strstr($_FILES['cover']['name'], '.', true) : 'default.png';
+                // Enregistrement de la couverture
+                $name = (!empty($_FILES['cover']['name'])) ? strtolower(strstr($_FILES['cover']['name'], '.', true)) : 'default.png';
                 $type = (!empty($_FILES['cover']['name'])) ? str_replace("/",".",strstr($_FILES['cover']['type'], '/')):'';
                 $timestamp = (!empty($_FILES['cover']['name'])) ? "-".time() : '';
-                $cover = $name.$timestamp.$type;
-
+                $cover = 'default.png';
                if (isset($_FILES['cover']['type']) && !empty($_FILES['cover']['name'])) {
                     $extentions = ["image/png", "image/gif", "image/jpg", "image/jpeg"];
                      if (in_array($_FILES['cover']['type'], $extentions)) {
@@ -76,10 +70,15 @@ class BooksController extends Controller
                              mkdir(__ROOT__. "/public/upload/cover", 0755, true);
                          }
                          move_uploaded_file($_FILES['cover']['tmp_name'], __ROOT__ . "/public/upload/cover/" . $name.$timestamp.$type);
+                         $cover = $name.$timestamp.$type;
                      } else {
-                         $message[] = "Extention invalide !";
+                         $this->message[]=['type' =>'warning', 'message' => "Extention invalide ! La couverture du livre n'est pas enregistrer"];
+                         $_SESSION['message'] = $this->message;
+                         $cover = 'default.png';
+                         //$message[] = "Extention invalide !";
                      }
                }
+                // Innsettion dans la base donnée
                 $newBook=$this->book->insert(
                     [
                         'title'   => $title,
@@ -89,37 +88,34 @@ class BooksController extends Controller
                         'cover' => $cover,
                     ]
                 );
-                $message[] = "Le livre a bien été ajouté à votre de liste de lecture";
+                $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
+                $_SESSION['message'] = $this->message;
 
                 if (isset($_POST['optionsRadios'])) {
-
                     $read_status=$_POST['optionsRadios'];
-                    
                     $retour = $this->book->addToReadingList($newBook['id'], $read_status);
-
                     if ($retour) {
-                        $message[] = "Le livre a bien été ajouté à votre de liste de lecture";
+                        $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
+                        $_SESSION['message'] = $this->message;
                     } else {
-                        $message[] = "Une erreur s'est produite, veuillez ré-essayér";
+                        $this->message[]=['type' =>'warning', 'message' => "Une erreur s'est produite, veuillez ré-essayér"];
+                        $_SESSION['message'] = $this->message;
                     }
                 }
-
             } else {
+                $this->message[]=['type' =>'warning', 'message' => "l'auteur ou le contenue sont vide."];
+                $_SESSION['message'] = $this->message;
 
-                $message[] = "l'auteur ou le contenue sont vide.";
+            
 
                 $this->show("book/add-book");
             }
         }
 
-        $this->show("book/add-book", ['message' => $message]);
+        $this->show("book/add-book");
 
     }
 
-
-
-    
-    
     /**
      * Supprimer un livre de sa liste de lecture
      * @param $bookid

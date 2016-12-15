@@ -59,10 +59,12 @@ class ProfileController extends Controller
                     if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                         $post['email'] = strip_tags(trim($_POST['email']));
                     } else {
-                        $message[] = "Le nouvel email n'est pas valide";
+                        $this->message[]=['type' =>'warning', 'message' => "Le nouvel email n'est pas valide"];
+                        $_SESSION['message'] = $this->message;
                     }
                 } else {
-                    $message[] = "L'email est invalide ou non disponible. Merci de changer de mot de passe.";
+                    $this->message[]=['type' =>'warning', 'message' => "L'email est invalide ou non disponible. Merci de changer de mot de passe."];
+                    $_SESSION['message'] = $this->message;
                 }
             }
             // Upload Speudo
@@ -81,7 +83,8 @@ class ProfileController extends Controller
                     $post['avatar'] = str_replace("/",".",strstr($_FILES['avatar']['type'], '/'));
                     move_uploaded_file($_FILES['avatar']['tmp_name'], __ROOT__ . "/public/upload/avatar/" . $user['id'].$post['avatar']);
                 } else {
-                    $message[] = "Extention invalide !";
+                    $this->message[]=['type' =>'warning', 'message' => "Extention invalide !"];
+                    $_SESSION['message'] = $this->message;
                 }
             }
 
@@ -90,7 +93,8 @@ class ProfileController extends Controller
                 if (($_POST['newPassword'] == $_POST['newPassword-cf'])) {
                     $post['password'] = password_hash(strip_tags(trim($_POST['newPassword'])), PASSWORD_DEFAULT);
                 } else {
-                    $message[]= "Le nouveau mot de passe et la confirmation du mot de passe ne correspondent pas.";
+                    $this->message[]=['type' =>'warning', 'message' => "Le nouveau mot de passe et la confirmation du mot de passe ne correspondent pas."];
+                    $_SESSION['message'] = $this->message;
                 }
             }
 
@@ -102,11 +106,12 @@ class ProfileController extends Controller
                     $message[] = "Le profil a été mis à jour.";
                 }
             } else {
-                $message[]= "Le mot de passe ne correspond pas à l'email.";
+                $this->message[]=['type' =>'warning', 'message' => "Le mot de passe ne correspond pas à l'email."];
+                $_SESSION['message'] = $this->message;
             }
 
         }
-        $this->show('profile/edit', ['message' => $message]);
+        $this->show('profile/edit');
     }
 
 
