@@ -11,7 +11,7 @@
 		<header>
 			<h1>W :: <?= $this->e($title) ?></h1>
 		</header>
-
+		
 		<section>
 			<?= $this->section('main_content') ?>
 		</section>

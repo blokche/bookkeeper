@@ -15,7 +15,6 @@ class ProfileController extends Controller
     private $auth;
     private $user;
     private $book;
-    private $errors = [];
     private $message = [];
 
     public function __construct()

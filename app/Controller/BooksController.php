@@ -9,5 +9,5 @@ use W\Security\AuthentificationModel;
 
 class BooksController extends Controller
 {
-  
+
 }
