@@ -235,6 +235,7 @@ class ProfileController extends Controller
                         $this->message[]=['type' =>'warning', 'message' => "Une erreur s'est produite, veuillez ré-essayer"];
                         $_SESSION['message'] = $this->message;
                     }
+
                 }
 
                 $_SESSION['message'] = $this->message;
@@ -242,8 +243,9 @@ class ProfileController extends Controller
             } else {
                 $this->message[]=['type' =>'warning', 'message' => "l'auteur ou le contenue sont vide."];
                 $_SESSION['message'] = $this->message;
-                $this->show("book/add-book");
             }
+            
+            $this->show("book/add-book");
         }
 
         $this->show("book/add-book");
@@ -261,7 +263,7 @@ class ProfileController extends Controller
             $_SESSION['message'] = $this->message;
         }
 
-        $this->redirectToRoute("public.view",['id' => $id]);
+        $this->redirectToRoute("profile.book",['page'=> 0]);
     }
     
 
@@ -289,14 +291,13 @@ class ProfileController extends Controller
                 $_SESSION['message']=$this->message;
             }
 
-            $this->redirectToRoute("public.view",['id'=> $id]);
         } else {
 
             $this->message [] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
-            $this->redirectToRoute("profile.book",['page'=> 0]);
         }
 
+        $this->redirectToRoute("profile.book",['page'=> 0]);
     }
 
 
@@ -323,16 +324,12 @@ class ProfileController extends Controller
                 $_SESSION['message']=$this->message;
             }
 
-            $this->redirectToRoute("public.view",['id'=> $id]);
-
         } else {
-            
+
             $this->message [] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
-            $this->redirectToRoute("profile.book",['page'=> 0]);
         }
 
+        $this->redirectToRoute("profile.book",['page'=> 0]);
     }
-
-
 }

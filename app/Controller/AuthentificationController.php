@@ -260,7 +260,7 @@ class AuthentificationController extends Controller
 
                     $id=strip_tags($_POST['id']);
                     $this->user->update(['password' => $this->auth->hashPassword($_POST['password']), 'token' => null],$id);
-                    $this->message = ['type' => 'success', 'message' => "Le mot de passe a bien été mis a jour ."];
+                    $this->message [] = ['type' => 'success', 'message' => "Le mot de passe a bien été mis a jour ."];
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('profile.home');
                 } else {
