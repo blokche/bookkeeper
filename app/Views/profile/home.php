@@ -15,8 +15,6 @@
             </div>
         </div>
 
-
-
         <div class="titre-liste row">
             <h2>Liste des livres lus:</h2>
         </div>
@@ -36,7 +34,6 @@
 
             <?php } ?>
         </div>
-
 
         <div class="titre-liste row">
             <h2>Liste des livres à lire:</h2>

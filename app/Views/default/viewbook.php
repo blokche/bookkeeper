@@ -4,11 +4,6 @@ $this->layout('layout', ['title' => $book['title']]) ;
 
 $this->start('main_content');
 
-//var_dump($book);
-
-//var_dump($ReadingList);
-
-
 $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
 
     <img src="<?php echo $this->assetUrl('/../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">

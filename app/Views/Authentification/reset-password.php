@@ -1,15 +1,6 @@
 <?php $this->layout('layout', ['title' => 'Reset Password']) ?>
 
 <?php $this->start('main_content') ?>
-    <h1></h1>
-    <?php
-
-    var_dump($_SESSION['errors']);
-    var_dump($_SESSION['message']);
-    unset($_SESSION['errors']);
-    unset($_SESSION['message']);
-
-?>
 
     <form action="<?= $this->url('auth.resetpassword') ?>" method="POST">
         
