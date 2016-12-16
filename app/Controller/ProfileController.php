@@ -19,6 +19,7 @@ class ProfileController extends Controller
 
     public function __construct()
     {
+        $this->allowTo(['user','admin']);
         $this->auth = new AuthentificationModel();
         $this->user = new UserModel();
         $this->book = new BookModel();
@@ -31,15 +32,13 @@ class ProfileController extends Controller
      * 
      */
     public function index () {
-        $this->allowTo(['user','admin']);
         $user = $this->getUser();
         $userModel = new UserModel();
         $avatar = (!empty($user['avatar'])) ? $user['id'].$user['avatar'] : 'default.png';
-        $bookRead = $userModel->userReadBook($user['id'], 1, 5);
-        $bookNoRead = $userModel->userReadBook($user['id'], 0 , 5);
 
-       //$coverRead = (!empty($bookRead['cover'])) ? $bookRead['cover'] : 'default.jpg';
-        //$coverNoRead = (!empty($bookNoRead['cover'])) ? $bookNoRead['cover'] : 'default.jpg';
+        $bookRead = $userModel->userReadBook($user['id'], 1, 6);
+        $bookNoRead = $userModel->userReadBook($user['id'], 0 , 6);
+
         $this->show('profile/home', ['avatar' => $avatar, 'bookRead' => $bookRead, 'bookNoRead' => $bookNoRead]);
     }
 
@@ -48,7 +47,6 @@ class ProfileController extends Controller
      */
     public function editProfile ()
     {
-        $this->allowTo(['user','admin']);
         $user = $this->getUser();
         $message =[];
         $authmodel = new AuthentificationModel();
@@ -124,18 +122,19 @@ class ProfileController extends Controller
      */
     public function deleteProfile () {
 
-        $this->allowTo(['user','admin']);
-
         if (isset($_SESSION['id'])) {
+
             if ($this->user->delete($_SESSION['id'])) {
+
                 $this->auth->logUserOut();
-                $this->message['delete-profil']="Votre profil a bien eté supprimé.";
-                $_SESSION['message']=$this->message['delete-profil'];
+                $this->message[] = ['type' => 'success', 'message' => "Votre profil a bien eté supprimé."];
+                $_SESSION['message']=$this->message;
                 $this->redirectToRoute('home');
             }
             else{
-                $this->errors['delete-profil']="Une erreur s'est produite, veuillez re-essayéer.";
-                $_SESSION['errors']=$this->errors['delete-profil'];
+
+                $this->message[] = ['type' => 'warning', 'message' => "Une erreur pendant la suppresion s'est produite, veuillez re-essayéer"];
+                $_SESSION['message']=$this->message;
                 $this->redirectToRoute('profile.home');
             }
         }
@@ -149,7 +148,6 @@ class ProfileController extends Controller
      */
     public function viewBooks ($page = 0) {
         
-        $this->allowTo(['user','admin']);
         $limit='10';
 
         $offset=$page*$limit;
@@ -262,8 +260,6 @@ class ProfileController extends Controller
      */
     public function deleteBook($id) {
 
-        $this->allowTo(['user','admin']);
-
         $rl=$this->book->find($id);
 
         if ($rl) {
@@ -271,18 +267,20 @@ class ProfileController extends Controller
             $retour = $this->user->deleteFromReadingList($id ,$this->getUser());
 
             if ($retour){
-                $this->message['toggleRead']="Le livre a bien été enlevé de votre de liste de lecture";
-                $_SESSION['message']=$this->message['toggleRead'];
+
+                $this->message = ['type' => 'success', 'message' => "Le livre a bien été enlevé de votre de liste de lecture"];
+                $_SESSION['message']=$this->message;
             }else{
-                $this->errors['toggleRead']="Une erreur s'est produite, veuillez ré-essayér";
-                $_SESSION['errors']=$this->errors['toggleRead'];
+
+                $this->message = ['type' => 'warning', 'message' => "Une erreur pendant la suppresion du livre s'est produite, veuillez ré-essayér"];
+                $_SESSION['message']=$this->message;
             }
 
             $this->redirectToRoute("public.view",['id'=> $id]);
         } else {
 
-            $this->errors['toggleRead']="Le livre n'existe pas";
-            $_SESSION['errors']=$this->errors['toggleRead'];
+            $this->message = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
+            $_SESSION['message']=$this->message;
             $this->redirectToRoute("profile.book",['page'=> 0]);
         }
 
@@ -296,8 +294,6 @@ class ProfileController extends Controller
      */
     public function toggleRead ($id, $status) {
 
-        $this->allowTo(['user','admin']);
-
         $rl=$this->book->find($id);
 
         if ($rl) {
@@ -305,19 +301,22 @@ class ProfileController extends Controller
             $retour=$this->user->changeStatut($id, $status ,$this->getUser());
 
             if ($retour){
-                $this->message['toggleRead']="Le statut du livre a bien été changé";
-                $_SESSION['message']=$this->message['toggleRead'];
+
+                $this->message = ['type' => 'success', 'message' => "Le statut du livre a bien été changé"];
+                $_SESSION['message']=$this->message;
                 $this->redirectToRoute('profile.book', ['page' => 0]);
             }else{
-                $this->errors['toggleRead']="Une erreur s'est produite, veuillez ré-essayér";
-                $_SESSION['errors']=$this->errors['toggleRead'];
+
+                $this->message = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez réessayer"];
+                $_SESSION['message']=$this->message;
             }
 
             $this->redirectToRoute("public.view",['id'=> $id]);
 
         } else {
-            $this->errors['toggleRead']="Le livre n'existe pas";
-            $_SESSION['errors']=$this->errors['toggleRead'];
+            
+            $this->message = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
+            $_SESSION['message']=$this->message;
             $this->redirectToRoute("profile.book",['page'=> 0]);
         }
 

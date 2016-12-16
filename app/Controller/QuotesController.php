@@ -5,9 +5,6 @@ namespace Controller;
 use W\Controller\Controller;
 use Model\QuoteModel;
 use Model\BookModel;
-use Model\UserModel;
-
-
 
 
 
@@ -15,9 +12,7 @@ class QuotesController extends Controller
 {
     private $quote;
     private $book;
-    //private $user;
 
-    private $errors = [];
     private $message = [];
 
     public function __construct()
@@ -25,7 +20,6 @@ class QuotesController extends Controller
         $this->allowTo(['user', 'admin']);
         $this->book = new BookModel();
         $this->quote = new QuoteModel();
-        //$this->user = new UserModel();
     }
 
     // QUOTES
@@ -38,7 +32,7 @@ class QuotesController extends Controller
     {
         $currentUser = $this->getUser();
         $quotes = $this->quote->quotesByUser($currentUser['id']);
-        $this->show("quote/quote",['quotes' => $quotes]);
+        $this->show("quote/quote", ['quotes' => $quotes]);
     }
 
     /**
@@ -73,7 +67,7 @@ class QuotesController extends Controller
                 if (!empty(trim($_POST['author'])))
                 {
                     $author = trim($_POST['author']);
-                } else if ($_POST['linkedbook'] != "0")
+                } else if ($_POST['linkedbook'] > 0)
                 {
                     $author = $this->book->find($_POST['linkedbook'])['author'];
                 }
@@ -98,15 +92,20 @@ class QuotesController extends Controller
                 }
 
                 if ($result) {
-                    $_SESSION['message'] = ['type' => 'success', 'message' => 'Ajout de l\'extrait, de la citation effectué avec succès'];
+
+                    $this->message[] = ['type' => 'success', 'message' => 'Ajout de l\'extrait, de la citation effectué avec succès'];
+                    $_SESSION['message']=$this->message;
                     $this->redirectToRoute("profile.quote", ['page' => 0]);
                 } else {
-                    $_SESSION['message'] = ['type' => 'warning', 'message' => 'Une erreur est survenue lors de l\'ajout.'];
+
+                    $this->message[] = ['type' => 'warning', 'message' => 'Une erreur est survenue lors de l\'ajout.'];
+                    $_SESSION['message']=$this->message;
                 }
 
             } else {
                 // Cas du champ contenu vide
-                $_SESSION['message'] = ['type' =>'warning', 'Le message ainsi que l\'auteur ne peuvent être vides'];
+                $this->message[] = ['type' =>'warning', 'Le message ainsi que l\'auteur ne peuvent être vides'];
+                $_SESSION['message']=$this->message;
                 $this->show("quote/add-quote", ['books' => $books]);
             }
         } else {
@@ -132,7 +131,6 @@ class QuotesController extends Controller
             // Méthode POST
             if (isset($_POST['editQuote']))
             {
-                //var_dump($_POST);
 
                 if ( !empty($_POST['content']) )
                 {
@@ -140,7 +138,7 @@ class QuotesController extends Controller
 
                     if ( !empty(trim($_POST['author'])) ) {
                         $author = trim($_POST['author']);
-                    } elseif ($_POST['linkedbook'] > 0) {
+                    } elseif ( (int) $_POST['linkedbook'] > 0) {
                         $author = $this->book->find($_POST['linkedbook'])['author'];
                     }
 
@@ -152,7 +150,7 @@ class QuotesController extends Controller
 
 
                     $book_id = -1;
-                    if ($_POST['linkedbook'] != "0")
+                    if ($_POST['linkedbook'] > 0)
                     {
                         $book_id = $_POST['linkedbook'];
                     }
@@ -168,15 +166,19 @@ class QuotesController extends Controller
 
                     if ($retour)
                     {
-                        $_SESSION['message'] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+                        $this->message[] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+                        $_SESSION['message']=$this->message;
                         $this->redirectToRoute("profile.quote");
                     } else {
-                        $_SESSION['message'] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+
+                        $this->message[] = ['type' => 'success', 'message' => 'Citation / extrait modifié avec succès.'];
+                        $_SESSION['message']=$this->message;
                         $this->show("quote/edit-quote", ['id' => $quoteid]);
                     }
                 }
                 else {
-                    $_SESSION['message'] = ['type' => 'warning', 'message' => 'La citation, l\extrait ne pas pas être vide.'];
+                    $this->message[] = ['type' => 'warning', 'message' => 'La citation, l\extrait ne pas pas être vide.'];
+                    $_SESSION['message']=$this->message;
                     $this->show("quote/edit-quote", ['quoteid'=>$quoteid]);
                 }
             } else {
@@ -200,9 +202,12 @@ class QuotesController extends Controller
         $quote = $this->quote->find($quoteid);
 
         if ($quote) {
+
             $this->quote->delete($quoteid);
-            $_SESSION['message'] = ['type' => "success", 'message' => 'Suppression de la citation, de l\'extrait effectué avec succès.'];
+            $this->message[] = ['type' => "success", 'message' => 'Suppression de la citation, de l\'extrait effectué avec succès.'];
+            $_SESSION['message']=$this->message;
         } else {
+            
             $this->redirectToRoute('profile.quote');
         }
 

@@ -1,8 +1,7 @@
-<?php $this->layout('layout', ['title' => 'Ajouter un livre 
-']) ?>
+<?php $this->layout('layout', ['title' => 'Ajouter un livre ']) ?>
 
     <pre>
-<?php $this->start('main_content');
+<?php $this->start('main_content'); ?>
 
 <form action="<?php $this->url('profile.book.add') ?>" method="POST" enctype="multipart/form-data">
 

@@ -22,7 +22,6 @@ class DefaultController extends Controller
 		$this->book = new BookModel();
 		$this->book->setTable('books');
 		$this->auth = new AuthentificationModel();
-
 	}
 
 	/**
@@ -30,9 +29,11 @@ class DefaultController extends Controller
 	 */
 	public function home()
 	{
-		$this->show('default/home');
+		$books = $this->book->findAll('id', "DESC", 10);
+		$this->show('default/home', ['books' => $books]);
 	}
 
+	
 	/**
 	 * Récupérer la liste des livres
 	 * @param int $page
@@ -60,6 +61,7 @@ class DefaultController extends Controller
 
 	}
 
+	
 	/**
 	 * Voir la fiche d'un livre
 	 * @param $id
@@ -83,7 +85,13 @@ class DefaultController extends Controller
 
 		if ($book) {
 
-			$this->show('default/viewbook.php', ['book' => $book,'ReadingList' => $ReadingList]);
+			if ($user) {
+
+				$this->show('default/viewbook.php', ['book' => $book, 'ReadingList' => $ReadingList]);
+			} else {
+
+				$this->show('default/viewbook.php', ['book' => $book]);
+			}
 		} else {
 
 			$this->showNotFound();
