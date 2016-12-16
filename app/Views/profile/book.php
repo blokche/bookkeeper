@@ -21,7 +21,7 @@
                     </a>
 
                     <a href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-default"  >Enlever de ma liste de lecture</a>
-                    <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 1]) ?>  " class="btn btn-default"  >Marquer comme non lue</a>
+                    <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 0]) ?>  " class="btn btn-default"  >Marquer comme non lue</a>
 
                 </div>
             <?php } ?>
@@ -46,7 +46,7 @@
                 </a>
 
                 <a href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-default"  >Enlever de ma liste de lecture</a>
-                <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 0]) ?>  " class="btn btn-default"  >Marquer comme non lu</a>
+                <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 1]) ?>  " class="btn btn-default"  >Marquer comme lu</a>
 
                 </div>
             <?php } ?>
