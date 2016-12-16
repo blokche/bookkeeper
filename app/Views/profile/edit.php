@@ -30,16 +30,15 @@
         <button name="editUsers" class="btn btn-default">Modifier mon profil</button>
     </form>
 
-<?php foreach ($message as $error){ ?>
-    <ul>
-        <li><?= $error ?></li>
-    </ul>
-<?php } ?>
+<?php if(isset($_SESSION['message'])):?>
+    <?php  foreach ($_SESSION['message'] as $message) : ?>
+        <p class="<?php echo $message['type'] ?> "> <?php echo $message['message'] ?></p>
+    <?php endforeach; ?>
+    <?php unset($_SESSION['message']) ?>
+<?php endif; ?>
 
 <div><a href="<?php echo $this->url('profile.home') ?>">Retour au profil</a></div>
 
 <?php $this->stop('main_content') ?>
 
-<?php $this->start('js') ?>
-<script src="<?php echo $this->assetUrl('scripts/quoteForm.js'); ?>"></script>
-<?php $this->stop('js'); ?>
+

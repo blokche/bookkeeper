@@ -12,7 +12,7 @@
 <ul>
 <?php
 foreach ($bookRead as $book){ ?>
-    <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
+    <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.png';?>
         <li><img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>"> <?php echo $book['title'] ?> <?php echo $book['author'] ?></li>
 <?php } ?>
 </ul>

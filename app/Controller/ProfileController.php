@@ -15,7 +15,6 @@ class ProfileController extends Controller
     private $auth;
     private $user;
     private $book;
-    private $errors = [];
     private $message = [];
 
     public function __construct()
@@ -25,6 +24,7 @@ class ProfileController extends Controller
         $this->book = new BookModel();
         $this->book->setTable("books");
     }
+
 
 
     /**
@@ -62,10 +62,12 @@ class ProfileController extends Controller
                     if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                         $post['email'] = strip_tags(trim($_POST['email']));
                     } else {
-                        $message[] = "Le nouvel email n'est pas valide";
+                        $this->message[]=['type' =>'warning', 'message' => "Le nouvel email n'est pas valide"];
+                        $_SESSION['message'] = $this->message;
                     }
                 } else {
-                    $message[] = "L'email est invalide ou non disponible. Merci de changer de mot de passe.";
+                    $this->message[]=['type' =>'warning', 'message' => "L'email est invalide ou non disponible. Merci de changer de mot de passe."];
+                    $_SESSION['message'] = $this->message;
                 }
             }
             // Upload Speudo
@@ -84,7 +86,8 @@ class ProfileController extends Controller
                     $post['avatar'] = str_replace("/",".",strstr($_FILES['avatar']['type'], '/'));
                     move_uploaded_file($_FILES['avatar']['tmp_name'], __ROOT__ . "/public/upload/avatar/" . $user['id'].$post['avatar']);
                 } else {
-                    $message[] = "Extention invalide !";
+                    $this->message[]=['type' =>'warning', 'message' => "Extention invalide !"];
+                    $_SESSION['message'] = $this->message;
                 }
             }
 
@@ -93,7 +96,8 @@ class ProfileController extends Controller
                 if (($_POST['newPassword'] == $_POST['newPassword-cf'])) {
                     $post['password'] = password_hash(strip_tags(trim($_POST['newPassword'])), PASSWORD_DEFAULT);
                 } else {
-                    $message[]= "Le nouveau mot de passe et la confirmation du mot de passe ne correspondent pas.";
+                    $this->message[]=['type' =>'warning', 'message' => "Le nouveau mot de passe et la confirmation du mot de passe ne correspondent pas."];
+                    $_SESSION['message'] = $this->message;
                 }
             }
 
@@ -105,11 +109,12 @@ class ProfileController extends Controller
                     $message[] = "Le profil a été mis à jour.";
                 }
             } else {
-                $message[]= "Le mot de passe ne correspond pas à l'email.";
+                $this->message[]=['type' =>'warning', 'message' => "Le mot de passe ne correspond pas à l'email."];
+                $_SESSION['message'] = $this->message;
             }
 
         }
-        $this->show('profile/edit', ['message' => $message]);
+        $this->show('profile/edit');
     }
 
 
@@ -167,66 +172,71 @@ class ProfileController extends Controller
 
 
 
-
     /**
      * Ajouter un livre
-     */
+    */
     public function addBook ()
     {
         $this->allowTo(['user','admin']);
+        $user = $this->auth->getLoggedUser();
+
+        $message = [];
 
         if (isset($_POST['addBook'])) {
-
-            if (!empty($_POST['title'])) {
+            if (!empty($_POST['title']) && !empty($_POST['author'])) {
                 $title = trim($_POST['title']);
-                if(isset($_POST['author']))
-                    $author = trim($_POST['author']);
+                $author = trim($_POST['author']);
 
-
-                if (isset($_POST['cover'])) {
-                    $cover = trim($_POST['cover']);
-                }else{
-                    $cover="";
+                // Enregistrement de la couverture
+                $name = (!empty($_FILES['cover']['name'])) ? strtolower(strstr($_FILES['cover']['name'], '.', true)) : 'default.png';
+                $type = (!empty($_FILES['cover']['name'])) ? str_replace("/",".",strstr($_FILES['cover']['type'], '/')):'';
+                $timestamp = (!empty($_FILES['cover']['name'])) ? "-".time() : '';
+                $cover = 'default.png';
+                if (isset($_FILES['cover']['type']) && !empty($_FILES['cover']['name'])) {
+                    $extentions = ["image/png", "image/gif", "image/jpg", "image/jpeg"];
+                    if (in_array($_FILES['cover']['type'], $extentions)) {
+                        if(!is_dir(__ROOT__ . "/public/upload/cover")){
+                            mkdir(__ROOT__. "/public/upload/cover", 0755, true);
+                        }
+                        move_uploaded_file($_FILES['cover']['tmp_name'], __ROOT__ . "/public/upload/cover/" . $name.$timestamp.$type);
+                        $cover = $name.$timestamp.$type;
+                    } else {
+                        $this->message[]=['type' =>'warning', 'message' => "Extention invalide ! La couverture du livre n'est pas enregistrer"];
+                        $_SESSION['message'] = $this->message;
+                        $cover = 'default.png';
+                        //$message[] = "Extention invalide !";
+                    }
                 }
-
-                var_dump($_POST);
-
-
-
+                // Innsettion dans la base donnée
                 $newBook=$this->book->insert(
                     [
                         'title'   => $title,
                         'author'    => $author,
-                        'created_by'   => $_SESSION['user']['id'],
+                        'created_by'   => $user['id'],
                         'status' => 1,
-                        'cover' => $cover
+                        'cover' => $cover,
                     ]
                 );
-
-                var_dump($newBook);
-
+                $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
+                $_SESSION['message'] = $this->message;
 
                 if (isset($_POST['optionsRadios'])) {
-
                     $read_status=$_POST['optionsRadios'];
-
-                    $retour = $this->user->addToReadingList($newBook['id'], $read_status ,$this->getUser());
-
+                    $retour = $this->book->addToReadingList($newBook['id'], $read_status);
                     if ($retour) {
-                        $this->message['toggleRead'] = "Le livre a bien été ajouté à votre de liste de lecture";
-                        $_SESSION['message'] = $this->message['toggleRead'];
+                        $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
+                        $_SESSION['message'] = $this->message;
                     } else {
-                        $this->errors['toggleRead'] = "Une erreur s'est produite, veuillez ré-essayér";
-                        $_SESSION['errors'] = $this->errors['toggleRead'];
+                        $this->message[]=['type' =>'warning', 'message' => "Une erreur s'est produite, veuillez ré-essayér"];
+                        $_SESSION['message'] = $this->message;
                     }
-
-                    $this->redirectToRoute("public.view",['id'=> $newBook['id']]);
                 }
-
             } else {
+                $this->message[]=['type' =>'warning', 'message' => "l'auteur ou le contenue sont vide."];
+                $_SESSION['message'] = $this->message;
 
-                $this->errors['add-book'] = "l'auteur ou le contenue sont vide.";
-                $_SESSION['errors'] = $this->errors['add-book'];
+
+
                 $this->show("book/add-book");
             }
         }
@@ -234,6 +244,9 @@ class ProfileController extends Controller
         $this->show("book/add-book");
 
     }
+
+
+
 
     public function  addBookToReadingList ($id,$status){
         $this->user->addToReadingList($id,$status,$this->getUser());
