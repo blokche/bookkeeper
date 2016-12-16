@@ -254,18 +254,18 @@ class ProfileController extends Controller
 
             if ($retour){
 
-                $this->message = ['type' => 'success', 'message' => "Le livre a bien été enlevé de votre de liste de lecture"];
+                $this->message[] = ['type' => 'success', 'message' => "Le livre a bien été enlevé de votre de liste de lecture"];
                 $_SESSION['message']=$this->message;
             }else{
 
-                $this->message = ['type' => 'warning', 'message' => "Une erreur pendant la suppresion du livre s'est produite, veuillez ré-essayér"];
+                $this->message[] = ['type' => 'warning', 'message' => "Une erreur pendant la suppresion du livre s'est produite, veuillez ré-essayér"];
                 $_SESSION['message']=$this->message;
             }
 
             $this->redirectToRoute("public.view",['id'=> $id]);
         } else {
 
-            $this->message = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
+            $this->message[] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
             $this->redirectToRoute("profile.book",['page'=> 0]);
         }
@@ -288,12 +288,12 @@ class ProfileController extends Controller
 
             if ($retour){
 
-                $this->message = ['type' => 'success', 'message' => "Le statut du livre a bien été changé"];
+                $this->message[] = ['type' => 'success', 'message' => "Le statut du livre a bien été changé"];
                 $_SESSION['message']=$this->message;
                 $this->redirectToRoute('profile.book', ['page' => 0]);
             }else{
 
-                $this->message = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez ré-essayér"];
+                $this->message [] = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez ré-essayér"];
                 $_SESSION['message']=$this->message;
             }
 
@@ -301,7 +301,7 @@ class ProfileController extends Controller
 
         } else {
             
-            $this->message = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
+            $this->message []= ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
             $this->redirectToRoute("profile.book",['page'=> 0]);
         }
