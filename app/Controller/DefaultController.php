@@ -41,7 +41,7 @@ class DefaultController extends Controller
 	public function allBooks($page = 1)
 	{
 
-		$perPage = 2;
+		$perPage = 12;
 
 		$total = count($this->book->findAll());
 		$nbPages = (int) ceil($total / $perPage);

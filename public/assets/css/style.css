@@ -263,7 +263,7 @@ body{
 
 .recent-add{
 	padding: 0 5rem;
-	margin-bottom: 3rem;
+	margin-bottom: 5rem;
 }
 .recent-add table{}
 .recent-add table tr:first-child{
@@ -343,7 +343,7 @@ body{
  |_|    |_|  \_\\____/|_|    |_____|______|
 
 ---------------------------------------*/
-.background-profil{
+.background-profil, .background-book{
 	background-image:  url("https://www.transparenttextures.com/patterns/subtle-dark-vertical.png");
 	padding-bottom: 5rem;
 }
@@ -355,15 +355,17 @@ body{
 }
 .profil img{
 	border-radius: 50%;
+	width: 12rem;
 }
-.titre-liste h1{
+.titre-liste h2{
 	font-weight: 600;
 	font-size: 2.5rem;
 }
 .vignette{
 	padding-bottom: 2.05rem;
 	max-height: 50rem;
-	min-height: 50rem;
+	min-height: 40rem;
+	overflow: hidden;
 }
 
 .vignette:hover{
@@ -379,11 +381,11 @@ body{
 	margin-top: 2rem;
 
 }
-.vignette h1{
+.vignette h3{
 	font-size: 1.5rem;
 	font-weight: 700;
 }
-.vignette h2{
+.vignette h4{
 	font-size: 1.3rem;
 	font-weight: 400;
 }
