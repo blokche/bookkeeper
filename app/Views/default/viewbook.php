@@ -4,7 +4,7 @@ $this->layout('layout', ['title' => $book['title']]) ;
 
 $this->start('main_content');
 
-$cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
+    $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
 
     <img src="<?php echo $this->assetUrl('/../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
     <p>  <?php echo $book['title'] ?>, par <?php echo $book['author'] ?>    </p>

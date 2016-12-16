@@ -92,9 +92,8 @@ class UserModel extends UsersModel {
             $q->bindValue(":book_id", $bookid, \PDO::PARAM_INT);
             $q->bindValue(":user_id", $_SESSION['user']['id'], \PDO::PARAM_INT);
             $q->bindValue(":read_status", $read_status, \PDO::PARAM_INT);
+            return $q->execute();
         }
-
-        return $q->execute();
     }
     
 

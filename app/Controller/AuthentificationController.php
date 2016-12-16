@@ -50,7 +50,7 @@ class AuthentificationController extends Controller
                     $this->redirectToRoute('home');
                 }
             } else{
-                $this->message[]=['type' => 'warning', 'message' => 'L\'email et le mot de passe saisie ne correspondent pas.'];
+                $this->message[]=['type' => 'warning', 'message' => "L'email et le mot de passe saisie ne correspondent pas."];
                 $_SESSION['message']=$this->message;
                 $this->redirectToRoute('home');
             }
@@ -173,6 +173,7 @@ class AuthentificationController extends Controller
                     $this->redirectToRoute('home');
                 }
             } else{
+                $_SESSION['message']=$this->message;
                 $this->show('default/home');
             }
         }
@@ -260,7 +261,7 @@ class AuthentificationController extends Controller
 
                     $id=strip_tags($_POST['id']);
                     $this->user->update(['password' => $this->auth->hashPassword($_POST['password']), 'token' => null],$id);
-                    $this->message = ['type' => 'success', 'message' => "Le mot de passe a bien été mis a jour ."];
+                    $this->message [] = ['type' => 'success', 'message' => "Le mot de passe a bien été mis a jour ."];
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('profile.home');
                 } else {
