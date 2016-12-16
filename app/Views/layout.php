@@ -38,28 +38,28 @@
 	</div>
 
 
-			<div class="container-fluid footer">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-12">
-							<ul>
-								<li><a href="">Webforce</a></li>
-								<li><a href="">A propos</a></li>
-								<li><a href="">L'equipe</a></li>
-								<li><a href="">S’enregistrer</a></li>
-								<li><a href="">Contact</a></li>
-							</ul>
-							<a href=""><img class="logoBookkeeper" src="<?= $this->assetUrl('img/LogoBlancOr1.svg') ?>" alt="LogoBookkeeper"></a>
-							<a href=""><img class="logoWebForce pull-right" src="<?= $this->assetUrl('img/logoWebforce.png') ?>" alt="LogoWebforce"></a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<h4>&copy; Bookkeeper</h4>
-						</div>
-					</div>
+	<div class="container-fluid footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<ul>
+						<li><a href="">Webforce</a></li>
+						<li><a href="">A propos</a></li>
+						<li><a href="">L'equipe</a></li>
+						<li><a href="">S’enregistrer</a></li>
+						<li><a href="">Contact</a></li>
+					</ul>
+					<a href=""><img class="logoBookkeeper" src="<?= $this->assetUrl('img/LogoBlancOr1.svg') ?>" alt="LogoBookkeeper"></a>
+					<a href=""><img class="logoWebForce pull-right" src="<?= $this->assetUrl('img/logoWebforce.png') ?>" alt="LogoWebforce"></a>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h4>&copy; Bookkeeper</h4>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<?php echo $this->section('js'); ?>

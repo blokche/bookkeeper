@@ -4,6 +4,11 @@ $this->start('main_content');?>
 <h1><i class="fa fa-book" aria-hidden="true"></i> Liste des livres</h1>
 <?php if (count($books) > 0) : ?>
     <div id="books">
+        <div class="form-group">
+            <input style="margin-bottom:1em;" class="search form-control" placeholder="Recherche..." />
+            <button class="sort btn btn-default" data-sort="author">Trier par auteur</button>
+            <button class="sort btn btn-default" data-sort="title">Trier par titre</button>
+        </div>
         <table class="table table-responsive table-striped">
             <thead>
             <tr>
@@ -13,7 +18,7 @@ $this->start('main_content');?>
                 <th>Actions</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="list">
             <?php foreach($books as $book) : ?>
                 <tr>
                     <td><?php echo $book['id']; ?></td>
@@ -32,3 +37,15 @@ $this->start('main_content');?>
     <p>Aucun utilisateur.</p>
 <?php endif; ?>
 <?php $this->stop('main_content') ?>
+
+<?php $this->start('js');?>
+<script src="<?php echo $this->assetUrl('vendor/list.js') ?>"></script>
+<script>
+
+    var options = {
+        valueNames: [ 'author', 'title' ]
+    };
+
+    var booksList = new List('books', options);
+</script>
+<?php $this->stop('js') ?>
