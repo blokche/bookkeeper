@@ -15,28 +15,7 @@
             </div>
         </div>
 
-        <div class="titre-liste row">
-            <h1>Liste des livres lus:</h1>
-        </div>
 
-        <div class="row">
-        <?php
-        foreach ($bookRead as $book){ ?>
-                <div class=" vignette col-xs-6 col-sm-4 col-md-2">
-                    <div class="cover">
-                        <img src="<?php echo $book['cover'] ?>" alt="cover de <?php echo $book['title'] ?>">
-                    </div>
-                    <h1><?php echo $book['title'] ?></h1>
-                    <h2><?php echo $book['author'] ?></h2>
-                </div>
-        <?php } ?>
-        </div>
-
-
-
-        <div class="titre-liste row">
-            <h1>Liste des livres à lire:</h1>
-        </div>
 
 <p>Liste des livres lu:</p>
 <ul>
@@ -48,13 +27,7 @@ foreach ($bookRead as $book){ ?>
 </ul>
 
 <p>Liste des livres à lire:</p>
-<ul>
-    <?php
-    foreach ($bookNoRead as $book){ ?>
-        <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
-        <li><img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>"> <?php echo $book['title'] ?> <?php echo $book['author'] ?></li>
-    <?php } ?>
-</ul>
+
 
 
         <div class="row">

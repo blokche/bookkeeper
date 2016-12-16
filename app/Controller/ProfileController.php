@@ -217,6 +217,7 @@ class ProfileController extends Controller
                 );
                 $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
                 $_SESSION['message'] = $this->message;
+                                                                                                                                                                                                                                                                                                                                                         
 
                 if (isset($_POST['optionsRadios'])) {
                     $read_status=$_POST['optionsRadios'];
@@ -224,6 +225,7 @@ class ProfileController extends Controller
                     if ($retour) {
                         $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
                         $_SESSION['message'] = $this->message;
+
                     } else {
                         $this->message[]=['type' =>'warning', 'message' => "Une erreur s'est produite, veuillez ré-essayér"];
                         $_SESSION['message'] = $this->message;
