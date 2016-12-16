@@ -11,7 +11,7 @@ $this->start('main_content');
 
 $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
 
-    <img src="<?php echo $cover ?>" alt="cover de <?php echo $book['title'] ?>">
+    <img src="<?php echo $this->assetUrl('/../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
     <p>  <?php echo $book['title'] ?>, par <?php echo $book['author'] ?>    </p>
 
 
@@ -29,14 +29,14 @@ if ($w_user) {
         if ($ReadingList['read_status'] == 1) {
             ?>
             <a href="  <?php echo $this->url('public.view', ['id' => $ReadingList['book_id'], 'status' => 0]); ?>  "
-               class="btn btn-default">Marquer comme non lue</a>
+               class="btn btn-default">Marquer comme non lu</a>
 
             <?php
 
         } else {
             ?>
             <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 1]) ?>  "
-               class="btn btn-default">Marquer comme lue</a>
+               class="btn btn-default">Marquer comme lu</a>
             <?php
         }
     } else { ?>

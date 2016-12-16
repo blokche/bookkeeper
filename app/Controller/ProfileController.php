@@ -104,7 +104,8 @@ class ProfileController extends Controller
                     // upload + extension en base
                     $userModel->update($post, $user['id'], true);
                     $authmodel->refreshUser();
-                    $message[] = "Le profil a été mis à jour.";
+                    $this->message[]=['type' =>'success', 'message' => "Le profil a été mis à jour."];
+                    $_SESSION['message'] = $this->message;
                 }
             } else {
                 $this->message[]=['type' =>'warning', 'message' => "Le mot de passe ne correspond pas à l'email."];
@@ -215,8 +216,13 @@ class ProfileController extends Controller
                         'cover' => $cover,
                     ]
                 );
-                $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
-                $_SESSION['message'] = $this->message;
+                if ($newBook) {
+                    $this->message[] = ['type' => 'success', 'message' => "Le livre a bien été ajouté"];
+
+                }else{
+                    $this->message[]=['type' =>'warning', 'message' => "Une erreur inconnu s'est produite pendant l'ajout du livre, veuillez ré-essayer."];
+                }
+
 
                 if (isset($_POST['optionsRadios'])) {
                     $read_status=$_POST['optionsRadios'];
@@ -225,16 +231,16 @@ class ProfileController extends Controller
                         $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
                         $_SESSION['message'] = $this->message;
                     } else {
-                        $this->message[]=['type' =>'warning', 'message' => "Une erreur s'est produite, veuillez ré-essayér"];
+                        $this->message[]=['type' =>'warning', 'message' => "Une erreur s'est produite, veuillez ré-essayer"];
                         $_SESSION['message'] = $this->message;
                     }
                 }
+
+                $_SESSION['message'] = $this->message;
+                $this->redirectToRoute('profile.book.add');
             } else {
                 $this->message[]=['type' =>'warning', 'message' => "l'auteur ou le contenue sont vide."];
                 $_SESSION['message'] = $this->message;
-
-
-
                 $this->show("book/add-book");
             }
         }

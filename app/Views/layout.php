@@ -30,12 +30,29 @@
 					</div>
 				</div>
 			</div>
-
+<div class="background-profil">
 	<div class="container-fluid">
 		<section>
+			<div class="container">
+				<div class="row">
+
+					<?php if ( isset($_SESSION['message'])) : ?>
+					<?php foreach ($_SESSION['message'] as $message): ?>
+							<div class="alert alert-<?= $message['type'] ?> alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<strong><?= $message['message'] ?></strong>
+							</div>
+					<?php	endforeach;
+							unset($_SESSION['message']);
+							endif;
+
+					?>
+				</div>
+			</div>
 			<?= $this->section('main_content') ?>
 		</section>
 	</div>
+</div>
 
 
 			<div class="container-fluid footer">
@@ -61,13 +78,10 @@
 				</div>
 			</div>
 
-
-
+			<script src="<?= $this->assetUrl('vendor\jquery\dist\jquery.min.js') ?>"></script>
+			<script src="<?= $this->assetUrl('vendor\bootstrap\dist\js\bootstrap.min.js') ?>"></script>
 	<?php echo $this->section('js'); ?>
 
-
-			<script src="<?= $this->assetUrl('js/randomquotes.js') ?>"></script>
-			<script> RandomQuotes.generateRandomQuote("#app"); </script>
 
 </body>
 </html>

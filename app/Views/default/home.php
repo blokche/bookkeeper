@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,400i,700" rel="stylesheet">
 </head>
 <body>
-<?php unset($_SESSION['message']);?>
 
         <div class="nav container-fluid blanc">
             <div class="container">
@@ -152,7 +151,7 @@
                         <td><?php echo $book['author'] ?></td>
                         <?php if (!empty($w_user)): ?>
                             <td>
-                                <button type="submit" class="btn-add"><img class="p0" src="<?= $this->assetUrl('img/logoAdd.svg') ?>" alt=""></button>
+                                <button type="submit" class="btn-add"><a href="<?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 0]); ?>"><img class="p0" src="<?= $this->assetUrl('img/logoAdd.svg') ?>" alt=""></a></button>
                             </td>
                         <?php endif ?>
                     </tr>
