@@ -217,7 +217,7 @@ class ProfileController extends Controller
                         $_SESSION['errors'] = $this->errors['toggleRead'];
                     }
 
-                    $this->redirectToRoute("public.view",['id'=> $newBook['id']]);
+                    $this->redirectToRoute("profile.book",['page'=> 0]);
                 }
 
             } else {
@@ -240,7 +240,7 @@ class ProfileController extends Controller
             $_SESSION['message'] = $this->message;
         }
 
-        $this->redirectToRoute("public.view",['id' => $id]);
+        $this->redirectToRoute("profile.book",['page'=> 0]);
     }
     
 
@@ -268,14 +268,13 @@ class ProfileController extends Controller
                 $_SESSION['message']=$this->message;
             }
 
-            $this->redirectToRoute("public.view",['id'=> $id]);
         } else {
 
             $this->message [] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
-            $this->redirectToRoute("profile.book",['page'=> 0]);
         }
 
+        $this->redirectToRoute("profile.book",['page'=> 0]);
     }
 
 
@@ -296,23 +295,18 @@ class ProfileController extends Controller
 
                 $this->message[] = ['type' => 'success', 'message' => "Le statut du livre a bien été changé"];
                 $_SESSION['message']=$this->message;
-                $this->redirectToRoute('profile.book', ['page' => 0]);
             }else{
 
                 $this->message [] = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez réessayer"];
                 $_SESSION['message']=$this->message;
             }
 
-            $this->redirectToRoute("public.view",['id'=> $id]);
-
         } else {
-            
+
             $this->message [] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
-            $this->redirectToRoute("profile.book",['page'=> 0]);
         }
 
+        $this->redirectToRoute("profile.book",['page'=> 0]);
     }
-
-
 }
