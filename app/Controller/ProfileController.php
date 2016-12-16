@@ -147,9 +147,27 @@ class ProfileController extends Controller
      * Consulter les livres dans la reading list
      * @param int $page
      */
-    public function viewBooks ($page = 0) {
-        
+    public function viewBooks ($page = 1) {
+
+
         $limit='10';
+
+        /*$total = count($this->book->findAll());
+        $nbPages = (int) ceil($total / $perPage);
+
+        if ($page <= 0) {
+            $page = 1;
+        }
+
+        if ($page > $nbPages) {
+            $page = $nbPages;
+        }
+
+        $offset = $perPage * ($page - 1);
+        $books = $this->book->findAll('id', 'DESC', $perPage, $offset);*/
+
+
+
 
         $offset=$page*$limit;
 
@@ -239,7 +257,7 @@ class ProfileController extends Controller
                 }
 
                 $_SESSION['message'] = $this->message;
-                $this->redirectToRoute('profile.book.add');
+                $this->redirectToRoute("profile.book",['page'=> 0]);
             } else {
                 $this->message[]=['type' =>'warning', 'message' => "l'auteur ou le contenue sont vide."];
                 $_SESSION['message'] = $this->message;

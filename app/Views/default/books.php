@@ -6,20 +6,19 @@
     <div class="container">
         <div class="row">
             <?php foreach($books as $book) : ?>
-
-
-                    <a href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
-                        <div class=" vignette col-xs-6 col-sm-4 col-md-2">
-
-                            <div class="cover">
-                                <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
-                                <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
-                            </div>
-                            <h3><?php echo $book['title'] ?></h3>
-                            <h4><?php echo $book['author'] ?></h4>
+                <a href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
+                    <div class=" vignette col-xs-6 col-sm-4 col-md-2">
+                        <div class="cover">
+                            <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
+                            <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
                         </div>
-                    </a>
+                        <h3><?php echo $book['title'] ?></h3>
+                        <h4><?php echo $book['author'] ?></h4>
+                    </div>
+                </a>
         <?php endforeach; ?>
+        </div>
+        <div class="row">
         <?php
             $previousPage = $page -1;
             $nextPage = $page +1;

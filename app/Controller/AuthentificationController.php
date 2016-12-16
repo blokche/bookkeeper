@@ -50,7 +50,7 @@ class AuthentificationController extends Controller
                     $this->redirectToRoute('home');
                 }
             } else{
-                $this->message[]=['type' => 'warning', 'message' => 'L\'email et le mot de passe saisie ne correspondent pas.'];
+                $this->message[]=['type' => 'warning', 'message' => "L'email et le mot de passe saisie ne correspondent pas."];
                 $_SESSION['message']=$this->message;
                 $this->redirectToRoute('home');
             }
@@ -173,6 +173,7 @@ class AuthentificationController extends Controller
                     $this->redirectToRoute('home');
                 }
             } else{
+                $_SESSION['message']=$this->message;
                 $this->show('default/home');
             }
         }
