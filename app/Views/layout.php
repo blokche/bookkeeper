@@ -62,7 +62,12 @@
 			</div>
 
 
+
 	<?php echo $this->section('js'); ?>
+
+
+			<script src="<?= $this->assetUrl('js/randomquotes.js') ?>"></script>
+			<script> RandomQuotes.generateRandomQuote("#app"); </script>
 
 </body>
 </html>

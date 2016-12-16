@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Bookkeeper</title>
     <link rel="stylesheet" href="<?= $this->assetUrl('css/style.css') ?>">
+    <link rel="stylesheet" href="<?= $this->assetUrl('css/randomquotes.css') ?>">
     <link rel="stylesheet" href="<?= $this->assetUrl('vendor/bootstrap/dist/css/bootstrap.min.css') ?>">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,400i,700" rel="stylesheet">
 </head>
@@ -82,6 +83,7 @@
     </div>
  <?php   } ?>
         <div class="container">
+            <div id="app"></div>
             <hr class="hr-icons">
             <div class="row icons">
                 <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
@@ -181,6 +183,7 @@
             </div>
         </div>
 </div>
-
+<script src="<?= $this->assetUrl('js/randomquotes.js') ?>"></script>
+<script> RandomQuotes.generateRandomQuote("#app"); </script>
 </body>
 </html>
