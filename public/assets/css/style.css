@@ -279,14 +279,14 @@ body{
 	text-align: left;
 }
 .recent-add table tr th:nth-child(2){
-	text-align: left;
+	text-align: right;
 }
 .recent-add table tr th:nth-child(3){
 	text-align: center;
 }
 .recent-add table tr td{}
 .recent-add table tr td:nth-child(2){
-	text-align: left;
+	text-align: right;
 }
 .recent-add table tr td:nth-child(3){
 	text-align: center;

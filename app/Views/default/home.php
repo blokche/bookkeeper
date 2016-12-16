@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>Bookkeeper</title>
         <link rel="stylesheet" href="<?= $this->assetUrl('css/style.css') ?>">
+        <link rel="stylesheet" href="<?= $this->assetUrl('css/randomquotes.css') ?>">
         <link rel="stylesheet" href="<?= $this->assetUrl('vendor/bootstrap/dist/css/bootstrap.min.css') ?>">
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,400i,700" rel="stylesheet">
     </head>
@@ -149,49 +150,6 @@
                     </div>
                 </div>
             </div>
-            <div class="container recent-add">
-                <div class="row">
-                    <h2>AJOUTS RECENTS</h2>
-                </div>
-                <div class="row">
-                    <table class="col-xs-12">
-                        <tr>
-                            <th>Titre du livre</th>
-                            <th>Auteurs</th>
-                            <?php if (!empty($w_user)): ?> <th>Ajout</th>  <?php endif ?>
-                        </tr>
-                        <?php foreach($books as $book):?>
-                        <tr>
-                            <td><?php echo $book['title'] ?></td>
-                            <td><?php echo $book['author'] ?></td>
-                            <?php if (!empty($w_user)): ?>
-                                <td>
-                                    <button type="submit" class="btn-add"><img class="p0" src="<?= $this->assetUrl('img/logoAdd.svg') ?>" alt=""></button>
-                                </td>
-                            <?php endif ?>
-                        </tr>
-                        <?php endforeach; ?>
-
-                    </table>
-                </div>
-            </div>
-        <div class="container-fluid footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <ul>
-                            <li><a href="">Webforce</a></li>
-                            <li><a href="">A propos</a></li>
-                            <li><a href="">L'equipe</a></li>
-                            <li><a href="">S’enregistrer</a></li>
-                            <li><a href="">Contact</a></li>
-                        </ul>
-                        <a href=""><img class="logoBookkeeper" src="<?= $this->assetUrl('img/LogoBlancOr1.svg')?>" alt="LogoBookkeeper"></a>
-                        <a href=""><img class="logoWebForce pull-right" src="<?= $this->assetUrl('img/logoWebforce.png')?>" alt="LogoWebforce"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="container recent-add">
             <div class="row">
                 <h2>AJOUTS RECENTS</h2>

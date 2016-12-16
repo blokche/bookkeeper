@@ -9,7 +9,7 @@
   <?php echo $this->section('css') ?>
 </head>
 <body>
-	<div class="container">
+
 			<div class="nav container-fluid">
 				<div class="container">
 					<a href="<?= $this->url('home') ?>"><img src="<?= $this->assetUrl('img/LogoBlancOr1.svg') ?>" alt=""></a>
@@ -47,7 +47,6 @@
 					</div>
 				</div>
 			</div>
-	</div>
 
 <div class="background-profil">
 	<div class="container-fluid">
@@ -72,7 +71,6 @@
 		</section>
 	</div>
 </div>
-
 
 	<div class="container-fluid footer">
 		<div class="container">
@@ -100,7 +98,6 @@
 			<script src="<?= $this->assetUrl('vendor\jquery\dist\jquery.min.js') ?>"></script>
 			<script src="<?= $this->assetUrl('vendor\bootstrap\dist\js\bootstrap.min.js') ?>"></script>
 	<?php echo $this->section('js'); ?>
-
 
 </body>
 </html>
