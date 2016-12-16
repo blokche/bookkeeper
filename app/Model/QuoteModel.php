@@ -23,4 +23,12 @@ class QuoteModel extends Model {
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function quotesAndLinkedBooksByUser($userid) {
+        $query = $this->dbh->prepare("SELECT books.id as book_id, quotes.author as quote_author, quotes.content as content, quotes.content as content, quotes.id as quote_id, books.title as title FROM `quotes` LEFT JOIN books ON books.id = quotes.book_id WHERE quotes.user_id = :user_id");
+        $query->bindValue(":user_id", $userid, \PDO::PARAM_INT);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
 }

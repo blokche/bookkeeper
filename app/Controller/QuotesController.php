@@ -31,7 +31,7 @@ class QuotesController extends Controller
     public function allQuotes ()
     {
         $currentUser = $this->getUser();
-        $quotes = $this->quote->quotesByUser($currentUser['id']);
+        $quotes = $this->quote->quotesAndLinkedBooksByUser($currentUser['id']);
         $this->show("quote/quote", ['quotes' => $quotes]);
     }
 

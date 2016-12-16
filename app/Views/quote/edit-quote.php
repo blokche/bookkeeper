@@ -26,7 +26,7 @@
     </form>
 
     <form method="POST" action="<?php echo $this->url('profile.quote.delete', ['id' => $quote['id']]); ?>">
-        <input type="submit" name="deleteQuote" value="Supprimer">
+        <input class="btn btn-danger" type="submit" name="deleteQuote" value="Supprimer">
     </form>
 
 <?php $this->stop('main_content') ?>

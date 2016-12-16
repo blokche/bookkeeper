@@ -5,7 +5,7 @@
     <title><?= $this->e($title) ?> | Admin section</title>
     <link rel="favicon" href="favicon.ico">
     <link rel="stylesheet" href="<?= $this->assetUrl('vendor/bootstrap/dist/css/bootstrap.min.css') ?>">
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link rel="stylesheet" href="<?= $this->assetUrl('vendor/font-awesome/css/font-awesome.min.css') ?>">
     <link rel="stylesheet" href="<?= $this->assetUrl('css/admin.css') ?>">
 </head>
@@ -26,6 +26,7 @@
     </div>
     <script src="<?php echo $this->assetUrl('vendor/jquery/dist/jquery.min.js') ?>"></script>
     <script src="<?php echo $this->assetUrl('vendor/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
+    <script src="<?php echo $this->assetUrl('scripts/confirmdelete.js') ?>"></script>
     <?php echo $this->section('js') ?>
 </body>
 </html>
