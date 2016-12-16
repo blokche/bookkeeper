@@ -159,7 +159,7 @@ class ProfileController extends Controller
      * Recherche parmi les quotes, livres
      */
     public function search () {
-
+        
     }
 
 
@@ -233,8 +233,14 @@ class ProfileController extends Controller
     }
 
     public function  addBookToReadingList ($id,$status){
-        $this->user->addToReadingList($id,$status,$this->getUser());
-        $this->redirectToRoute("profile.book",['page' => 0]);
+        $retour = $this->user->addToReadingList($id,$status,$this->getUser());
+
+        if ($retour) {
+            $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
+            $_SESSION['message'] = $this->message;
+        }
+
+        $this->redirectToRoute("public.view",['id' => $id]);
     }
     
 
@@ -265,7 +271,7 @@ class ProfileController extends Controller
             $this->redirectToRoute("public.view",['id'=> $id]);
         } else {
 
-            $this->message[] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
+            $this->message [] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
             $this->redirectToRoute("profile.book",['page'=> 0]);
         }
@@ -293,7 +299,7 @@ class ProfileController extends Controller
                 $this->redirectToRoute('profile.book', ['page' => 0]);
             }else{
 
-                $this->message [] = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez ré-essayér"];
+                $this->message [] = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez réessayer"];
                 $_SESSION['message']=$this->message;
             }
 
@@ -301,7 +307,7 @@ class ProfileController extends Controller
 
         } else {
             
-            $this->message []= ['type' => 'warning', 'message' => "Le livre n'existe pas"];
+            $this->message [] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
             $this->redirectToRoute("profile.book",['page'=> 0]);
         }

@@ -14,6 +14,7 @@ class MailModel extends Model {
 
         
         $mail->isSMTP();                                            // Set mailer to use SMTP
+        $mail->CharSet = 'UTF-8';
         $mail->Host = $smtp;                                        // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                                 // Enable SMTP authentication
         $mail->Username = $username_sender;                                // SMTP username

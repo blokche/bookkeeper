@@ -4,11 +4,6 @@ $this->layout('layout', ['title' => $book['title']]) ;
 
 $this->start('main_content');
 
-//var_dump($book);
-
-//var_dump($ReadingList);
-
-
 $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
 
     <img src="<?php echo $cover ?>" alt="cover de <?php echo $book['title'] ?>">
@@ -29,7 +24,7 @@ if ($w_user) {
         if ($ReadingList['read_status'] == 1) {
             ?>
             <a href="  <?php echo $this->url('public.view', ['id' => $ReadingList['book_id'], 'status' => 0]); ?>  "
-               class="btn btn-default">Marquer comme non lue</a>
+               class="btn btn-default">Marquer comme non lu</a>
 
             <?php
 

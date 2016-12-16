@@ -286,7 +286,7 @@ class AuthentificationController extends Controller
 
             if ($user_token) {
 
-                $this->show('Authentification/reset-password');
+                $this->show('Authentification/reset-password',['id' => $user_token['id']]);
             }
 
             else {

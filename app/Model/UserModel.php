@@ -75,15 +75,24 @@ class UserModel extends UsersModel {
     }
 
 
-    public function addToReadingList($bookid,$read_status,$user){
+    public function addToReadingList($bookid,$read_status){
 
-        $sql="INSERT INTO reading_list (book_id, user_id, read_status) VALUES (:book_id, :user_id, :read_status)";
-
+        $sql="SELECT * FROM books INNER JOIN reading_list on books.id = reading_list.book_id INNER JOIN users on users.id = reading_list.user_id WHERE users.id = :user_id AND books.id = :book_id LIMIT 1";
         $q=$this->dbh->prepare($sql);
-
         $q->bindValue(":book_id",$bookid, \PDO::PARAM_INT);
-        $q->bindValue(":user_id",$user['id'],\PDO::PARAM_INT);
-        $q->bindValue(":read_status",$read_status, \PDO::PARAM_INT);
+        $q->bindValue(":user_id",$_SESSION['user']['id'], \PDO::PARAM_INT);
+        $q->execute();
+        $q=$q->fetch();
+
+        if (!$q) {
+            $sql = "INSERT INTO reading_list (book_id, user_id, read_status) VALUES (:book_id, :user_id, :read_status)";
+
+            $q = $this->dbh->prepare($sql);
+
+            $q->bindValue(":book_id", $bookid, \PDO::PARAM_INT);
+            $q->bindValue(":user_id", $_SESSION['user']['id'], \PDO::PARAM_INT);
+            $q->bindValue(":read_status", $read_status, \PDO::PARAM_INT);
+        }
 
         return $q->execute();
     }
