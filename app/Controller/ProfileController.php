@@ -5,6 +5,7 @@ namespace Controller;
 use Model\UserModel;
 use W\Controller\Controller;
 use Model\User;
+use Model\BookModel;
 use W\Security\AuthentificationModel;
 
 
@@ -13,17 +14,18 @@ class ProfileController extends Controller
 {
     private $auth;
     private $user;
-    private $errors = [];
-    private  $message = [];
-
+    private $book;
+    private $message = [];
 
     public function __construct()
     {
         $this->auth = new AuthentificationModel();
         $this->user = new UserModel();
+        $this->book = new BookModel();
+        $this->book->setTable("books");
     }
 
-       
+
 
     /**
      * 
@@ -46,6 +48,7 @@ class ProfileController extends Controller
      */
     public function editProfile ()
     {
+        $this->allowTo(['user','admin']);
         $user = $this->getUser();
         $message =[];
         $authmodel = new AuthentificationModel();
@@ -121,6 +124,8 @@ class ProfileController extends Controller
      */
     public function deleteProfile () {
 
+        $this->allowTo(['user','admin']);
+
         if (isset($_SESSION['id'])) {
             if ($this->user->delete($_SESSION['id'])) {
                 $this->auth->logUserOut();
@@ -142,14 +147,17 @@ class ProfileController extends Controller
      * Consulter les livres dans la reading list
      * @param int $page
      */
-    public function viewBooks ($page = 1) {
-        $this->allowTo(['user','admin']);
-        $user = $this->getUser();
-        $userModel = new UserModel();
-        $offset='';
-        $bookRead = $userModel->userReadBook($user['id'],1);
-        $bookNoRead = $userModel->userReadBook($user['id'],0);
+    public function viewBooks ($page = 0) {
         
+        $this->allowTo(['user','admin']);
+        $limit='10';
+
+        $offset=$page*$limit;
+
+        $user = $this->getUser();
+        $bookRead = $this->user->userReadBook($user['id'],1,$limit,$offset,"DESC");
+        $bookNoRead = $this->user->userReadBook($user['id'],0,$limit,$offset,"DESC");
+
 
         $this->show('profile/book', ['bookRead' => $bookRead, 'bookNoRead' => $bookNoRead]);
     }
@@ -160,5 +168,160 @@ class ProfileController extends Controller
     public function search () {
 
     }
+
+
+
+
+    /**
+     * Ajouter un livre
+    */
+    public function addBook ()
+    {
+        $this->allowTo(['user','admin']);
+        $user = $this->auth->getLoggedUser();
+
+        $message = [];
+
+        if (isset($_POST['addBook'])) {
+            if (!empty($_POST['title']) && !empty($_POST['author'])) {
+                $title = trim($_POST['title']);
+                $author = trim($_POST['author']);
+
+                // Enregistrement de la couverture
+                $name = (!empty($_FILES['cover']['name'])) ? strtolower(strstr($_FILES['cover']['name'], '.', true)) : 'default.png';
+                $type = (!empty($_FILES['cover']['name'])) ? str_replace("/",".",strstr($_FILES['cover']['type'], '/')):'';
+                $timestamp = (!empty($_FILES['cover']['name'])) ? "-".time() : '';
+                $cover = 'default.png';
+                if (isset($_FILES['cover']['type']) && !empty($_FILES['cover']['name'])) {
+                    $extentions = ["image/png", "image/gif", "image/jpg", "image/jpeg"];
+                    if (in_array($_FILES['cover']['type'], $extentions)) {
+                        if(!is_dir(__ROOT__ . "/public/upload/cover")){
+                            mkdir(__ROOT__. "/public/upload/cover", 0755, true);
+                        }
+                        move_uploaded_file($_FILES['cover']['tmp_name'], __ROOT__ . "/public/upload/cover/" . $name.$timestamp.$type);
+                        $cover = $name.$timestamp.$type;
+                    } else {
+                        $this->message[]=['type' =>'warning', 'message' => "Extention invalide ! La couverture du livre n'est pas enregistrer"];
+                        $_SESSION['message'] = $this->message;
+                        $cover = 'default.png';
+                        //$message[] = "Extention invalide !";
+                    }
+                }
+                // Innsettion dans la base donnée
+                $newBook=$this->book->insert(
+                    [
+                        'title'   => $title,
+                        'author'    => $author,
+                        'created_by'   => $user['id'],
+                        'status' => 1,
+                        'cover' => $cover,
+                    ]
+                );
+                $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
+                $_SESSION['message'] = $this->message;
+
+                if (isset($_POST['optionsRadios'])) {
+                    $read_status=$_POST['optionsRadios'];
+                    $retour = $this->book->addToReadingList($newBook['id'], $read_status);
+                    if ($retour) {
+                        $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
+                        $_SESSION['message'] = $this->message;
+                    } else {
+                        $this->message[]=['type' =>'warning', 'message' => "Une erreur s'est produite, veuillez ré-essayér"];
+                        $_SESSION['message'] = $this->message;
+                    }
+                }
+            } else {
+                $this->message[]=['type' =>'warning', 'message' => "l'auteur ou le contenue sont vide."];
+                $_SESSION['message'] = $this->message;
+
+
+
+                $this->show("book/add-book");
+            }
+        }
+
+        $this->show("book/add-book");
+
+    }
+
+
+
+
+    public function  addBookToReadingList ($id,$status){
+        $this->user->addToReadingList($id,$status,$this->getUser());
+        $this->redirectToRoute("profile.book",['page' => 0]);
+    }
     
+
+
+
+    /**
+     * Supprimer un livre de sa liste de lecture
+     * @param $bookid
+     */
+    public function deleteBook($id) {
+
+        $this->allowTo(['user','admin']);
+
+        $rl=$this->book->find($id);
+
+        if ($rl) {
+
+            $retour = $this->user->deleteFromReadingList($id ,$this->getUser());
+
+            if ($retour){
+                $this->message['toggleRead']="Le livre a bien été enlevé de votre de liste de lecture";
+                $_SESSION['message']=$this->message['toggleRead'];
+            }else{
+                $this->errors['toggleRead']="Une erreur s'est produite, veuillez ré-essayér";
+                $_SESSION['errors']=$this->errors['toggleRead'];
+            }
+
+            $this->redirectToRoute("public.view",['id'=> $id]);
+        } else {
+
+            $this->errors['toggleRead']="Le livre n'existe pas";
+            $_SESSION['errors']=$this->errors['toggleRead'];
+            $this->redirectToRoute("profile.book",['page'=> 0]);
+        }
+
+    }
+
+
+
+    /**
+     * Marquer un livre comme lu/non en fonction de son id
+     * @param $bookid
+     */
+    public function toggleRead ($id, $status) {
+
+        $this->allowTo(['user','admin']);
+
+        $rl=$this->book->find($id);
+
+        if ($rl) {
+
+            $retour=$this->user->changeStatut($id, $status ,$this->getUser());
+
+            if ($retour){
+                $this->message['toggleRead']="Le statut du livre a bien été changé";
+                $_SESSION['message']=$this->message['toggleRead'];
+                $this->redirectToRoute('profile.book', ['page' => 0]);
+            }else{
+                $this->errors['toggleRead']="Une erreur s'est produite, veuillez ré-essayér";
+                $_SESSION['errors']=$this->errors['toggleRead'];
+            }
+
+            $this->redirectToRoute("public.view",['id'=> $id]);
+
+        } else {
+            $this->errors['toggleRead']="Le livre n'existe pas";
+            $_SESSION['errors']=$this->errors['toggleRead'];
+            $this->redirectToRoute("profile.book",['page'=> 0]);
+        }
+
+    }
+
+
 }
