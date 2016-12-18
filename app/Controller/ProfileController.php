@@ -244,7 +244,7 @@ class ProfileController extends Controller
                 
                 if (isset($_POST['optionsRadios'])) {
                     $read_status=$_POST['optionsRadios'];
-                    $retour = $this->book->addToReadingList($newBook['id'], $read_status);
+                    $retour = $this->user->addToReadingList($newBook['id'], $read_status,$this->getUser());
                     if ($retour) {
                         $this->message[]=['type' =>'success', 'message' => "Le livre a bien été ajouté à votre de liste de lecture"];
                         $_SESSION['message'] = $this->message;

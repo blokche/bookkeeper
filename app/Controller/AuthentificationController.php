@@ -80,7 +80,7 @@ class AuthentificationController extends Controller
         $msg="Bonjour ".$user['username'].", vous avez demandé une réinitialisation de votre mot de passe, vous pouvez le changer en cliquant sur le lien ci dessous ou le copier/coller dans votre navigateur internet  :  ".$url.".".PHP_EOL."Si vous n'avez pas          demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte";
 
 
-        $message_html="<p>Bonjour ".$user['username'].", vous avez demandé une réinitialisation de votre mot de passe, vous pouvez le changer en cliquant <a href='".$url."'>ici</a></p>
+        $message_html="<p>Bonjour ".$user['username'].", vous avez demandé une réinitialisation de votre mot de passe, vous pouvez le <a href='".$url."'>changer en cliquant ici</a></p>
         <p>Si vous n'avez pas demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte</p>";
 
 
@@ -102,8 +102,8 @@ class AuthentificationController extends Controller
 
         $msg="Bonjour ".$user_register['username'].", vous venez de vous inscrirer sur notre site, vous pouvez activer votre compte en cliquant sur le lien ci dessous ou le copier/coller dans votre navigateur internet  : ".$url.".".PHP_EOL."Si vous n'avez pas effectué cette inscription veuillez nous contacter.";
 
-        $message_html="<p>Bonjour ".$user_register['username'].", vous venez de vous inscrirer sur notre site, vous pouvez activer votre compte en cliquant <a href='".$url."'>ici</a></p>
-        <p>Si vous n'avez pas demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte</p>";
+        $message_html="<p>Bonjour ".$user_register['username'].", vous venez de vous inscrirer sur notre site, vous pouvez <a href='".$url."'>activer votre compte en cliquant ici</a></p>
+        <p>Si vous n'avez pas demandé cette réinitialisation de votre mot de passe veuillez ne pas en tenir compte</p>";
 
         $object="[BookKeeper] - Activation de votre Compte";
         return $this->mail->envoieMail($user_register['email'],$msg,$message_html,$object,$user_register['username']);
