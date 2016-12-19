@@ -5,6 +5,11 @@ $this->start('main_content');
 <div class="container-fluid background-book">
     <div class="container">
         <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+                <li class="active">Rechercher un livre</li>
+            </ol>
+
             <form action="<?php echo $this->url('public.search'); ?>" method="POST">
                 <label for="search">Effectuer une recherche</label>
                 <input id="search" type="search" name="q" id="q" placeholder="Rechercher">

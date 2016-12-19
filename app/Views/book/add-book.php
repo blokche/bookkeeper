@@ -4,6 +4,9 @@
 <?php $this->start('main_content'); ?>
 <div class="container">
     <div class="row">
+        <ol class="breadcrumb">
+        </ol>
+
         <form action="<?php $this->url('profile.book.add') ?>" method="POST" enctype="multipart/form-data">
 
             <div class=" form-group">

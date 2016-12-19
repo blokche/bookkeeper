@@ -1,10 +1,15 @@
 <?php
-    $this->layout('layout', ['title' => 'Accueil']);
+    $this->layout('layout', ['title' => 'Liste des livres']);
     $this->start('main_content');
 ?>
+
 <div class="container-fluid">
     <div class="container">
         <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+                <li class="active"> Liste de livres </li>
+            </ol>
             <?php foreach($books as $book) : ?>
                 <a href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
                     <div class=" vignette col-xs-6 col-sm-4 col-md-2">

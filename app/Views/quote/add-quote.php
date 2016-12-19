@@ -2,6 +2,13 @@
 
 <?php $this->start('main_content') ?>
 
+    <ol class="breadcrumb">
+        <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+        <li><a href="<?php echo $this->url('profile.home') ?>">Mon profil</a></li>
+        <li><a href="<?php echo $this->url('profile.quote') ?>">Mes citations / extraits</a></li>
+        <li class="active">Ajouter un une citation/extrait</li>
+    </ol>
+
     <form action="<?php $this->url('profile.quote.add') ?>" method="POST" >
         
         <div class="form-group">
