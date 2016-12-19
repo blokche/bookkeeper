@@ -17,7 +17,7 @@
                     <a href="<?= $this->url('public.search') ?>">Recherche de livres</a>
                     <?php if($w_user) : ?>
 
-                        <a href="<?= $this->url('profile.book',['page' => 0]) ?>">Ma liste de lecture</a>
+                        <a href="<?= $this->url('profile.bookread',['page' => 1]) ?>">Ma liste de lecture</a>
                         <a href="<?= $this->url('profile.quote') ?>">Mes citations</a>
                         <a href="<?= $this->url('profile.home') ?>">Mon profile</a>
 

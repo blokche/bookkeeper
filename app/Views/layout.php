@@ -9,30 +9,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   <?php echo $this->section('css') ?>
 </head>
-<body>
-
-			<div class="nav container-fluid">
-				<div class="container">
-					<a href="<?= $this->url('home') ?>"><img src="<?= $this->assetUrl('img/LogoBlancOr1.svg') ?>" alt=""></a>
-					<a href="<?= $this->url('public.book',['page' => 1]) ?>">Liste des livres</a>
-					<a href="<?= $this->url('public.libraries') ?>">Liste des librairies</a>
-					<a href="<?= $this->url('public.search') ?>">Recherche de livres</a>
-
-					<?php if($w_user) : ?>
-
-						<a href="<?= $this->url('profile.bookread',['page' => 1]) ?>">Livres lus</a>
-						<a href="<?= $this->url('profile.bookunread',['page' => 1]) ?>">Livres non lus</a>
-						<a href="<?= $this->url('profile.quote') ?>">Mes citations</a>
-						<a href="<?= $this->url('profile.home') ?>">Mon profile</a>
-
-						<?php if($w_user['role']=="admin") : ?>
-							<a href="<?= $this->url('profile.home') ?>"></a>
-						<?php endif; ?>
-
-
-
-
-
+<body>	
 <nav class="navbar navbar-default">
 	<div class="container">
 		<!-- Brand and toggle get grouped for better mobile display -->
