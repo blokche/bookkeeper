@@ -27,22 +27,22 @@ $this->start('main_content');
             </div>
             <div class="col-sm-12">
                 <?php if (!empty($results)) : ?>
-              <ul>
-                <?php foreach ($results as $result) : ?>
-                    <li>
-                        <a href="<?php echo $this->url('public.view', ['id' => $result['id']]); ?>">
-                            <?php echo $result['title'] ?>
-                            <small>(<?php echo $result['author']; ?>)</small>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-                <?php else : ?>
-                    <p>Aucun résultat pour &laquo; <?php echo $searchTerm; ?> &raquo;.</p>
-                    <?php if ($w_user): ?>
-                    <p>Pourquoi ne pas nous faire <a href="<?php echo $this->url('profile.book.add'); ?>">une proposition de livre</a> ?</p>
-                    <?php endif ?>
-                <?php endif; ?>
+                  <ul>
+                    <?php foreach ($results as $result) : ?>
+                        <li>
+                            <a href="<?php echo $this->url('public.view', ['id' => $result['id']]); ?>">
+                                <?php echo $result['title'] ?>
+                                <small>(<?php echo $result['author']; ?>)</small>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
+                <?php elseif($w_user) : ?>
+                <p>Aucun résultat pour &laquo; <?php echo $searchTerm; ?> &raquo;. <br />Pourquoi ne pas nous faire <a href="<?php echo $this->url('profile.book.add'); ?>">une proposition de livre</a> ?</p>
+                <?php else: ?>
+                <p>Aucun résultat pour &laquo; <?php echo $searchTerm; ?> &raquo;.</p>
+                <?php endif ?>
+            <?php endif; ?>
             </div>
         </div>
 </div>
