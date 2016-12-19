@@ -16,9 +16,10 @@
                 <p><span class="gras">Email :</span> <?php echo $w_user['email'] ?></p>
                 <?php $date = new DateTime($w_user['created_at']); ?>
                 <p><span class="gras">Compte créé le :</span> <?php echo $date->format('d/m/Y, à h\hm'); ?></p>
-                <? if (isset($w_user['updated_at'])): ?>
-                    <p><span class="gras">Derniere modification effectuée le :</span> <?php echo $w_user['updated_at'] ?></p>
-                <? endif ?>
+                <?php if (isset($w_user['updated_at'])): ?>
+                    <p><span class="gras">Derniere modification éffectuée le :</span> <?php echo $w_user['updated_at'] ?></p>
+                <?php endif ?>
+
                 <a href="<?php echo $this->url('profile.edit') ?>">Modifier mon profil</a>
             </div>
         </div>

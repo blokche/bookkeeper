@@ -9,7 +9,7 @@
 </ol>
 
 <?php if (count($quotes) > 0) : ?>
-    <div id="quotes">
+    <div class="container">
         <div class="form-group">
             <input style="margin-bottom:1em;margin-top:1em;" class="form-control search" placeholder="Rechercher..." />
             <button class="btn btn-default sort" data-sort="author">Trier par auteur</button>
@@ -36,10 +36,12 @@
             </tbody>
         </table>
         <a class="btn btn-primary" href="<?php echo $this->url('profile.quote.add'); ?>">Ajouter une citation, un extrait</a>
-    </div>
+
 <?php else : ?>
     <p>Aucune citation. <a href="<?php echo $this->url('profile.quote.add'); ?>">Ajoutez-en dès maintenant</a> !</p>
 <?php endif; ?>
+    </div>
+
 
 <?php $this->stop('main_content') ?>
 

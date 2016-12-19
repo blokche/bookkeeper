@@ -32,29 +32,30 @@ if ($w_user) :
     if ($ReadingList) :
         ?>
         <a href="  <?php echo $this->url('profile.book.delete', ['id' => $ReadingList['book_id']]) ?>  "
-           class="btn btn-default">Enlever de ma liste de lecture</a>
+           class="btn btn-default"><i class="fa fa-times" aria-hidden="true"></i></a>
 
         <?php
 
         if ($ReadingList['read_status'] == 1) :
             ?>
+              
             <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 0]); ?>  "
-               class="btn btn-default">Marquer comme non lu</a>
+               class="btn btn-default"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 
             <?php
         else :
             ?>
             <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 1]) ?>  "
-               class="btn btn-default">Marquer comme lu</a>
+               class="btn btn-default"><i class="fa fa-check" aria-hidden="true"></i></a>
             <?php
         endif;
     else : ?>
 
         <a href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 0]); ?>  "
-           class="btn btn-default">Ajouter ce livre dans ma liste de lecture en tant que livre non lu </a>
+           class="btn btn-default"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 
         <a href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 1]); ?>  "
-           class="btn btn-default"> Ajouter ce livre dans ma liste de lecture en tant que livre lu </a>
+           class="btn btn-default"><i class="fa fa-check" aria-hidden="true"></i></a>
 
         <?php
     endif;
