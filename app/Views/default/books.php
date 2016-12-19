@@ -28,8 +28,10 @@
                     </a>
                 <?php endforeach; ?>
             <?php else : ?>
-                <?php foreach ($books_reading_list as $book) : ?>
-                    <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
+                <?php foreach ($books_reading_list as $book) :
+                    //var_dump($book);
+                    ?>
+                    <a href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
                         <div class=" vignette col-xs-6 col-sm-4 col-md-2">
                             <div class="cover">
                                 <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg'; ?>
