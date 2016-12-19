@@ -3,6 +3,14 @@
 <?php $this->start('main_content'); ?>
 
     <div class="container">
+
+        <ol class="breadcrumb">
+            <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+            <li><a href="<?php echo $this->url('profile.home') ?>">Mon profil</a></li>
+            <li class="active">Liste de lecture</li>
+        </ol>
+
+
         <div class="titre-liste row">
             <h2>Liste des livres lus:</h2>
         </div>

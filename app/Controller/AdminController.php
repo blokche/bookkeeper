@@ -7,11 +7,15 @@ use Model\DatabaseModel;
 use Model\QuoteModel;
 use Model\CategoryModel;
 
+use W\Security\AuthentificationModel;
+
+
 use W\Controller\Controller;
 use W\Model\UsersModel;
 
 class AdminController extends Controller {
 
+    private $auth;
     private $user;
     private $quote;
     private $book;
@@ -19,11 +23,13 @@ class AdminController extends Controller {
 
     public function __construct()
     {
-        $this->allowTo('admin');
         $this->user = new UsersModel();
+        $this->auth = new AuthentificationModel();
+        $this->auth->refreshUser();
         $this->quote = new QuoteModel();
         $this->book = new BookModel();
         $this->category = new CategoryModel();
+        $this->allowTo('admin');
     }
 
     public function index ()

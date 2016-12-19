@@ -3,6 +3,10 @@
 <?php $this->start('main_content') ?>
 
     <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+            <li class="active">Mon profil</li>
+        </ol>
         <div class="row profil">
             <div class=" col-xs-6 col-md-2">
                 <img src="<?php echo $this->assetUrl('../upload/avatar')."/".$avatar ?>" alt="avatar">
@@ -10,20 +14,24 @@
             <div class=" col-xs-12 col-md-6">
                 <p><span class="gras">Pseudo :</span> <?php echo $w_user['username'] ?></p>
                 <p><span class="gras">Email :</span> <?php echo $w_user['email'] ?></p>
-                <p><span class="gras">Compte créé le :</span> <?php echo $w_user['created_at'] ?></p>
-                <a href="<?php echo $this->url('profile.edit') ?>">Modifier son profil</a>
+                <?php $date = new DateTime($w_user['created_at']); ?>
+                <p><span class="gras">Compte créé le :</span> <?php echo $date->format('d/m/Y, à h\hm'); ?></p>
+                <? if (isset($w_user['updated_at'])): ?>
+                    <p><span class="gras">Derniere modification effectuée le :</span> <?php echo $w_user['updated_at'] ?></p>
+                <? endif ?>
+                <a href="<?php echo $this->url('profile.edit') ?>">Modifier mon profil</a>
             </div>
         </div>
-
         <?php if(!empty($bookRead)){ ?>
         <div class="titre-liste row">
-            <a href="<?php echo $this->url('profile.bookread', ['page' => 1]) ?>"><h2>Liste des livres lus:</h2></a>
+            <a href="<?php echo $this->url('profile.bookread', ['page' => 1]) ?>"><h2>Vos derniers livres lus :</h2></a>
         </div>
-
+            
         <div class="row">
-          <?php
-            foreach ($bookRead as $book) : ?>
-                <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
+            <?php
+            if (empty($booksRead)) : ?>
+                <?php foreach ($bookRead as $book) : ?>
+                <a href="<?php echo $this->url('public.view', [ 'id' => $book['book_id'] ]); ?>">
                     <div class=" vignette col-xs-6 col-sm-4 col-md-2">
                         <div class="cover">
                             <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.png';?>
@@ -34,16 +42,20 @@
                     </div>
                 </a>
             <?php endforeach; ?>
+            <?php else : ?>
+            <p>Aucun livre dans votre liste de livres lus.</p>
+            <?php endif; ?>
         </div>
         <?php } ?>
 
         <?php if(!empty($bookUnRead)){ ?>
         <div class="titre-liste row">
-            <a href="<?php echo $this->url('profile.bookunread', ['page' => 1]) ?>"><h2>Liste des livres à lire:</h2></a>
+            <a href="<?php echo $this->url('profile.bookunread', ['page' => 1]) ?>"><h2>Livres que vous envisagez de lire :</h2></a>
         </div>
 
         <div class="row">
             <?php
+            if (!empty($bookUnRead)) :
             foreach ($bookUnRead as $book) : ?>
                 <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
                     <div class=" vignette col-xs-6 col-sm-4 col-md-2">
@@ -54,8 +66,14 @@
                         <h3><?php echo $book['title'] ?></h3>
                         <h4><?php echo $book['author'] ?></h4>
                     </div>
-                </a>
+                    <h3><?php echo $book['title'] ?></h3>
+                    <h4><?php echo $book['author'] ?></h4>
+                </div>
+            </a>
             <?php endforeach; ?>
+            <?php else : ?>
+                <p>Aucun livre dans votre liste de lectures futures...</p>
+            <?php endif ; ?>
         </div>
     </div>
 <?php } ?>

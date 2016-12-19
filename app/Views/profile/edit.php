@@ -1,7 +1,14 @@
-<?php $this->layout('layout', ['title' => 'Modifier un profile']) ?>
+<?php $this->layout('layout', ['title' => 'Modifier mon profile']) ?>
 
 <?php $this->start('main_content') ?>
 <div class="container">
+
+    <ol class="breadcrumb">
+        <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+        <li><a href="<?php echo $this->url('profile.home') ?>">Mon profil</a></li>
+        <li class="active">Modifier mon  profile</li>
+    </ol>
+
     <form action="<?php $this->url('profile.edit') ?>" method="POST" enctype="multipart/form-data">
         <div class=" form-group">
             <label for="email">Modifier l'email :</label>

@@ -4,19 +4,40 @@ $this->start('main_content');
 ?>
 <div class="container-fluid background-book">
     <div class="container">
+
         <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+                <li class="active">Rechercher un livre</li>
+            </ol>
+
             <form action="<?php echo $this->url('public.search'); ?>" method="POST">
                 <label for="search">Effectuer une recherche</label>
                 <input id="search" type="search" name="q" id="q" placeholder="Rechercher">
                 <input type="submit" name="search" value="Rechercher">
             </form>
+            <div class="col-sm-12">
+                <h1>Rechercher un livre</h1>
+                <p>Vous recherchez un livre ou les ouvrages d'un auteur en particulier ?<br />
+                    Effectuez votre recherche grâce au formulaire ci-dessous.</p>
+                <form class="form" action="<?php echo $this->url('public.search'); ?>" method="POST">
+                    <div class="form-group">
+                        <label for="search">Effectuer une recherche</label>
+                        <input id="search" type="search" name="q" id="q" class="form-control" placeholder="Rechercher">
+                    </div>
+                    <input type="submit" class="btn btn-default" name="search" value="Rechercher">
+                </form>
+            </div>
         </div>
+
         <?php if (isset($results)) : ?>
         <div class="row">
-            <h2>Résultats pour &laquo; <?php echo $searchTerm; ?> &raquo;</h2>
-        </div>
-        <div class="row">
-                <ul>
+            <div class="col-sm-12">
+                <h2>Résultats de recherche pour &laquo; <?php echo $searchTerm; ?> &raquo;</h2>
+            </div>
+            <div class="col-sm-12">
+                <?php if (!empty($results)) : ?>
+              <ul>
                 <?php foreach ($results as $result) : ?>
                     <li>
                         <a href="<?php echo $this->url('public.view', ['id' => $result['id']]); ?>">
@@ -25,14 +46,14 @@ $this->start('main_content');
                         </a>
                     </li>
                 <?php endforeach; ?>
+                <?php else : ?>
+                    <p>Aucun résultat pour &laquo; <?php echo $searchTerm; ?> &raquo;.</p>
+                    <?php if ($w_user): ?>
+                    <p>Pourquoi ne pas nous faire <a href="<?php echo $this->url('profile.book.add'); ?>">une proposition de livre</a> ?</p>
+                    <?php endif ?>
+                <?php endif; ?>
                 </ul>
-            <?php if ($w_user): ?>
-                <p>Si vous ne trouvez pas le livre que vous recherchez, <a
-                    href="   <?php echo $this->url('profile.book.add'); ?>   "> vous pouvez l'ajouter ici </a></p>
-            <?php endif ?>
+            </div>
         </div>
-        <?php endif; ?>
-    </div>
 </div>
-
 <?php $this->stop('main_content') ?>
