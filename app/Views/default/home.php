@@ -45,6 +45,27 @@
                     </div>
                 </div>
             </div>
+
+            <div class="container-fluid">
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <?php if ( isset($_SESSION['message'])) : ?>
+                                <?php foreach ($_SESSION['message'] as $message): ?>
+                                    <div class="alert alert-<?= $message['type'] ?> alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <strong><?= $message['message'] ?></strong>
+                                    </div>
+                                <?php	endforeach;
+                                unset($_SESSION['message']);
+                            endif;
+                            ?>
+                        </div>
+                    </div>
+                    <?= $this->section('main_content') ?>
+                </section>
+            </div>
+
     <?php if(empty($w_user)) :?>
         <div class="background">
             <div class="container-fluid home-register">

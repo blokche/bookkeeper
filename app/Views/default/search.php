@@ -27,6 +27,7 @@ $this->start('main_content');
             </div>
             <div class="col-sm-12">
                 <?php if (!empty($results)) : ?>
+              <ul>
                 <?php foreach ($results as $result) : ?>
                     <li>
                         <a href="<?php echo $this->url('public.view', ['id' => $result['id']]); ?>">
@@ -37,11 +38,12 @@ $this->start('main_content');
                 <?php endforeach; ?>
                 <?php else : ?>
                     <p>Aucun résultat pour &laquo; <?php echo $searchTerm; ?> &raquo;.</p>
+                    <?php if ($w_user): ?>
+                    <p>Pourquoi ne pas nous faire <a href="<?php echo $this->url('profile.book.add'); ?>">une proposition de livre</a> ?</p>
+                    <?php endif ?>
                 <?php endif; ?>
                 </ul>
             </div>
         </div>
-        <?php endif; ?>
 </div>
-
 <?php $this->stop('main_content') ?>
