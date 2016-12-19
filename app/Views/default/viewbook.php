@@ -38,7 +38,8 @@ if ($w_user) :
 
         if ($ReadingList['read_status'] == 1) :
             ?>
-            <a href="  <?php echo $this->url('public.view', ['id' => $ReadingList['book_id'], 'status' => 0]); ?>  "
+              
+            <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 0]); ?>  "
                class="btn btn-default"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 
             <?php

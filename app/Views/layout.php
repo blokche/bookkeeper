@@ -11,6 +11,23 @@
 </head>
 <body>
 
+			<div class="nav container-fluid">
+				<div class="container">
+					<a href="<?= $this->url('home') ?>"><img src="<?= $this->assetUrl('img/LogoBlancOr1.svg') ?>" alt=""></a>
+					<a href="<?= $this->url('public.book',['page' => 1]) ?>">Liste des livres</a>
+					<a href="<?= $this->url('public.libraries') ?>">Liste des librairies</a>
+					<a href="<?= $this->url('public.search') ?>">Recherche de livres</a>
+
+					<?php if($w_user) : ?>
+
+						<a href="<?= $this->url('profile.bookread',['page' => 1]) ?>">Livres lus</a>
+						<a href="<?= $this->url('profile.bookunread',['page' => 1]) ?>">Livres non lus</a>
+						<a href="<?= $this->url('profile.quote') ?>">Mes citations</a>
+						<a href="<?= $this->url('profile.home') ?>">Mon profile</a>
+
+						<?php if($w_user['role']=="admin") : ?>
+							<a href="<?= $this->url('profile.home') ?>"></a>
+						<?php endif; ?>
 
 
 
@@ -42,8 +59,8 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ma liste de lecture<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="<?= $this->url('profile.book',['page' => 0]) ?>">Mes livres lu</a></li>
-							<li><a href="<?= $this->url('profile.book',['page' => 0]) ?>">Mes livres non lu</a></li>
+							<li><a href="<?= $this->url('profile.bookread',['page' => 1]) ?>">Mes livres lus</a></li>
+							<li><a href="<?= $this->url('profile.bookunread',['page' => 1]) ?>">Mes livres non lus</a></li>
 						</ul>
 					</li>
 					<li><a href="<?= $this->url('profile.quote') ?>">Mes citations</a></li>

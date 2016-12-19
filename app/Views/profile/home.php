@@ -19,14 +19,15 @@
                 <?php if (isset($w_user['updated_at'])): ?>
                     <p><span class="gras">Derniere modification éffectuée le :</span> <?php echo $w_user['updated_at'] ?></p>
                 <?php endif ?>
+
                 <a href="<?php echo $this->url('profile.edit') ?>">Modifier mon profil</a>
             </div>
         </div>
-
+        <?php if(!empty($bookRead)){ ?>
         <div class="titre-liste row">
-            <h2>Vos derniers livres lus :</h2>
+            <a href="<?php echo $this->url('profile.bookread', ['page' => 1]) ?>"><h2>Vos derniers livres lus :</h2></a>
         </div>
-
+            
         <div class="row">
             <?php
             if (empty($booksRead)) : ?>
@@ -46,20 +47,25 @@
             <p>Aucun livre dans votre liste de livres lus.</p>
             <?php endif; ?>
         </div>
+        <?php } ?>
 
+        <?php if(!empty($bookUnRead)){ ?>
         <div class="titre-liste row">
-            <h2>Livres que vous envisagez de lire :</h2>
+            <a href="<?php echo $this->url('profile.bookunread', ['page' => 1]) ?>"><h2>Livres que vous envisagez de lire :</h2></a>
         </div>
 
         <div class="row">
             <?php
-            if (!empty($bookNoRead)) : ?>
-            <?php foreach ($bookNoRead as $book) : ?>
-            <a href="<?php echo $this->url('public.view', [ 'id' => $book['book_id'] ]); ?>">
-                <div class=" vignette col-xs-6 col-sm-4 col-md-2">
-                    <div class="cover">
-                        <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
-                        <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
+            if (!empty($bookUnRead)) :
+            foreach ($bookUnRead as $book) : ?>
+                <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
+                    <div class=" vignette col-xs-6 col-sm-4 col-md-2">
+                        <div class="cover">
+                            <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
+                            <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
+                        </div>
+                        <h3><?php echo $book['title'] ?></h3>
+                        <h4><?php echo $book['author'] ?></h4>
                     </div>
                     <h3><?php echo $book['title'] ?></h3>
                     <h4><?php echo $book['author'] ?></h4>
@@ -71,6 +77,6 @@
             <?php endif ; ?>
         </div>
     </div>
-
+<?php } ?>
 
 <?php $this->stop('main_content') ?>
