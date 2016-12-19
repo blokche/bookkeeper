@@ -74,13 +74,28 @@ class UserModel extends UsersModel {
         return $q->fetch();
     }
 
+    public  function getAllBookWithReadingList($order,$nbBook,$pagination){
 
-    public function addToReadingList($bookid,$read_status){
+        $ord = (isset($order)) ? " ORDER BY books.created_at $order" : '';
+        $nb = (isset($nbBook)) ? " LIMIT $nbBook" : '';
+        $pag = (isset($pagination)) ? " OFFSET $pagination" : '';
+        
+        $sql="SELECT * FROM books LEFT JOIN reading_list ON books.id = reading_list.book_id $ord $nb $pag";
+
+        $q=$this->dbh->prepare($sql);
+
+        $q->execute();
+
+        return $q->fetchAll();
+    }
+
+
+    public function addToReadingList($bookid,$read_status,$user){
 
         $sql="SELECT * FROM books INNER JOIN reading_list on books.id = reading_list.book_id INNER JOIN users on users.id = reading_list.user_id WHERE users.id = :user_id AND books.id = :book_id LIMIT 1";
         $q=$this->dbh->prepare($sql);
         $q->bindValue(":book_id",$bookid, \PDO::PARAM_INT);
-        $q->bindValue(":user_id",$_SESSION['user']['id'], \PDO::PARAM_INT);
+        $q->bindValue(":user_id",$user['id'], \PDO::PARAM_INT);
         $q->execute();
         $q=$q->fetch();
 
@@ -90,11 +105,10 @@ class UserModel extends UsersModel {
             $q = $this->dbh->prepare($sql);
 
             $q->bindValue(":book_id", $bookid, \PDO::PARAM_INT);
-            $q->bindValue(":user_id", $_SESSION['user']['id'], \PDO::PARAM_INT);
+            $q->bindValue(":user_id", $user['id'], \PDO::PARAM_INT);
             $q->bindValue(":read_status", $read_status, \PDO::PARAM_INT);
+            return $q->execute();
         }
-
-        return $q->execute();
     }
     
 

@@ -41,7 +41,7 @@ class AuthentificationController extends Controller
                 if ($currentUser['status']) {
                     $this->auth->logUserIn($currentUser);
 
-                    $this->message[]=['type' => 'success', 'message' => 'Vous etez bien connecté.'];
+                    $this->message[]=['type' => 'success', 'message' => 'Vous etes bien connecté.'];
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('profile.home');
                 } else {
@@ -50,7 +50,7 @@ class AuthentificationController extends Controller
                     $this->redirectToRoute('home');
                 }
             } else{
-                $this->message[]=['type' => 'warning', 'message' => 'L\'email et le mot de passe saisie ne correspondent pas.'];
+                $this->message[]=['type' => 'warning', 'message' => "L'email et le mot de passe saisie ne correspondent pas."];
                 $_SESSION['message']=$this->message;
                 $this->redirectToRoute('home');
             }
@@ -80,7 +80,7 @@ class AuthentificationController extends Controller
         $msg="Bonjour ".$user['username'].", vous avez demandé une réinitialisation de votre mot de passe, vous pouvez le changer en cliquant sur le lien ci dessous ou le copier/coller dans votre navigateur internet  :  ".$url.".".PHP_EOL."Si vous n'avez pas          demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte";
 
 
-        $message_html="<p>Bonjour ".$user['username'].", vous avez demandé une réinitialisation de votre mot de passe, vous pouvez le changer en cliquant <a href='".$url."'>ici</a></p>
+        $message_html="<p>Bonjour ".$user['username'].", vous avez demandé une réinitialisation de votre mot de passe, vous pouvez le <a href='".$url."'>changer en cliquant ici</a></p>
         <p>Si vous n'avez pas demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte</p>";
 
 
@@ -102,8 +102,8 @@ class AuthentificationController extends Controller
 
         $msg="Bonjour ".$user_register['username'].", vous venez de vous inscrirer sur notre site, vous pouvez activer votre compte en cliquant sur le lien ci dessous ou le copier/coller dans votre navigateur internet  : ".$url.".".PHP_EOL."Si vous n'avez pas effectué cette inscription veuillez nous contacter.";
 
-        $message_html="<p>Bonjour ".$user_register['username'].", vous venez de vous inscrirer sur notre site, vous pouvez activer votre compte en cliquant <a href='".$url."'>ici</a></p>
-        <p>Si vous n'avez pas demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte</p>";
+        $message_html="<p>Bonjour ".$user_register['username'].", vous venez de vous inscrirer sur notre site, vous pouvez <a href='".$url."'>activer votre compte en cliquant ici</a></p>
+        <p>Si vous n'avez pas demandé cette réinitialisation de votre mot de passe veuillez ne pas en tenir compte</p>";
 
         $object="[BookKeeper] - Activation de votre Compte";
         return $this->mail->envoieMail($user_register['email'],$msg,$message_html,$object,$user_register['username']);
@@ -155,7 +155,7 @@ class AuthentificationController extends Controller
 
                 $user_connected=$this->user->insert($user_connected);
                 $this->auth->logUserIn($user_connected);
-                $this->message[]=['type' => 'success', 'message' => 'Vous etez bien inscrit.'];
+                $this->message[]=['type' => 'success', 'message' => 'Vous etes bien inscrit.'];
                 $retour=$this->envoieMailActivation($user_connected);
 
                 //var_dump(isset($retour['errors-mail']));
@@ -173,6 +173,7 @@ class AuthentificationController extends Controller
                     $this->redirectToRoute('home');
                 }
             } else{
+                $_SESSION['message']=$this->message;
                 $this->show('default/home');
             }
         }
@@ -260,7 +261,7 @@ class AuthentificationController extends Controller
 
                     $id=strip_tags($_POST['id']);
                     $this->user->update(['password' => $this->auth->hashPassword($_POST['password']), 'token' => null],$id);
-                    $this->message = ['type' => 'success', 'message' => "Le mot de passe a bien été mis a jour ."];
+                    $this->message [] = ['type' => 'success', 'message' => "Le mot de passe a bien été mis a jour ."];
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('profile.home');
                 } else {
