@@ -22,14 +22,14 @@
                 <a href="<?php echo $this->url('profile.edit') ?>">Modifier mon profil</a>
             </div>
         </div>
-        <?php if(!empty($bookRead)){ ?>
+        <?php if(!empty($bookRead)) : ?>
+
         <div class="titre-liste row">
             <a href="<?php echo $this->url('profile.bookread', ['page' => 1]) ?>"><h2>Vos derniers livres lus :</h2></a>
         </div>
             
         <div class="row">
-            <?php
-            if (empty($booksRead)) : ?>
+            <?php if (empty($booksRead)) : ?>
                 <?php foreach ($bookRead as $book) : ?>
                 <a href="<?php echo $this->url('public.view', [ 'id' => $book['book_id'] ]); ?>">
                     <div class=" vignette col-xs-6 col-sm-4 col-md-2">
@@ -41,24 +41,23 @@
                         <h4><?php echo $book['author'] ?></h4>
                     </div>
                 </a>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             <?php else : ?>
             <p>Aucun livre dans votre liste de livres lus.</p>
             <?php endif; ?>
         </div>
-        <?php } ?>
+        <?php endif; ?>
 
-        <?php if(!empty($bookUnRead)){ ?>
+        <?php if( !empty($bookUnRead) ) : ?>
         <div class="titre-liste row">
             <a href="<?php echo $this->url('profile.bookunread', ['page' => 1]) ?>"><h2>Livres que vous envisagez de lire :</h2></a>
         </div>
 
         <div class="row">
-            <?php
-            if (!empty($bookUnRead)) :
-            foreach ($bookUnRead as $book) : ?>
+            <?php if (!empty($bookUnRead)) : ?>
+            <?php foreach ($bookUnRead as $book) : ?>
                 <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
-                    <div class=" vignette col-xs-6 col-sm-4 col-md-2">
+                    <div class="vignette col-xs-6 col-sm-4 col-md-2">
                         <div class="cover">
                             <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
                             <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
@@ -66,16 +65,13 @@
                         <h3><?php echo $book['title'] ?></h3>
                         <h4><?php echo $book['author'] ?></h4>
                     </div>
-                    <h3><?php echo $book['title'] ?></h3>
-                    <h4><?php echo $book['author'] ?></h4>
-                </div>
             </a>
             <?php endforeach; ?>
             <?php else : ?>
                 <p>Aucun livre dans votre liste de lectures futures...</p>
             <?php endif ; ?>
         </div>
-    </div>
-<?php } ?>
+        </div>
+        <?php endif; ?>
 
 <?php $this->stop('main_content') ?>
