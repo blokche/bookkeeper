@@ -2,6 +2,12 @@
 
 <?php $this->start('main_content') ?>
 
+<ol class="breadcrumb">
+    <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+    <li><a href="<?php echo $this->url('profile.home') ?>">Mon profil</a></li>
+    <li class="active">Mes citations / extraits</li>
+</ol>
+
 <?php if (count($quotes) > 0) : ?>
     <div id="quotes">
         <div class="form-group">

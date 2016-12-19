@@ -2,8 +2,17 @@
 
 $this->layout('layout', ['title' => $book['title']]) ;
 
-$this->start('main_content');
+$this->start('main_content'); ?>
 
+
+<ol class="breadcrumb">
+    <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+    <li><a href="<?php echo $this->url('public.book',['page'=> 1]); ?>">Liste de livres</a></li>
+    <li class="active">  <?php echo $book['title'] ?>   </li>
+</ol>
+
+
+<?php
     $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
 
     <img src="<?php echo $this->assetUrl('/../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">

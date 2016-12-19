@@ -6,6 +6,16 @@ $this->start('main_content');
     <div class="container">
 
         <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+                <li class="active">Rechercher un livre</li>
+            </ol>
+
+            <form action="<?php echo $this->url('public.search'); ?>" method="POST">
+                <label for="search">Effectuer une recherche</label>
+                <input id="search" type="search" name="q" id="q" placeholder="Rechercher">
+                <input type="submit" name="search" value="Rechercher">
+            </form>
             <div class="col-sm-12">
                 <h1>Rechercher un livre</h1>
                 <p>Vous recherchez un livre ou les ouvrages d'un auteur en particulier ?<br />

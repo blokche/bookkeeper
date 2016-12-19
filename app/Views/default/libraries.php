@@ -7,6 +7,12 @@ $this->layout('layout', ['title' => 'Librairies sur la métropole lilloise']) ?>
 <?php $this->stop('css') ?>
 
 <?php $this->start('main_content') ?>
+
+    <ol class="breadcrumb">
+        <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+        <li class="active">Librairies sur la métropole lilloise</li>
+    </ol>
+
     <div id="app">
         <div class="libraries-list">
             <h2 v-show="libraries.length > 0">{{libraries.length}} librairies présentes sur la Métropole Européenne de Lille</h2>

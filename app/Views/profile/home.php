@@ -3,6 +3,10 @@
 <?php $this->start('main_content') ?>
 
     <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
+            <li class="active">Mon profil</li>
+        </ol>
         <div class="row profil">
             <div class=" col-xs-6 col-md-2">
                 <img src="<?php echo $this->assetUrl('../upload/avatar')."/".$avatar ?>" alt="avatar">
