@@ -11,6 +11,9 @@
                 <p><span class="gras">Pseudo :</span> <?php echo $w_user['username'] ?></p>
                 <p><span class="gras">Email :</span> <?php echo $w_user['email'] ?></p>
                 <p><span class="gras">Compte créé le :</span> <?php echo $w_user['created_at'] ?></p>
+                <? if (isset($w_user['updated_at'])): ?>
+                    <p><span class="gras">Derniere modification éffectué le :</span> <?php echo $w_user['updated_at'] ?></p>
+                <? endif ?>
                 <a href="<?php echo $this->url('profile.edit') ?>">Modifier son profil</a>
             </div>
         </div>
