@@ -57,7 +57,8 @@ define('__ROOT__', dirname(__DIR__ ));
 		['GET|POST', '/profile/search', 'ProfileController#search', 'profile.search'],
 
 		//Reading List
-		['GET', '/profile/book/[i:page]', 'ProfileController#viewBooks', 'profile.book'],
+		['GET', '/profile/book/read/[i:page]', 'ProfileController#viewBooksRead', 'profile.bookread'],
+		['GET', '/profile/book/noread/[i:page]', 'ProfileController#viewBooksNoRead', 'profile.booknoread'],
 		['GET|POST', '/profile/book/add', 'ProfileController#addBook', 'profile.book.add'],
 
 		['GET', '/profile/book/[i:id]/add/[i:status]', 'ProfileController#addBookToReadingList', 'profile.readinglist.add'],

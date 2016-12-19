@@ -19,7 +19,8 @@
 
 					<?php if($w_user) : ?>
 
-						<a href="<?= $this->url('profile.book',['page' => 0]) ?>">Ma liste de lecture</a>
+						<a href="<?= $this->url('profile.bookread',['page' => 0]) ?>">Livres lus</a>
+						<a href="<?= $this->url('profile.booknoread',['page' => 0]) ?>">Livres non lus</a>
 						<a href="<?= $this->url('profile.quote') ?>">Mes citations</a>
 						<a href="<?= $this->url('profile.home') ?>">Mon profile</a>
 

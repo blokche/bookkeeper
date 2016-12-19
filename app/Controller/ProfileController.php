@@ -147,7 +147,8 @@ class ProfileController extends Controller
      * Consulter les livres dans la reading list
      * @param int $page
      */
-    public function viewBooks ($page = 1) {
+
+    public function viewBooksRead ($page = 0) {
 
 
         $limit='10';
@@ -173,12 +174,19 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
         $bookRead = $this->user->userReadBook($user['id'],1,$limit,$offset,"DESC");
-        $bookNoRead = $this->user->userReadBook($user['id'],0,$limit,$offset,"DESC");
-
-
-        $this->show('profile/book', ['bookRead' => $bookRead, 'bookNoRead' => $bookNoRead]);
+        $this->show('profile/bookread', ['bookRead' => $bookRead ]);
     }
 
+    public function viewBooksNoRead ($page = 0) {
+
+        $limit='10';
+
+        $offset=$page*$limit;
+
+        $user = $this->getUser();
+        $bookNoRead = $this->user->userReadBook($user['id'],0,$limit,$offset,"DESC");
+        $this->show('profile/booknoread', ['bookNoRead' => $bookNoRead]);
+    }
     /**
      * Recherche parmi les quotes, livres
      */
