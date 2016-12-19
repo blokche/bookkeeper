@@ -41,6 +41,8 @@ class DefaultController extends Controller
 	public function allBooks($page = 1)
 	{
 
+		$user = $this->getUser();
+
 		$perPage = 12;
 
 		$total = count($this->book->findAll());
@@ -55,9 +57,17 @@ class DefaultController extends Controller
 		}
 
 		$offset = $perPage * ($page - 1);
-		$books = $this->book->findAll('id', 'DESC', $perPage, $offset);
 
-		$this->show('default/books', ['books' => $books, 'nbpages' => $nbPages, 'page' => $page]);
+
+		if ($user) {
+			$books_reading_list=$this->user->getAllBookWithReadingList('DESC',$perPage,$offset);
+			//var_dump($books_reading_list[0]);
+			//die();
+			$this->show('default/books', ['books_reading_list' => $books_reading_list, 'nbpages' => $nbPages, 'page' => $page]);
+		} else {
+			$books = $this->book->findAll('id', 'DESC', $perPage, $offset);
+			$this->show('default/books', ['books' => $books, 'nbpages' => $nbPages, 'page' => $page]);
+		}
 
 	}
 
@@ -75,7 +85,6 @@ class DefaultController extends Controller
 		//die();
 
 		if($user){
-
 			$ReadingList=$this->user->getFromReadingListByBookId($id,$user);
 		}
 
