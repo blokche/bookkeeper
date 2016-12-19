@@ -95,8 +95,9 @@
 		</div>
 	</div>
 
-			<script src="<?= $this->assetUrl('vendor\jquery\dist\jquery.min.js') ?>"></script>
-			<script src="<?= $this->assetUrl('vendor\bootstrap\dist\js\bootstrap.min.js') ?>"></script>
+	<script src="<?= $this->assetUrl('vendor\jquery\dist\jquery.min.js') ?>"></script>
+	<script src="<?= $this->assetUrl('vendor\bootstrap\dist\js\bootstrap.min.js') ?>"></script>
+	<script src="<?php echo $this->assetUrl('scripts/confirmdelete.js') ?>"></script>
 	<?php echo $this->section('js'); ?>
 
 </body>

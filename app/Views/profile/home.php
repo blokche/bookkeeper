@@ -10,40 +10,47 @@
             <div class=" col-xs-12 col-md-6">
                 <p><span class="gras">Pseudo :</span> <?php echo $w_user['username'] ?></p>
                 <p><span class="gras">Email :</span> <?php echo $w_user['email'] ?></p>
-                <p><span class="gras">Compte créé le :</span> <?php echo $w_user['created_at'] ?></p>
-                <a href="<?php echo $this->url('profile.edit') ?>">Modifier son profil</a>
+                <?php $date = new DateTime($w_user['created_at']); ?>
+                <p><span class="gras">Compte créé le :</span> <?php echo $date->format('d/m/Y, à h\hm'); ?></p>
+
+                <a href="<?php echo $this->url('profile.edit') ?>">Modifier mon profil</a>
             </div>
         </div>
 
         <div class="titre-liste row">
-            <h2>Liste des livres lus:</h2>
+            <h2>Vos derniers livres lus :</h2>
         </div>
 
         <div class="row">
             <?php
-            foreach ($bookRead as $book){ ?>
-            <div class=" vignette col-xs-6 col-sm-4 col-md-2">
-
-                <div class="cover">
-                        <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.png';?>
-                        <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
-                </div>
-                <h3><?php echo $book['title'] ?></h3>
-                <h4><?php echo $book['author'] ?></h4>
-            </div>
-
-            <?php } ?>
+            if (empty($booksRead)) : ?>
+                <?php foreach ($bookRead as $book) : ?>
+                <a href="<?php echo $this->url('public.view', [ 'id' => $book['book_id'] ]); ?>">
+                    <div class=" vignette col-xs-6 col-sm-4 col-md-2">
+                        <div class="cover">
+                            <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.png';?>
+                            <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
+                        </div>
+                        <h3><?php echo $book['title'] ?></h3>
+                        <h4><?php echo $book['author'] ?></h4>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+            <?php else : ?>
+            <p>Aucun livre dans votre liste de livres lus.</p>
+            <?php endif; ?>
         </div>
 
         <div class="titre-liste row">
-            <h2>Liste des livres à lire:</h2>
+            <h2>Livres que vous envisagez de lire :</h2>
         </div>
 
         <div class="row">
             <?php
-            foreach ($bookNoRead as $book){ ?>
+            if (!empty($bookNoRead)) : ?>
+            <?php foreach ($bookNoRead as $book) : ?>
+            <a href="<?php echo $this->url('public.view', [ 'id' => $book['book_id'] ]); ?>">
                 <div class=" vignette col-xs-6 col-sm-4 col-md-2">
-
                     <div class="cover">
                         <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
                         <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
@@ -51,8 +58,11 @@
                     <h3><?php echo $book['title'] ?></h3>
                     <h4><?php echo $book['author'] ?></h4>
                 </div>
-
-            <?php } ?>
+            </a>
+            <?php endforeach; ?>
+            <?php else : ?>
+                <p>Aucun livre dans votre liste de lectures futures...</p>
+            <?php endif ; ?>
         </div>
     </div>
 

@@ -204,7 +204,7 @@ class QuotesController extends Controller
         if ($quote) {
 
             $this->quote->delete($quoteid);
-            $this->message[] = ['type' => "success", 'message' => 'Suppression de la citation, de l\'extrait effectué avec succès.'];
+            $this->message[] = ['type' => "success", 'message' => 'Suppression de la citation, de l\'extrait effectuée avec succès.'];
             $_SESSION['message']=$this->message;
         } else {
             
