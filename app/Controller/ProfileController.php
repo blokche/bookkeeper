@@ -37,9 +37,9 @@ class ProfileController extends Controller
         $avatar = (!empty($user['avatar'])) ? $user['id'].$user['avatar'] : 'default.png';
 
         $bookRead = $userModel->userReadBook($user['id'], 1, 6);
-        $bookNoRead = $userModel->userReadBook($user['id'], 0 , 6);
+        $bookUnRead = $userModel->userReadBook($user['id'], 0 , 6);
 
-        $this->show('profile/home', ['avatar' => $avatar, 'bookRead' => $bookRead, 'bookNoRead' => $bookNoRead]);
+        $this->show('profile/home', ['avatar' => $avatar, 'bookRead' => $bookRead, 'bookUnRead' => $bookUnRead]);
     }
 
     /**
@@ -148,44 +148,32 @@ class ProfileController extends Controller
      * @param int $page
      */
 
-    public function viewBooksRead ($page = 0) {
+    public function viewBooksRead ($page = 1) {
 
-
-        $limit='10';
-
-        /*$total = count($this->book->findAll());
-        $nbPages = (int) ceil($total / $perPage);
-
-        if ($page <= 0) {
-            $page = 1;
-        }
-
-        if ($page > $nbPages) {
-            $page = $nbPages;
-        }
-
-        $offset = $perPage * ($page - 1);
-        $books = $this->book->findAll('id', 'DESC', $perPage, $offset);*/
-
-
-
-
-        $offset=$page*$limit;
-
+        $limit= 12;
         $user = $this->getUser();
+
+        $total = count($this->user->userReadBook($user['id'],1));
+        $nbPages = (int) ceil($total / $limit);
+
+        $offset=($page*$limit)- $limit;
+
         $bookRead = $this->user->userReadBook($user['id'],1,$limit,$offset,"DESC");
-        $this->show('profile/bookread', ['bookRead' => $bookRead ]);
+        $this->show('profile/bookread', ['bookRead' => $bookRead, 'page' => $page, 'nbPages' => $nbPages ]);
     }
 
-    public function viewBooksNoRead ($page = 0) {
+    public function viewBooksUnRead ($page = 1) {
 
-        $limit='10';
-
-        $offset=$page*$limit;
-
+        $limit= 12;
         $user = $this->getUser();
-        $bookNoRead = $this->user->userReadBook($user['id'],0,$limit,$offset,"DESC");
-        $this->show('profile/booknoread', ['bookNoRead' => $bookNoRead]);
+
+        $total = count($this->user->userReadBook($user['id'],0));
+        $nbPages = (int) ceil($total / $limit);
+
+        $offset=($page*$limit)- $limit;
+
+        $bookUnRead = $this->user->userReadBook($user['id'],0,$limit ,$offset ,"DESC");
+        $this->show('profile/bookunread', ['bookUnRead' => $bookUnRead, 'page' => $page, 'nbPages' => $nbPages]);
     }
     /**
      * Recherche parmi les quotes, livres
@@ -232,7 +220,7 @@ class ProfileController extends Controller
                         //$message[] = "Extention invalide !";
                     }
                 }
-                // Innsettion dans la base donnée
+                // Insettion dans la base donnée
                 $newBook=$this->book->insert(
                     [
                         'title'   => $title,
@@ -265,7 +253,17 @@ class ProfileController extends Controller
                 }
 
                 $_SESSION['message'] = $this->message;
-                $this->redirectToRoute("profile.book",['page'=> 0]);
+
+                if(isset($read_status)){
+                    if ($read_status == 1) {
+                        $this->redirectToRoute("profile.bookread", ['page' => 1]);
+                    } else {
+                        $this->redirectToRoute("profile.bookunread", ['page' => 1]);
+                    }
+                }else {
+                    $this->redirectToRoute("public.book", ['page' => 1]);
+                    }
+
             } else {
                 $this->message[]=['type' =>'warning', 'message' => "l'auteur ou le contenue sont vide."];
                 $_SESSION['message'] = $this->message;
@@ -289,7 +287,11 @@ class ProfileController extends Controller
             $_SESSION['message'] = $this->message;
         }
 
-        $this->redirectToRoute("profile.book",['page'=> 0]);
+        if ($status == 1) {
+            $this->redirectToRoute("profile.bookread", ['page' => 1]);
+        } else {
+            $this->redirectToRoute("profile.bookunread", ['page' => 1]);
+        }
     }
     
 
@@ -323,7 +325,7 @@ class ProfileController extends Controller
             $_SESSION['message']=$this->message;
         }
 
-        $this->redirectToRoute("profile.book",['page'=> 0]);
+        $this->redirectToRoute("public.book",['page'=> 0]);
     }
 
 
@@ -344,6 +346,7 @@ class ProfileController extends Controller
 
                 $this->message[] = ['type' => 'success', 'message' => "Le statut du livre a bien été changé"];
                 $_SESSION['message']=$this->message;
+
             }else{
 
                 $this->message [] = ['type' => 'success', 'message' => "Une erreur pendant le changement de status s'est produite, veuillez réessayer"];
@@ -355,7 +358,13 @@ class ProfileController extends Controller
             $this->message [] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
         }
+        var_dump($status);
 
-        $this->redirectToRoute("profile.book",['page'=> 0]);
+
+        if ($status == 1) {
+            $this->redirectToRoute("profile.bookread", ['page' => 1]);
+        } else {
+            $this->redirectToRoute("profile.bookunread", ['page' => 1]);
+        }
     }
 }

@@ -15,12 +15,13 @@
             </div>
         </div>
 
+        <?php if(!empty($bookRead)){ ?>
         <div class="titre-liste row">
-            <h2>Liste des livres lus:</h2>
+            <a href="<?php echo $this->url('profile.bookread', ['page' => 1]) ?>"><h2>Liste des livres lus:</h2></a>
         </div>
 
         <div class="row">
-            <?php
+          <?php
             foreach ($bookRead as $book) : ?>
                 <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
                     <div class=" vignette col-xs-6 col-sm-4 col-md-2">
@@ -34,14 +35,16 @@
                 </a>
             <?php endforeach; ?>
         </div>
+        <?php } ?>
 
+        <?php if(!empty($bookUnRead)){ ?>
         <div class="titre-liste row">
-            <h2>Liste des livres à lire:</h2>
+            <a href="<?php echo $this->url('profile.bookunread', ['page' => 1]) ?>"><h2>Liste des livres à lire:</h2></a>
         </div>
 
         <div class="row">
             <?php
-            foreach ($bookNoRead as $book) : ?>
+            foreach ($bookUnRead as $book) : ?>
                 <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
                     <div class=" vignette col-xs-6 col-sm-4 col-md-2">
                         <div class="cover">
@@ -55,6 +58,6 @@
             <?php endforeach; ?>
         </div>
     </div>
-
+<?php } ?>
 
 <?php $this->stop('main_content') ?>

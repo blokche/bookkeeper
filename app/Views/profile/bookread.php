@@ -26,7 +26,23 @@
                 </div>
             <?php endforeach; ?>
         </div>
-    
+
+        <div class="row">
+            <?php
+            $previousPage = $page -1;
+            $nextPage = $page +1;
+            ?>
+            <div class="pagination">
+                <?php if ($page > 1) : ?>
+                    <a href="<?php echo $this->url('profile.bookunread', ['page' => $previousPage]) ?>">Résultats précédents</a>
+                <?php endif; ?>
+                <?php if ($page < $nbPages) : ?>
+                    <a href="<?php echo $this->url('profile.bookunread', ['page' => $nextPage]) ?>">Résultats suivants</a>
+                <?php endif; ?>
+                <?php echo "<p>Page : ". $page."/".$nbPages."</p>"; ?>
+            </div>
+        </div>
+    </div>
 
 
 

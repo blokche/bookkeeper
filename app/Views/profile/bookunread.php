@@ -10,7 +10,7 @@
 
         <div class="row">
             <?php
-            foreach ($bookNoRead as $book){ ?>
+            foreach ($bookUnRead as $book){ ?>
                 <div class=" vignette col-xs-6 col-sm-4 col-md-2">
                     <div class="cover">
                         <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.png';?>
@@ -22,12 +22,27 @@
                     </a>
 
                     <a href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-default"  >Enlever de ma liste de lecture</a>
-                    <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 0]) ?>  " class="btn btn-default"  >Marquer comme non lue</a>
+                    <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 1]) ?>  " class="btn btn-default"  >Marquer comme lue</a>
 
                 </div>
             <?php } ?>
         </div>
-    </div>
 
+        <div class="row">
+            <?php
+            $previousPage = $page -1;
+            $nextPage = $page +1;
+            ?>
+            <div class="pagination">
+                <?php if ($page > 1) : ?>
+                    <a href="<?php echo $this->url('profile.bookunread', ['page' => $previousPage]) ?>">Résultats précédents</a>
+                <?php endif; ?>
+                <?php if ($page < $nbPages) : ?>
+                    <a href="<?php echo $this->url('profile.bookunread', ['page' => $nextPage]) ?>">Résultats suivants</a>
+                <?php endif; ?>
+                <?php echo "<p>Page : ". $page."/".$nbPages."</p>"; ?>
+            </div>
+        </div>
+    </div>
 
 <?php $this->stop('main_content') ?>
