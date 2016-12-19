@@ -102,6 +102,11 @@ class ProfileController extends Controller
             if ($authmodel->isValidLoginInfo($user['email'], $_POST['password'])) {
                 if (!empty($post)) {
                     // upload + extension en base
+
+                    $date = new \DateTime();
+                    $date = $date->format("Y-m-d H:i:s");
+                    $post['updated_at']=$date;
+                    
                     $userModel->update($post, $user['id'], true);
                     $authmodel->refreshUser();
                     $this->message[]=['type' =>'success', 'message' => "Le profil a été mis à jour."];
