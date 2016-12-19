@@ -74,6 +74,21 @@ class UserModel extends UsersModel {
         return $q->fetch();
     }
 
+    public  function getAllBookWithReadingList($order,$nbBook,$pagination){
+
+        $ord = (isset($order)) ? " ORDER BY books.created_at $order" : '';
+        $nb = (isset($nbBook)) ? " LIMIT $nbBook" : '';
+        $pag = (isset($pagination)) ? " OFFSET $pagination" : '';
+        
+        $sql="SELECT * FROM books LEFT JOIN reading_list ON books.id = reading_list.book_id $ord $nb $pag";
+
+        $q=$this->dbh->prepare($sql);
+
+        $q->execute();
+
+        return $q->fetchAll();
+    }
+
 
     public function addToReadingList($bookid,$read_status,$user){
 
