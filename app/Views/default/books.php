@@ -59,12 +59,12 @@
             $previousPage = $page -1;
             $nextPage = $page +1;
         ?>
-        <div class="pagination">
+        <div class="pagination pager">
             <?php if ($page > 1) : ?>
-                <a href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a>
+                <li><a href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
             <?php endif; ?>
             <?php if ($page < $nbpages) : ?>
-                <a href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a>
+                <li><a href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
             <?php endif; ?>
             <?php echo "<p>Page : ". $page."/".$nbpages."</p>"; ?>
             </div>

@@ -7,8 +7,8 @@
         <ol class="breadcrumb">
           <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
           <li><a href="<?php echo $this->url('profile.home') ?>">Mon profil</a></li>
-          <li><a href="<?php echo $this->url('profile.quote',['page'=> 1]) ?>">Liste de lecture</a></li>
-          <li class="active">Ajouter un citation/extrait</li>
+          <li><a href="<?php echo $this->url('profile.bookunread',['page'=> 1]) ?>">Mes livres non lus</a></li>
+          <li class="active">Ajouter un livre</li>
         </ol>
 
         <form action="<?php $this->url('profile.book.add') ?>" method="POST" enctype="multipart/form-data">
