@@ -67,7 +67,9 @@
             </div>
 
     <?php if(empty($w_user)) :?>
+        
         <div class="background">
+            
             <div class="container-fluid home-register">
                 <div class="row">
 
@@ -121,22 +123,30 @@
                 <div id="app"></div>
                 <hr class="hr-icons">
                 <div class="row icons">
-                    <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
-                        <a href="<?= $this->url('public.book',['page' => 1]) ?>"><div class="block-logo"><img src="<?= $this->assetUrl('img/logoMaListe.svg')?>" alt=""></div></a>
-                        <h3>Liste des Livres</h3>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
-                        <a href="<?= $this->url('profile.quote') ?>"><div class="block-logo"><img src="<?= $this->assetUrl('img/logoCitation.svg')?>" alt=""></div></a>
-                        <h3>Mes Citations</h3>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
-                        <a href="<?= $this->url('profile.home') ?>"><div class="block-logo"><img src="<?= $this->assetUrl('img/logoProfil.svg')?>" alt=""></div></a>
-                        <h3>Profil</h3>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
-                        <div class="block-logo"><img src="<?= $this->assetUrl('img/logoBibliothèque.svg')?>" alt=""></div>
-                        <h3>Les Bibliothèques</h3>
-                    </div>
+                    <a href="<?= $this->url('public.book',['page' => 1]) ?>">
+                        <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
+                            <div class="block-logo"><img src="<?= $this->assetUrl('img/logoMaListe.svg')?>" alt=""></div>
+                            <h3>Liste des Livres</h3>
+                        </div>
+                    </a>
+                    <a href="<?= $this->url('profile.quote') ?>">
+                        <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
+                            <div class="block-logo"><img src="<?= $this->assetUrl('img/logoCitation.svg')?>" alt=""></div>
+                            <h3>Mes Citations</h3>
+                        </div>
+                    </a>
+                    <a href="<?= $this->url('profile.home') ?>">
+                        <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
+                            <div class="block-logo"><img src="<?= $this->assetUrl('img/logoProfil.svg')?>" alt=""></div>
+                            <h3>Profil</h3>
+                        </div>
+                    </a>
+                    <a href="<?= $this->url('public.libraries') ?>">
+                        <div class="col-xs-12 col-sm-6 col-md-3 text-center icon">
+                            <div class="block-logo"><img src="<?= $this->assetUrl('img/logoBibliothèque.svg')?>" alt=""></div>
+                            <h3>Les Bibliothèques</h3>
+                        </div>
+                    </a>
 
                 </div>
                 <hr class="hr-icons">
@@ -146,7 +156,7 @@
             <div class="container-fluid tuto">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 screentuto">
+                        <div class="col-xs-12 col-sm-6 screentuto">
                             <img src="<?= $this->assetUrl('img/tuto1.png')?>" alt="">
                         </div>
                         <div class="col-xs-12 col-sm-6">
@@ -184,7 +194,7 @@
                     </tr>
                     <?php foreach($books as $book):?>
                     <tr>
-                        <td><?php echo $book['title'] ?></td>
+                        <td><a href="<?php echo $this->url('public.view', ['id' => $book['id']]) ?>"> <?php echo $book['title'] ?> </a></td>
                         <td><?php echo $book['author'] ?></td>
                         <?php if (!empty($w_user)): ?>
                             <td>
