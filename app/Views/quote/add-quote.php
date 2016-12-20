@@ -20,7 +20,8 @@
         <div class="form-group">
             <label for="linkedbook">Associer un livre à l'extrait / la citation</label>
             <select name="linkedbook" id="linkedbook" class="form-control">
-                <option value="0"></option>
+                <option value="0">Associer la citation à un livre</option>
+                <optgroup label="Livres">
                 <?php foreach ($books as $book) : ?>
                     <option value="<?= $book['id'] ?>"><?= $book['title'] ?> - <?= $book['author'] ?></option>
                 <?php endforeach; ?>
