@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <?php else : ?>
-                <li>
+                <li  <?php if ($w_current_route=="profile.home" ||  $w_current_route=="profile.edit" ) { echo "class='active'"; } ?>  >
                     <a href=" <?= $this->url('profile.home') ?> ">Profil</a>
                 </li>
                 <li>
