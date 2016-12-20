@@ -8,26 +8,39 @@ $this->layout('layout', ['title' => 'Librairies sur la métropole lilloise']) ?>
             opacity:0;
         }
         .libraries {
+            counter-reset: lib;
             display: flex;
             flex-wrap: wrap;
             list-style: none;
         }
         .libraries li {
+            counter-increment: lib;
             flex:0 1 calc(50% - 20px);
-            padding:10px;
+            padding:1em;
             margin:10px;
             background:rgba(0,0,0,0.05);
+            position:relative;
+        }
+        .libraries li:before {
+            left:-1em;
+            top:-1em;
+            font-size:1em;
+            background:#404040;
+            color:white;
+            padding:5px 8px;
+            border-radius: 50%;
+            position: absolute;
+            content: counter(lib);
         }
         .loader {
             margin:2em auto;
-            display: inline-block;
+            display: block;
             width:60px;
             height: 60px;
             border:5px solid transparent;
             border-top-color:rgba(64,64,64,0.8);
             border-radius:50%;
             vertical-align: middle;
-            margin-right:1em;
             position: relative;
             -webkit-animation:rotation360 1.5s linear infinite;
             animation:rotation360 1.5s linear infinite;
@@ -62,6 +75,7 @@ $this->layout('layout', ['title' => 'Librairies sur la métropole lilloise']) ?>
             animation:rotation360 1s linear infinite;
         }
 
+
         @-webkit-keyframes rotation360 {
             0% {
                 -webkit-transform:rotate(0deg);
@@ -94,7 +108,7 @@ $this->layout('layout', ['title' => 'Librairies sur la métropole lilloise']) ?>
     </ol>
 
     <div id="app">
-        <div v-cloak v-show="libraries.length" class="libraries-list col-sm-12 col-md-6">
+        <div v-cloak v-show="libraries.length" class="libraries-list col-sm-12">
             <div>
                 <h2>{{libraries.length}} librairies présentes sur la Métropole Européenne de Lille</h2>
                 <div class="form-group">
@@ -113,9 +127,9 @@ $this->layout('layout', ['title' => 'Librairies sur la métropole lilloise']) ?>
         </div>
         <div class="col-sm-12" v-if="loading">
             <span class="loader loader-triple"></span>
-            <p>Patience. Nous récupérons la liste des bibliothèques présentes sur la métropole lilloise...</p>
+            <p class="text-center">Patience. Nous récupérons la liste des bibliothèques présentes sur la métropole lilloise...</p>
         </div>
-        <div id="map" class="col-sm-12 col-md-6 embed-responsive embed-responsive-16by9"></div>
+        <div id="map" class="col-sm-12 embed-responsive"></div>
     </div>
 <?php $this->stop('main_content') ?>
 
