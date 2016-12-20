@@ -76,11 +76,49 @@ class UserModel extends UsersModel {
 
     public  function getAllBookWithReadingList($order,$nbBook,$pagination){
 
-        $ord = (isset($order)) ? " ORDER BY books.created_at $order" : '';
+        $ord = (isset($order)) ? " ORDER BY created_at $order" : '';
         $nb = (isset($nbBook)) ? " LIMIT $nbBook" : '';
         $pag = (isset($pagination)) ? " OFFSET $pagination" : '';
-        
-        $sql="SELECT * FROM books LEFT JOIN reading_list ON books.id = reading_list.book_id $ord $nb $pag";
+
+
+        $sql="SELECT
+
+                books.id as book_id,
+                books.title,
+                books.author,
+                books.cover,
+                books.created_at,
+                
+                reading_list.book_id as read_book_id,
+                reading_list.read_status,
+                reading_list.user_id,
+                
+                
+                users.id
+                
+                FROM books LEFT JOIN reading_list  on books.id = reading_list.book_id LEFT JOIN users on users.id = reading_list.user_id 
+                
+                UNION
+                
+                SELECT
+                
+                books.id as book_id,
+                books.title,
+                books.author,
+                books.cover,
+                books.created_at,
+                
+                
+                reading_list.book_id as read_book_id,
+                reading_list.read_status,
+                reading_list.user_id,                
+                
+                users.id
+                
+                
+                FROM books RIGHT JOIN reading_list  on books.id = reading_list.book_id RIGHT JOIN users on users.id = reading_list.user_id                 
+                
+                $ord $nb $pag";
 
         $q=$this->dbh->prepare($sql);
 
