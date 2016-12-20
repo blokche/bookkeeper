@@ -154,7 +154,6 @@ class AuthentificationController extends Controller
                 ];
 
                 $user_connected=$this->user->insert($user_connected);
-                $this->auth->logUserIn($user_connected);
                 $this->message[]=['type' => 'success', 'message' => 'Vous etes bien inscrit.'];
                 $retour=$this->envoieMailActivation($user_connected);
 
