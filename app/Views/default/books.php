@@ -43,7 +43,7 @@
 
 
                             <?php if (isset($book['read_status'])): ?>
-                                <?php if ($book['read_status'] == 0) : ?>
+                                <?php if ($book['read_status'] == 1) : ?>
                                     <span class="label label-success">Lu</span>
                                 <?php else: ?>
                                     <span class="label label-danger">Non lu</span>

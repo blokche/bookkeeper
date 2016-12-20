@@ -1,4 +1,4 @@
-<?php $this->layout('layout', ['title' => 'Profile de '.$w_user['username']]) ?>
+<?php $this->layout('layout', ['title' => 'Profil de '.$w_user['username']]) ?>
 
 <?php $this->start('main_content') ?>
 
@@ -17,7 +17,8 @@
                 <?php $date = new DateTime($w_user['created_at']); ?>
                 <p><span class="gras">Compte créé le :</span> <?php echo $date->format('d/m/Y, à h\hm'); ?></p>
                 <?php if (isset($w_user['updated_at'])): ?>
-                    <p><span class="gras">Derniere modification éffectuée le :</span> <?php echo $w_user['updated_at'] ?></p>
+                    <?php $date = new DateTime($w_user['updated_at']); ?>
+                    <p><span class="gras">Dernière modification effectuée le :</span> <?php echo $date->format('d/m/Y, à h\hm'); ?></p>
                 <?php endif ?>
 
                 <a href="<?php echo $this->url('profile.edit') ?>">Modifier mon profil</a>
@@ -57,15 +58,15 @@
         <div class="row">
             <?php if (!empty($bookUnRead)) : ?>
             <?php foreach ($bookUnRead as $book) : ?>
-                <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
-                    <div class="vignette col-xs-6 col-sm-4 col-md-2">
-                        <div class="cover">
-                            <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
-                            <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
-                        </div>
-                        <h3><?php echo $book['title'] ?></h3>
-                        <h4><?php echo $book['author'] ?></h4>
+            <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
+                <div class="vignette col-xs-6 col-sm-4 col-md-2">
+                    <div class="cover">
+                        <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg';?>
+                        <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
                     </div>
+                    <h3><?php echo $book['title'] ?></h3>
+                    <h4><?php echo $book['author'] ?></h4>
+                </div>
             </a>
             <?php endforeach; ?>
             <?php else : ?>

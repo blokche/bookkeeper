@@ -12,6 +12,12 @@ var app = new Vue({
             var coords = this.filterlibraries[index].fields.geo_point_2d
             var info = this.filterlibraries[index].fields
 
+            var resultsArea = document.querySelector('#app > div');
+            var mapArea = document.querySelector('#map');
+
+            console.log(resultsArea);
+            console.log(mapArea);
+
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: coords[0], lng: coords[1]},
                 zoom: 17
@@ -30,6 +36,10 @@ var app = new Vue({
             marker.addListener('click', function() {
                 infowindow.open(map, marker);
             });
+
+            mapArea.classList.add('col-md-6');
+            resultsArea.classList.add('col-md-6');
+            mapArea.classList.add('embed-responsive-16by9');
 
             let position = document.querySelector('#map').getBoundingClientRect();
             window.scrollBy(0, position.top);

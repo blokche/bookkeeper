@@ -61,8 +61,6 @@ class AuthentificationController extends Controller
     public function logout() {
 
         $this->auth->logUserOut();
-        $this->message[]=['type' => 'success', 'message' => 'Vous avez bien été déconnecté.'];
-        $_SESSION['message']=$this->message;
         $this->redirectToRoute('home');
     }
 
