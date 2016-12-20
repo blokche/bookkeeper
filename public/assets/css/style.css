@@ -24,6 +24,14 @@ body{
 	position: relative;
 	padding-top: 25rem;
 }
+.breadcrumb {
+	margin-top: 1rem;
+}
+
+.alert {
+	margin-top: 1rem;
+
+}
 
 .pr0{
 	padding-right: 0;
@@ -41,33 +49,81 @@ body{
 /* ----------------------------
               NAV
 -----------------------------*/
-
-.nav{
-    width: 100%;
+.navbar{
 	margin-bottom: 0;
-	list-style: none;
-	padding: 0.5rem 1rem;
-	background: #404040;
+}
+.navbar-default{
+	border-color: #404040;
+	background-color: #404040;
+}
+.navbar-default .navbar-nav>li>a:hover {
 	color: white;
+	background-color: transparent;
+	outline:none;
 }
-.blanc{
-	background: white;
-	color: #404040;
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+	color: #c6a25b;
+	background-color: inherit;
 }
-.nav .login{
-	padding: 5px 0;
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {
+	color: #c6a25b;
+	text-decoration: none;
+	background-color: inherit;
+	outline: 0;
 }
-.nav label{
-	margin-right: 5px;
+.navbar-brand {
+	float: left;
+	height: 50px;
+	padding: 1rem 1.5rem;
+	font-size: 18px;
+	line-height: 20px;
 }
-.nav input{
-	margin-right: 5px;
-	padding: 5px;
-	border: 0.05rem solid rgba(0,0,0, 0.1);
-	border-radius: 5px;
-
+.navbar-brand img{
+	height: 100%;
 }
-
+.navbar-default .navbar-nav>li>a {
+	color: #f6f6f6;
+	font-weight: 600;
+}
+.navbar-default .navbar-nav>li:hover > a {
+	color: #C6A25B;
+}
+.navbar-default .navbar-nav>li ul a:hover {
+	color: #C6A25B;
+}
+@media (min-width: 768px) {
+	.navbar-nav > li > a {
+		padding-top: 18px;
+		padding-bottom: 15px;
+	}
+}
+.modal-content {
+	position: relative;
+	background-color: rgb(255, 255, 255);
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	border: 1px solid #999;
+	border: 1px solid rgba(0,0,0,.2);
+	border-radius: 0;
+	outline: 0;
+	-webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+	box-shadow: 0 3px 9px rgba(0,0,0,.5);
+}
+.modal-header {
+	padding: 15px;
+	color: white;
+	background: #C6A25B;
+}
+.modal-body input{
+	padding: 0.5rem;
+}
+.forgetpassword{
+	padding: 1rem 0 ;
+	color: black;
+}
+.forgetpassword a{
+	 color: black;
+ }
 /* -------------------------------------
        FORMULAIRE + TEXTE PRESENTATION
 ---------------------------------------*/
@@ -185,8 +241,16 @@ body{
 .result-search ul li a{
     color: #48443c;;
 }
-
-
+/* -------------------------------------
+            QUOTE
+---------------------------------------*/
+blockquote {
+	padding: 1rem 2rem;
+	margin: 2em 0 2rem;
+	font-size: 17.5px;
+	border-left: none;
+	text-align: center;
+}
 
 /* -------------------------------------
             Menu ICONS
