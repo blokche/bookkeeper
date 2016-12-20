@@ -90,7 +90,7 @@
                         </div>
                 </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer la fenêtre</button>
                         <button name="login" class="btn btn-default">Se connecter</button>
                     </div>
             </form>
