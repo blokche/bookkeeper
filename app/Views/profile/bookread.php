@@ -1,5 +1,7 @@
 <?php $this->layout('layout', ['title' => 'Mes livres lu']) ?>
 
+
+
 <?php $this->start('main_content'); ?>
         <ol class="breadcrumb">
             <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
@@ -26,8 +28,8 @@
                         <h4><?php echo $book['author'] ?></h4>
                     </a>
 
-                    <a href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-default"  >Enlever de ma liste de lecture</a>
-                    <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 0]) ?>  " class="btn btn-default"  >Marquer comme non lue</a>
+                    <a href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-warning btn-block">Retirer de ma liste</a>
+                    <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 0]) ?>  " class="btn btn-info btn-block" >Marquer non lu</a>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -51,4 +53,5 @@
                 <?php echo "<p>Page : ". $page."/".$nbPages."</p>"; ?>
             </div>
         </div>
+
 <?php $this->stop('main_content') ?>
