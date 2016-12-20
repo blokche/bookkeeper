@@ -16,47 +16,40 @@ $this->start('main_content'); ?>
     $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
 
     <img src="<?php echo $this->assetUrl('/../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
-    <p>
-        <?php echo $book['title'] ?>
-        <?php if (!empty($book['author'])) :
-            echo "<span>, par </span>"; echo $book['author'];
-        endif;
-        ?>
-    </p>
+
+    <h2><?php echo $book['title'] ?></h2>
+    <h3><?php echo $book['author'] ?></h3>
+
 
 
 <?php
 
 if ($w_user) :
 
-    if ($ReadingList) :
-        ?>
-        <a href="  <?php echo $this->url('profile.book.delete', ['id' => $ReadingList['book_id']]) ?>  "
-           class="btn btn-default"><i class="fa fa-times" aria-hidden="true"></i></a>
+    if ($ReadingList) : ?>
+        <?php if ($ReadingList['read_status'] == 1) : ?>
+            <p class="label label-success">Lu</p>
+        <?php else: ?>
+            <p class="label label-danger">Non lu</p>
+        <?php endif ?>
+
+        <p><a href=" <?php echo $this->url('profile.book.delete', ['id' => $ReadingList['book_id']]) ?>  " class="btn btn-warning">Retirer de ma liste</a></p>
 
         <?php
 
-        if ($ReadingList['read_status'] == 1) :
-            ?>
+        if ($ReadingList['read_status'] == 1) : ?>
               
-            <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 0]); ?>  "
-               class="btn btn-default"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+            <p><a  href="  <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 0]); ?>  " class="btn btn-info" >Marquer non lu</a></p>
 
             <?php
-        else :
-            ?>
-            <a href="  <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 1]) ?>  "
-               class="btn btn-default"><i class="fa fa-check" aria-hidden="true"></i></a>
+        else : ?>
+            <p><a  href=" <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 1]) ?> " class="btn btn-success" >Marquer lu</a></p>
             <?php
         endif;
     else : ?>
 
-        <a href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 0]); ?>  "
-           class="btn btn-default"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-
-        <a href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 1]); ?>  "
-           class="btn btn-default"><i class="fa fa-check" aria-hidden="true"></i></a>
-
+        <p><a  href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 0]); ?> "  class="btn btn-info" >Ajouter comme non lu</a></p>
+        <p><a  href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 1]); ?>  " class="btn btn-success">Ajouter comme lu</a></p>
         <?php
     endif;
 endif;
