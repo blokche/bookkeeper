@@ -33,7 +33,7 @@
             <input id="author" name="author" class="form-control" type="text" placeholder="Auteur">
         </div>
 
-        <input type="submit" name="addQuote" class="btn btn-default" value="Ajouter une citation" />
+        <input type="submit" name="addQuote" class="btn btn-success pull-right" value="Ajouter une citation" />
     </form>
 
 

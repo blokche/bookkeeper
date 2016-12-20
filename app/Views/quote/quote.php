@@ -40,7 +40,7 @@
         </div>
 
 
-        <a class="btn btn-primary" href="<?php echo $this->url('profile.quote.add'); ?>">Ajouter une citation, un extrait</a>
+        <a class="btn btn-primary pull-right" href="<?php echo $this->url('profile.quote.add'); ?>">Ajouter une citation, un extrait</a>
 
 <?php else : ?>
     <p>Aucune citation. <a href="<?php echo $this->url('profile.quote.add'); ?>">Ajoutez-en dès maintenant</a> !</p>
