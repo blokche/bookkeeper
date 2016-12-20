@@ -11,9 +11,6 @@ var app = new Vue({
         {
             var coords = this.filterlibraries[index].fields.geo_point_2d
             var info = this.filterlibraries[index].fields
-            var app = document.querySelector('#app');
-
-            app.classList.add('mounted');
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: coords[0], lng: coords[1]},
