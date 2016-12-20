@@ -1,4 +1,4 @@
-<?php $this->layout('layout', ['title' => 'Profile de '.$w_user['username']]) ?>
+<?php $this->layout('layout', ['title' => 'Profil de '.$w_user['username']]) ?>
 
 <?php $this->start('main_content') ?>
 
