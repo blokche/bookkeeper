@@ -34,11 +34,11 @@
             <label for="newPassword-cf">Confirmer le nouveau password :</label>
             <input id="newPassword-cf" name="newPassword-cf" class="form-control" type="password">
         </div>
-        <button name="editUsers" class="btn btn-default">Modifier mon profil</button>
+        <a class="btn btn-primary pull-left" href="<?php echo $this->url('profile.home') ?>">Retour au profil</a>
+        <button class="btn btn-success pull-right" name="editUsers" class="btn btn-default">Modifier mon profil</button>
     </form>
 </div>
 
-<div><a href="<?php echo $this->url('profile.home') ?>">Retour au profil</a></div>
 
 <?php $this->stop('main_content') ?>
 

@@ -6,3 +6,4 @@ app/config.php
 /public/upload/cover/
 /public/upload/avatar/
 public/assets/scripts/tooltip.js
+app/Controller/DefaultController.php
