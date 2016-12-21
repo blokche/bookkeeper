@@ -68,7 +68,6 @@ class DefaultController extends Controller
 			$books = $this->book->findAll('id', 'DESC', $perPage, $offset);
 			$this->show('default/books', ['books' => $books, 'nbpages' => $nbPages, 'page' => $page]);
 		}
-
 	}
 
 	
