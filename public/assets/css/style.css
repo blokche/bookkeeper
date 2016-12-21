@@ -45,6 +45,11 @@ body{
 .gras{
 	font-weight: 700;
 }
+.booklist{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
 
 /* ----------------------------
               NAV
@@ -484,6 +489,7 @@ main{
 
 }
 
+
 /* -------------------------------------
             BOOK
 ---------------------------------------*/
@@ -508,9 +514,14 @@ main{
 	background-image: none;
 	border: 1px solid transparent;
 	float: left;
-
 }
-
+.book .macaron {
+	position: absolute;
+	top: 20px;
+	right: 25px;
+	width: 25%;
+	transform: rotate(10deg);
+}
 
 
 @media screen and (max-width: 620px){   }
