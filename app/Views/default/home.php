@@ -154,7 +154,7 @@
                         <th>Titre du livre</th>
                         <th>Auteurs</th>
                     </tr>
-                    <?php if (isset($book)) : ?>
+                    <?php if (isset($books)) : ?>
                         <?php foreach($books as $book):?>
                         <tr>
                             <td><a href="<?php echo $this->url('public.view', ['id' => $book['id']]) ?>"> <?php echo $book['title'] ?> </a></td>
@@ -162,7 +162,8 @@
                         </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    
+
+
                     <?php if (isset($books_reading_list)) : ?>
 
                         <?php foreach($books_reading_list as $book):?>
