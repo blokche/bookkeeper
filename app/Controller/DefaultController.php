@@ -68,11 +68,12 @@ class DefaultController extends Controller
 
 		$offset = $perPage * ($page - 1);
 
+		if ($offset<0){
+			$offset=0;
+		}
 
 		if ($user) {
 			$books_reading_list=$this->user->getAllBookWithReadingList('DESC',$perPage,$offset);
-			//var_dump($books_reading_list[0]);
-			//die();
 			$this->show('default/books', ['books_reading_list' => $books_reading_list, 'nbpages' => $nbPages, 'page' => $page]);
 		} else {
 			$books = $this->book->findAll('id', 'DESC', $perPage, $offset);
