@@ -36,19 +36,19 @@
                                 <img src="<?php echo $this->assetUrl('../upload/cover') . "/" . $cover ?>"
                                      alt="cover de <?php echo $book['title'] ?>">
                             </div>
-                            <h3><?php echo $book['title'] ?></h3>
-                            <h4><?php echo $book['author'] ?></h4>
 
-                            <?php if($w_user['id']==$book['user_id']) : ?>
-                                <?php if (isset($book['read_status'])): ?>
-                                    <?php if ($book['read_status'] == 1) : ?>
-                                        <span class="label label-success">Lu</span>
-                                    <?php else: ?>
-                                        <span class="label label-danger">Non lu</span>
-                                    <?php endif ?>
-                                <?php endif; ?>
+                            <?php if (isset($book['read_status'])): ?>
+                                <?php if ($book['read_status'] == 1) : ?>
+                                    <span class="label label-success">Lu</span>
+                                <?php else: ?>
+                                    <span class="label label-danger">Non lu</span>
+                            <?php endif ?>
                             <?php endif; ?>
-                            
+                            <div class="titre-auteur">
+                                <h3><?php echo $book['title'] ?></h3>
+                                <h4><?php echo $book['author'] ?></h4>
+                            </div>
+
                         </div>
                     </a>
                 <?php endforeach; ?>
