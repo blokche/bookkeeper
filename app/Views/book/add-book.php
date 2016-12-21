@@ -27,6 +27,7 @@
 
             <div class=" form-group">
                 <label for="cover">Couverture :</label>
+                <small>Extensions autorisées : .jpg, .jpeg, .png, .gif</small>
                 <input id="cover" name="cover" class="" type="file">
             </div>
 

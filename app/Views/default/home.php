@@ -153,19 +153,39 @@
                     <tr>
                         <th>Titre du livre</th>
                         <th>Auteurs</th>
-                        <?php if (!empty($w_user)): ?> <th>Ajout</th>  <?php endif ?>
                     </tr>
-                    <?php foreach($books as $book):?>
-                    <tr>
-                        <td><a href="<?php echo $this->url('public.view', ['id' => $book['id']]) ?>"> <?php echo $book['title'] ?> </a></td>
-                        <td><?php echo $book['author'] ?></td>
-                        <?php if (!empty($w_user)): ?>
-                            <td>
-                                <button type="submit" class="btn-add"><a href="<?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 0]); ?>"><img class="p0" src="<?= $this->assetUrl('img/logoAdd.svg') ?>" alt=""></a></button>
-                            </td>
-                        <?php endif ?>
-                    </tr>
-                    <?php endforeach; ?>
+                    <?php if (isset($book)) : ?>
+                        <?php foreach($books as $book):?>
+                        <tr>
+                            <td><a href="<?php echo $this->url('public.view', ['id' => $book['id']]) ?>"> <?php echo $book['title'] ?> </a></td>
+                            <td><?php echo $book['author'] ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    
+                    <?php if (isset($books_reading_list)) : ?>
+
+                        <?php foreach($books_reading_list as $book):?>
+                            <tr>
+                                <td><a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]) ?>"> <?php echo $book['title'] ?> </a></td>
+                                <td><?php echo $book['author'] ?></td>
+                                <td>
+
+                                    <?php if($w_user['id']==$book['user_id']) : ?>
+                                        <?php if (isset($book['read_status'])): ?>
+                                            <?php if ($book['read_status'] == 1) : ?>
+                                                <span class="label label-success">Lu</span>
+                                            <?php else: ?>
+                                                <span class="label label-danger">Non lu</span>
+                                            <?php endif ?>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        
+                    <?php endif; ?>
 
                 </table>
             </div>

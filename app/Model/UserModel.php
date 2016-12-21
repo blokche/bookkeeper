@@ -74,7 +74,7 @@ class UserModel extends UsersModel {
         return $q->fetch();
     }
 
-    public  function getAllBookWithReadingList($order,$nbBook,$pagination){
+    public  function getAllBookWithReadingList($order,$nbBook,$pagination=0){
 
         $ord = (isset($order)) ? " ORDER BY created_at $order" : '';
         $nb = (isset($nbBook)) ? " LIMIT $nbBook" : '';

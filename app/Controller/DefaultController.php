@@ -29,8 +29,18 @@ class DefaultController extends Controller
 	 */
 	public function home()
 	{
-		$books = $this->book->findAll('id', "DESC", 10);
-		$this->show('default/home', ['books' => $books]);
+		$user = $this->getUser();
+
+		$perPage = 10;
+
+		if ($user) {
+			$books_reading_list=$this->user->getAllBookWithReadingList('DESC',$perPage);
+			
+			$this->show('default/home', ['books_reading_list' => $books_reading_list]);
+		} else {
+			$books = $this->book->findAll('id', "DESC", $perPage);
+			$this->show('default/home', ['books' => $books]);
+		}
 	}
 
 	
