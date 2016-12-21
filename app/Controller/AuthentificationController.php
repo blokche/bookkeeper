@@ -72,14 +72,14 @@ class AuthentificationController extends Controller
         $token=$secu_chaine->randomString();
         $this->user->update(['status' => 1,'token' => $token],$user['id']);
         $url=$this->generateUrl('auth.resetpassword',"",true)."?token=".$token;
-        var_dump($url);
+        //var_dump($url);
 
         //envoie du mail a  faire dans un model a part
         $msg="Bonjour ".$user['username'].", vous avez demandé une réinitialisation de votre mot de passe, vous pouvez le changer en cliquant sur le lien ci dessous ou le copier/coller dans votre navigateur internet  :  ".$url.".".PHP_EOL."Si vous n'avez pas          demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte";
 
 
         $message_html="<p>Bonjour ".$user['username'].", vous avez demandé une réinitialisation de votre mot de passe, vous pouvez le <a href='".$url."'>changer en cliquant ici</a></p>
-        <p>Si vous n'avez pas demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte</p>";
+        <p>Si vous n'avez pas demandé cette Réinitialisation de votre mot de passe veuillez ne pas en tenir compte.</p>";
 
 
 
@@ -95,13 +95,13 @@ class AuthentificationController extends Controller
         $token=$secu_chaine->randomString();
         $this->user->update(['token' => $token],$user_register['id']);
         $url=$this->generateUrl('auth.activateaccount',"",true)."?token=".$token;
-        var_dump($url);
+        //var_dump($url);
 
 
         $msg="Bonjour ".$user_register['username'].", vous venez de vous inscrirer sur notre site, vous pouvez activer votre compte en cliquant sur le lien ci dessous ou le copier/coller dans votre navigateur internet  : ".$url.".".PHP_EOL."Si vous n'avez pas effectué cette inscription veuillez nous contacter.";
 
         $message_html="<p>Bonjour ".$user_register['username'].", vous venez de vous inscrirer sur notre site, vous pouvez <a href='".$url."'>activer votre compte en cliquant ici</a></p>
-        <p>Si vous n'avez pas demandé cette réinitialisation de votre mot de passe veuillez ne pas en tenir compte</p>";
+        <p>Si vous n'avez pas demandé cette réinitialisation de votre mot de passe veuillez ne pas en tenir compte.</p>";
 
         $object="[BookKeeper] - Activation de votre Compte";
         return $this->mail->envoieMail($user_register['email'],$msg,$message_html,$object,$user_register['username']);
@@ -186,7 +186,7 @@ class AuthentificationController extends Controller
             if ($user_token) {
 
                 $this->user->update(['token' => null],$user_token['id']);
-                $this->message[] = ['type' => 'success', 'message' => "Votre compte a bien été activée, vous etez maintenant connecté."];
+                $this->message[] = ['type' => 'success', 'message' => "Votre compte a bien été activée, vous pouvez maintenant vous connecter."];
                 $_SESSION['message']=$this->message;
                 $this->redirectToRoute('profile.home');
             } else {
@@ -220,16 +220,15 @@ class AuthentificationController extends Controller
 
                     //if (!isset($retour['errors-mail'])){
                     if ($retour['type']=="success") {
-
-                        $this->message[]=$retour;
-                        $_SESSION['message']=$this->message;
                         $this->redirectToRoute('home');
                     } else{
 
-                        $this->message[]=$retour;
-                        $_SESSION['message']=$this->message;
                         $this->show('Authentification/forget-password');
                     }
+                    
+                    $this->message[]=$retour;
+                    $_SESSION['message']=$this->message;
+                    
                 } else {
 
                     $this->message[]=['type' => 'warning', 'message' => "L'email saisie est introuvable !"];

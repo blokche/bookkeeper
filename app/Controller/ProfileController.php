@@ -364,7 +364,7 @@ class ProfileController extends Controller
             $this->message [] = ['type' => 'warning', 'message' => "Le livre n'existe pas"];
             $_SESSION['message']=$this->message;
         }
-        var_dump($status);
+        //var_dump($status);
 
 
         if ($status == 1) {
