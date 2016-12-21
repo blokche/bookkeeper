@@ -26,33 +26,37 @@
                             <h4><?php echo $book['author'] ?></h4>
                         </div>
                     </a>
-                <?php endforeach; ?>
-            <?php else : ?>
+                <?php endforeach;
+            else : ?>
                 <?php foreach ($books_reading_list as $book) : ?>
-                    <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
-                        <div class=" vignette col-xs-6 col-sm-4 col-md-2">
-                            <div class="cover">
-                                <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg'; ?>
-                                <img src="<?php echo $this->assetUrl('../upload/cover') . "/" . $cover ?>"
-                                     alt="cover de <?php echo $book['title'] ?>">
-                            </div>
+                    <?php if (isset($book['book_id'])) : ?>
+                        <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
+                            <div class=" vignette col-xs-6 col-sm-4 col-md-2">
+                                <div class="cover">
+                                    <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg'; ?>
+                                    <img src="<?php echo $this->assetUrl('../upload/cover') . "/" . $cover ?>"
+                                         alt="cover de <?php echo $book['title'] ?>">
+                                </div>
 
-                            <?php if (isset($book['read_status'])): ?>
-                                <?php if ($book['read_status'] == 1) : ?>
-                                    <span class="label label-success">Lu</span>
-                                <?php else: ?>
-                                    <span class="label label-danger">Non lu</span>
-                            <?php endif ?>
-                            <?php endif; ?>
-                            <div class="titre-auteur">
-                                <h3><?php echo $book['title'] ?></h3>
-                                <h4><?php echo $book['author'] ?></h4>
-                            </div>
+                                <?php if ($w_user['id']==$book['user_id']) :
+                                     if (isset($book['read_status'])):
+                                         if ($book['read_status'] == 1) : ?>
+                                            <span class="label label-success">Lu</span>
+                                        <?php else: ?>
+                                            <span class="label label-danger">Non lu</span>
+                                        <?php endif;
+                                     endif;
+                                endif; ?>
+                                <div class="titre-auteur">
+                                    <h3><?php echo $book['title'] ?></h3>
+                                    <h4><?php echo $book['author'] ?></h4>
+                                </div>
 
-                        </div>
-                    </a>
-                <?php endforeach; ?>
-            <?php endif; ?>
+                            </div>
+                        </a>
+                    <?php endif; ?>
+                <?php endforeach;
+            endif; ?>
         </div>
         <div class="row">
         <?php
@@ -62,11 +66,11 @@
         <div class="pagination pager">
             <?php if ($page > 1) : ?>
                 <li><a href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
-            <?php endif; ?>
-            <?php if ($page < $nbpages) : ?>
+            <?php endif;
+            if ($page < $nbpages) : ?>
                 <li><a href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
-            <?php endif; ?>
-            <?php echo "<p>Page : ". $page."/".$nbpages."</p>"; ?>
+            <?php endif;
+            echo "<p>Page : ". $page."/".$nbpages."</p>"; ?>
             </div>
         </div>
     </div>
