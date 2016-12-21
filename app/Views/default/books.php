@@ -7,16 +7,17 @@
     <div class="container">
 
 
-        <div class="row">
+        <div class="row ">
             <ol class="breadcrumb">
                 <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
                 <li class="active"> Liste de livres</li>
             </ol>
-
+         </div>
+        <div class="row booklist">
             <?php if (isset($books)) : ?>
                 <?php foreach ($books as $book) : ?>
-                    <a href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
-                        <div class=" vignette col-xs-6 col-sm-4 col-md-2">
+                    <a class=" col-xs-6 col-sm-4 col-md-2 href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
+                        <div class=" vignette">
                             <div class="cover">
                                 <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg'; ?>
                                 <img src="<?php echo $this->assetUrl('../upload/cover') . "/" . $cover ?>"
@@ -29,8 +30,8 @@
                 <?php endforeach; ?>
             <?php else : ?>
                 <?php foreach ($books_reading_list as $book) : ?>
-                    <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
-                        <div class=" vignette col-xs-6 col-sm-4 col-md-2">
+                    <a class=" col-xs-6 col-sm-4 col-md-2" href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
+                        <div class=" vignette">
                             <div class="cover">
                                 <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg'; ?>
                                 <img src="<?php echo $this->assetUrl('../upload/cover') . "/" . $cover ?>"
