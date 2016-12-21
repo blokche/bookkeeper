@@ -12,7 +12,7 @@
                 <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
                 <li class="active"> Liste de livres</li>
             </ol>
-         </div>
+        </div>
         <div class="row booklist">
             <?php if (isset($books)) : ?>
                 <?php foreach ($books as $book) : ?>
@@ -93,18 +93,16 @@
             <?php endif; ?>
         </div>
         <div class="row">
-        <?php
-            $previousPage = $page -1;
-            $nextPage = $page +1;
-        ?>
-        <div class="pagination pager">
-            <?php if ($page > 1) : ?>
-                <li><a href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
-            <?php endif;
-            if ($page < $nbpages) : ?>
-                <li><a href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
-            <?php endif;
-            echo "<p>Page : ". $page."/".$nbpages."</p>"; ?>
+            <?php $previousPage = $page -1; ?>
+            <?php $nextPage = $page +1; ?>
+            <div class="pagination pager">
+                <?php if ($page > 1) : ?>
+                    <li><a href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
+                <?php endif; ?>
+                <?php if ($page < $nbpages) : ?>
+                    <li><a href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
+                <?php endif; ?>
+                <?php echo "<p>Page : ". $page."/".$nbpages."</p>"; ?>
             </div>
         </div>
     </div>

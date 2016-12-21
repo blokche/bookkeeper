@@ -34,7 +34,7 @@ class MailModel extends Model {
         $mail->Subject = $object;
         $mail->AltBody = $msg;
 
-        var_dump($mail->AltBody);
+        //var_dump($mail->AltBody);
 
         if(!$mail->send()) {
             $message= ['type' => 'warning', 'message' => "Une erreur inconnu s'est produite pendant l'envoie du mail, veuillez ré-essayér."];
