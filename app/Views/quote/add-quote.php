@@ -34,6 +34,8 @@
             <input id="author" name="author" class="form-control" type="text" placeholder="Auteur">
         </div>
 
+        <a class="btn btn-primary pull-left" href="<?php echo $this->url('profile.quote') ?>">Retour aux citations</a>
+
         <input type="submit" name="addQuote" class="btn btn-success pull-right" value="Ajouter une citation" />
     </form>
 

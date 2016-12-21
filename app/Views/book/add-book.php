@@ -27,22 +27,22 @@
 
             <div class=" form-group">
                 <label for="cover">Couverture :</label>
-                <input id="cover" name="cover" class="form-control" type="file">
+                <input id="cover" name="cover" class="" type="file">
             </div>
 
             <div class="radio">
+                <p>Ajouter ce livre dans ma liste de lecture en tant que livre :</p>
                 <label>
                     <input type="radio" name="optionsRadios" id="status-non-lu" value="0">
-                    Ajouter ce livre dans ma liste de lecture en tant que livre non lu
+                     non lu
                 </label>
+                <br>
                 <label>
                     <input type="radio" name="optionsRadios" id="status-lu" value="1">
-                    Ajouter ce livre dans ma liste de lecture en tant que livre lu
+                     lu
                 </label>
             </div>
-
-
-            <button name="addBook" class="btn btn-default">Ajouter un livre</button>
+            <button name="addBook" class="btn btn-success pull-right">Ajouter un livre</button>
         </form>
     </div>
 </div>
