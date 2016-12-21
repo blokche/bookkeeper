@@ -62,12 +62,12 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-xs-11">
-                                    <input id="password-register" name="password" type="password" class="form-control input-register" placeholder="Mot de passe :">
+                                    <input id="password-register" name="password" type="password" class="form-control input-register" placeholder="Mot de passe">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-xs-11">
-                                    <input id="cf-password" name="cf-password" type="password" class="form-control input-register" placeholder="Confirmer le mot de passe :">
+                                    <input id="cf-password" name="cf-password" type="password" class="form-control input-register" placeholder="Confirmer le mot de passe">
                                 </div>
                             </div>
                             <div class="row">

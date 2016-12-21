@@ -43,30 +43,39 @@
                 <li  <?php if ($w_current_route=="profile.quote") { echo "class='active'"; } ?>  >
                     <a href="<?= $this->url('profile.quote') ?>">Citations</a>
                 </li>
-                <?php if($w_user['role']=="admin") : ?>
-                <li>
-                    <a href="<?= $this->url('admin.home') ?>">Admin</a>
-                </li>
-                <?php endif; ?>
+
                 <?php endif; ?>
                 <li <?php if ($w_current_route=="public.libraries") { echo "class='active'"; } ?>  >
                     <a href="<?= $this->url('public.libraries') ?>">Librairies</a>
                 </li>
-                <?php if(empty($w_user)) :?>
-                <li class="login">
-                    <a href="#" type="button" data-toggle="modal" data-target="#myModal">
-                        Se connecter
-                    </a>
-                </li>
-                <?php else : ?>
-                <li>
-                    <a href=" <?= $this->url('profile.home') ?> ">Profil</a>
-                </li>
-                <li>
-                    <a href="<?= $this->url('auth.logout') ?>">Déconnexion</a>
-                </li>
-                <?php endif; ?>
             </ul>
+                <?php if(empty($w_user)) :?>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="login">
+                            <a href="#" type="button" data-toggle="modal" data-target="#myModal">
+                                Se connecter
+                            </a>
+                        </li>
+                    </ul>
+
+                <?php else : ?>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href=" <?= $this->url('profile.home') ?> ">Profil</a>
+                        </li>
+                        <?php if($w_user['role']=="admin") : ?>
+                            <li>
+                                <a href="<?= $this->url('admin.home') ?>">Admin</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <li>
+                            <a href="<?= $this->url('auth.logout') ?>">Déconnexion</a>
+                        </li>
+
+                    </ul>
+                <?php endif; ?>
+
         </div>
     </div>
 </nav>

@@ -480,6 +480,36 @@ main{
 	font-size: 1.3rem;
 	font-weight: 400;
 }
+.titre-auteur{
+
+}
+
+/* -------------------------------------
+            BOOK
+---------------------------------------*/
+.book img{
+	width: 100%;
+}
+.label-perso{
+	font-weight: 300;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	border-radius: .25em;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-right: 1rem;
+	margin-bottom: 0;
+	font-size: 1.4rem;
+	vertical-align: middle;
+	touch-action: manipulation;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	float: left;
+
+}
 
 
 
