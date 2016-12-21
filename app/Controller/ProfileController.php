@@ -174,6 +174,10 @@ class ProfileController extends Controller
 
         $offset=($page*$limit)- $limit;
 
+        if ($nbPages==0){
+            $page=0;
+        }
+
         $bookUnRead = $this->user->userReadBook($user['id'],0,$limit ,$offset ,"DESC");
         $this->show('profile/bookunread', ['bookUnRead' => $bookUnRead, 'page' => $page, 'nbPages' => $nbPages]);
     }
