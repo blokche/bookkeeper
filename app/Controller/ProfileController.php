@@ -111,6 +111,7 @@ class ProfileController extends Controller
                     $authmodel->refreshUser();
                     $this->message[]=['type' =>'success', 'message' => "Le profil a été mis à jour."];
                     $_SESSION['message'] = $this->message;
+                    $this->redirectToRoute("profile.home");
                 }
             } else {
                 $this->message[]=['type' =>'warning', 'message' => "Le mot de passe ne correspond pas à l'email."];
