@@ -167,23 +167,25 @@
                     <?php if (isset($books_reading_list)) : ?>
 
                         <?php foreach($books_reading_list as $book):?>
-                            <tr>
-                                <td><a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]) ?>"> <?php echo $book['title'] ?> </a></td>
-                                <td><?php echo $book['author'] ?></td>
-                                <td>
+                            <?php if (isset($book['book_id'])) : ?>
+                                <tr>
+                                    <td><a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]) ?>"> <?php echo $book['title'] ?> </a></td>
+                                    <td><?php echo $book['author'] ?></td>
+                                    <td>
 
-                                    <?php if($w_user['id']==$book['user_id']) : ?>
-                                        <?php if (isset($book['read_status'])): ?>
-                                            <?php if ($book['read_status'] == 1) : ?>
-                                                <span class="label label-success">Lu</span>
-                                            <?php else: ?>
-                                                <span class="label label-danger">Non lu</span>
-                                            <?php endif ?>
+                                        <?php if($w_user['id']==$book['user_id']) : ?>
+                                            <?php if (isset($book['read_status'])): ?>
+                                                <?php if ($book['read_status'] == 1) : ?>
+                                                    <span class="label label-success">Lu</span>
+                                                <?php else: ?>
+                                                    <span class="label label-danger">Non lu</span>
+                                                <?php endif ?>
+                                            <?php endif; ?>
                                         <?php endif; ?>
-                                    <?php endif; ?>
 
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                         
                     <?php endif; ?>
