@@ -15,10 +15,10 @@
                 <p><span class="gras">Pseudo :</span> <?php echo $w_user['username'] ?></p>
                 <p><span class="gras">Email :</span> <?php echo $w_user['email'] ?></p>
                 <?php $date = new DateTime($w_user['created_at']); ?>
-                <p><span class="gras">Compte créé le :</span> <?php echo $date->format('d/m/Y, à h\hm'); ?></p>
+                <p><span class="gras">Compte créé le :</span> <?php echo $date->format('d/m/Y, à h\hi'); ?></p>
                 <?php if (isset($w_user['updated_at'])): ?>
                     <?php $date = new DateTime($w_user['updated_at']); ?>
-                    <p><span class="gras">Dernière modification effectuée le :</span> <?php echo $date->format('d/m/Y, à h\hm'); ?></p>
+                    <p><span class="gras">Dernière modification effectuée le :</span> <?php echo $date->format('d/m/Y, à h\hi'); ?></p>
                 <?php endif ?>
 
                 <a href="<?php echo $this->url('profile.edit') ?>">Modifier mon profil</a>
