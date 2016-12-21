@@ -33,7 +33,7 @@ $this->layout('layout', ['title' => 'Librairies sur la métropole lilloise']) ?>
             content: counter(lib);
         }
         .loader {
-            margin:2em auto;
+            margin:5em auto 2em;
             display: block;
             width:60px;
             height: 60px;
@@ -113,7 +113,7 @@ $this->layout('layout', ['title' => 'Librairies sur la métropole lilloise']) ?>
                 <h2>{{libraries.length}} librairies présentes sur la Métropole Européenne de Lille</h2>
                 <div class="form-group">
                     <label for="filter">Filtrer les résultats par ville</label>
-                    <input id="filter" class="form-control" @keyup.enter="filterValue" v-model="filter" type="search" placeholder="Filtrer les résultats" />
+                    <input id="filter" class="form-control" @keyup="filterValue" v-model="filter" type="search" placeholder="Filtrer les résultats" />
                 </div>
                 <ul class="libraries">
                     <li v-for="(library, index) of filterlibraries">

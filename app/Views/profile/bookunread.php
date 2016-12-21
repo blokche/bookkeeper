@@ -11,7 +11,7 @@
         <h2>Liste des livres à lire:</h2>
     </div>
 
-    <div class="row">
+    <div class="row booklist">
         <?php
         foreach ($bookUnRead as $book) : ?>
             <div class=" vignette col-xs-6 col-sm-4 col-md-2">

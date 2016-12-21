@@ -9,31 +9,28 @@ var app = new Vue({
     methods:{
         situer: function (index)
         {
-            var coords = this.filterlibraries[index].fields.geo_point_2d
-            var info = this.filterlibraries[index].fields
+            let coords = this.filterlibraries[index].fields.geo_point_2d
+            let info = this.filterlibraries[index].fields
 
-            var resultsArea = document.querySelector('#app > div');
-            var mapArea = document.querySelector('#map');
+            let resultsArea = document.querySelector('#app > div');
+            let mapArea = document.querySelector('#map');
 
-            console.log(resultsArea);
-            console.log(mapArea);
-
-            var map = new google.maps.Map(document.getElementById('map'), {
+            let map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: coords[0], lng: coords[1]},
                 zoom: 17
             });
 
-            var marker = new google.maps.Marker({
+            let marker = new google.maps.Marker({
                 position: {lat:coords[0], lng:coords[1]},
                 map: map,
                 title: info.libelle
             });
 
-            var infowindow = new google.maps.InfoWindow({
+            let infowindow = new google.maps.InfoWindow({
                 content: "<p>"+info.libelle+"<hr />"+info.adresse+"<br />"+info.cp+" "+info.ville+"</p>"
             });
 
-            marker.addListener('click', function() {
+            marker.addListener('click', () => {
                 infowindow.open(map, marker);
             });
 
@@ -48,7 +45,7 @@ var app = new Vue({
         filterValue : function() {
             if (this.filter != null) {
                 let filtre = new RegExp(this.filter, 'i');
-                this.filterlibraries = this.libraries.filter( lib => filtre.test(lib.fields.ville) )
+                this.filterlibraries = this.libraries.filter( lib => filtre.test(lib.fields.ville )  || filtre.test(lib.fields.cp) )
             } else {
                 this.filterlibraries = this.libraries
             }
@@ -61,7 +58,7 @@ var app = new Vue({
                 this.loading = false
                 this.filterValue();
     })
-    .catch(err => {
+    .catch( function(err) {
             console.error(err)
         })
     }
