@@ -64,15 +64,13 @@
                             <a href=" <?= $this->url('profile.home') ?> ">Profil</a>
                         </li>
                         <?php if($w_user['role']=="admin") : ?>
-                            <li>
-                                <a href="<?= $this->url('admin.home') ?>">Admin</a>
-                            </li>
-                        <?php endif; ?>
-
                         <li>
-                            <a href="<?= $this->url('auth.logout') ?>">Déconnexion</a>
+                          <a href="<?= $this->url('admin.home') ?>">Admin</a>
                         </li>
-
+                        <?php endif; ?>
+                        <li>
+                          <a href="<?= $this->url('auth.logout') ?>">Déconnexion</a>
+                        </li>
                     </ul>
                 <?php endif; ?>
 
@@ -99,7 +97,7 @@
                         </div>
                 </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer la fenêtre</button>
                         <button name="login" class="btn btn-default">Se connecter</button>
                     </div>
             </form>

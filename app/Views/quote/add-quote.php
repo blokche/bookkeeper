@@ -18,9 +18,10 @@
 
         <?php if (count($books) > 0) : ?>
         <div class="form-group">
-            <label for="linkedbook">Associer un livre à l'extrait / la citation</label>
+            <label for="linkedbook">Associer un livre à l'extrait / la citation <small>(facultatif)</small></label>
             <select name="linkedbook" id="linkedbook" class="form-control">
                 <option value="0"></option>
+                <optgroup label="Associer la citation à un livre">
                 <?php foreach ($books as $book) : ?>
                     <option value="<?= $book['id'] ?>"><?= $book['title'] ?> - <?= $book['author'] ?></option>
                 <?php endforeach; ?>
@@ -29,9 +30,11 @@
         <?php endif; ?>
 
         <div class="form-group">
-            <label for="author">Auteur :</label>
+            <label for="author">Auteur <small>(facultatif)</small></label>
             <input id="author" name="author" class="form-control" type="text" placeholder="Auteur">
         </div>
+
+        <a class="btn btn-primary pull-left" href="<?php echo $this->url('profile.quote') ?>">Retour aux citations</a>
 
         <input type="submit" name="addQuote" class="btn btn-success pull-right" value="Ajouter une citation" />
     </form>

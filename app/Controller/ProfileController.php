@@ -33,11 +33,10 @@ class ProfileController extends Controller
      */
     public function index () {
         $user = $this->getUser();
-        $userModel = new UserModel();
         $avatar = (!empty($user['avatar'])) ? $user['id'].$user['avatar'] : 'default.png';
 
-        $bookRead = $userModel->userReadBook($user['id'], 1, 6);
-        $bookUnRead = $userModel->userReadBook($user['id'], 0 , 6);
+        $bookRead = $this->user->userReadBook($user['id'], 1, 6);
+        $bookUnRead = $this->user->userReadBook($user['id'], 0 , 6);
 
         $this->show('profile/home', ['avatar' => $avatar, 'bookRead' => $bookRead, 'bookUnRead' => $bookUnRead]);
     }
@@ -48,15 +47,12 @@ class ProfileController extends Controller
     public function editProfile ()
     {
         $user = $this->getUser();
-        $message =[];
-        $authmodel = new AuthentificationModel();
-        $userModel = new UserModel();
         if (isset($_POST['editUsers'])) {
             $post = [];
 
             // Upload Email
             if(($_POST['email'] !== $user['email'])){
-                if (!empty($_POST['email']) && !($userModel->emailExists($_POST['email']))) {
+                if (!empty($_POST['email']) && !($this->user->emailExists($_POST['email']))) {
                     if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                         $post['email'] = strip_tags(trim($_POST['email']));
                     } else {
@@ -99,7 +95,7 @@ class ProfileController extends Controller
                 }
             }
 
-            if ($authmodel->isValidLoginInfo($user['email'], $_POST['password'])) {
+            if ($this->auth->isValidLoginInfo($user['email'], $_POST['password'])) {
                 if (!empty($post)) {
                     // upload + extension en base
 
@@ -107,10 +103,11 @@ class ProfileController extends Controller
                     $date = $date->format("Y-m-d H:i:s");
                     $post['updated_at']=$date;
                     
-                    $userModel->update($post, $user['id'], true);
-                    $authmodel->refreshUser();
+                    $this->user->update($post, $user['id'], true);
+                    $this->auth->refreshUser();
                     $this->message[]=['type' =>'success', 'message' => "Le profil a été mis à jour."];
                     $_SESSION['message'] = $this->message;
+                    $this->redirectToRoute("profile.home");
                 }
             } else {
                 $this->message[]=['type' =>'warning', 'message' => "Le mot de passe ne correspond pas à l'email."];

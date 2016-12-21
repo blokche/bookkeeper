@@ -28,27 +28,27 @@
                     </a>
                 <?php endforeach; ?>
             <?php else : ?>
-                <?php foreach ($books_reading_list as $book) :
-                    //var_dump($book);
-                    ?>
-                    <a href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
+                <?php foreach ($books_reading_list as $book) : ?>
+                    <a href="<?php echo $this->url('public.view', ['id' => $book['book_id']]); ?>">
                         <div class=" vignette col-xs-6 col-sm-4 col-md-2">
                             <div class="cover">
                                 <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg'; ?>
                                 <img src="<?php echo $this->assetUrl('../upload/cover') . "/" . $cover ?>"
                                      alt="cover de <?php echo $book['title'] ?>">
                             </div>
+
                             <?php if (isset($book['read_status'])): ?>
                                 <?php if ($book['read_status'] == 1) : ?>
                                     <span class="label label-success">Lu</span>
                                 <?php else: ?>
                                     <span class="label label-danger">Non lu</span>
-                                <?php endif ?>
+                            <?php endif ?>
                             <?php endif; ?>
                             <div class="titre-auteur">
                                 <h3><?php echo $book['title'] ?></h3>
                                 <h4><?php echo $book['author'] ?></h4>
                             </div>
+
                         </div>
                     </a>
                 <?php endforeach; ?>
