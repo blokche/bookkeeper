@@ -6,27 +6,30 @@
 	<link rel="stylesheet" href="<?= $this->assetUrl('vendor/bootstrap/dist/css/bootstrap.min.css') ?>">
 	<link rel="stylesheet" href="<?= $this->assetUrl('css/style.css') ?>">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,400i,700" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<?= $this->assetUrl('vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<?php echo $this->section('css') ?>
 </head>
 <body>
 <?php $this->insert('default/menu') ;?>
 
 <main class="container">
-	<?php if ( isset($_SESSION['message'])) : ?>
-		<div class="container">
-			<div class="row">
-				<?php foreach ($_SESSION['message'] as $message): ?>
-					<div class="alert alert-<?= $message['type'] ?> alert-dismissible" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<strong><?= $message['message'] ?></strong>
-					</div>
 
-				<?php	endforeach;
-				unset($_SESSION['message']); ?>
+		<?php if ( isset($_SESSION['message'])) : ?>
+			<div class="container">
+				<div class="row">
+					<?php foreach ($_SESSION['message'] as $message): ?>
+						<div class="alert alert-<?= $message['type'] ?> alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong><?= $message['message'] ?></strong>
+						</div>
+
+					<?php	endforeach;
+					unset($_SESSION['message']); ?>
+				</div>
 			</div>
-		</div>
-	<?php endif; ?>
+		<?php endif; ?>
+
+
 	<?= $this->section('main_content') ?>
 </main>
 <div class="container-fluid footer">

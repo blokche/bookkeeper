@@ -50,7 +50,15 @@ body{
 	flex-direction: row;
 	flex-wrap: wrap;
 }
-
+h2, h3, h4{
+	word-break: break-word;
+}
+.alert-position{
+	position: absolute;
+	top: 10%;
+	right: 1%;
+	z-index: 1;
+}
 /* ----------------------------
               NAV
 -----------------------------*/
@@ -100,6 +108,12 @@ body{
 	.navbar-nav > li > a {
 		padding-top: 18px;
 		padding-bottom: 15px;
+	}
+}
+
+@media (max-width: 767px) {
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+		color: #fff;
 	}
 }
 .modal-content {
@@ -377,6 +391,7 @@ blockquote {
 }
 .recent-add table tr td:nth-child(3){
 	text-align: center;
+	padding-left: 1rem;
 }
 .recent-add table tr td .btn-add{
 	background: none;
@@ -430,6 +445,8 @@ main{
 }
 
 
+
+
 /* -------------------------------------
   _____  _____   ____  ______ _____ _
  |  __ \|  __ \ / __ \|  ____|_   _| |
@@ -456,6 +473,7 @@ main{
 .titre-liste h2{
 	font-weight: 600;
 	font-size: 2.5rem;
+	word-break: break-all;
 }
 .vignette{
 	padding-bottom: 2.05rem;
@@ -485,8 +503,8 @@ main{
 	font-size: 1.3rem;
 	font-weight: 400;
 }
-.titre-auteur{
-
+.titre-auteur {
+	min-height: 9rem;
 }
 
 
