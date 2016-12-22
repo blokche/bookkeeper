@@ -90,8 +90,8 @@
             <form class="login navbar-form" action="<?= $this->url('auth.login') ?>" method="POST">
                 <div class="modal-body">
                         <div class="form-group">
-                            <input id="email" name="email" type="text" class="form-nav" placeholder="Votre Pseudo">
-                            <input id="password" name="password" type="password" class="form-nav" placeholder="Votre Password">
+                            <input id="email" name="email" type="text" class="form-nav" placeholder="Votre email">
+                            <input id="password" name="password" type="password" class="form-nav" placeholder="Votre mot de passe">
                         </div>
                         <div class="forgetpassword">
                             <a href="<?= $this->url	('auth.forgetpassword') ?>">Mot de passe oublié ?</a>
