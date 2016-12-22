@@ -41,16 +41,16 @@ class AuthentificationController extends Controller
                 if ($currentUser['status']) {
                     $this->auth->logUserIn($currentUser);
 
-                    $this->message[]=['type' => 'success', 'message' => 'Vous etes bien connecté.'];
+                    $this->message[]=['type' => 'success', 'message' => 'Vous êtes bien connecté.'];
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('profile.home');
                 } else {
-                    $this->message[]=['type' => 'warning', 'message' => 'Cette utilisateur est actuellement desactivé ou n\'as pas encore été activé.'];
+                    $this->message[]=['type' => 'warning', 'message' => 'Cet utilisateur est actuellement desactivé ou n\'a pas encore été activé.'];
                     $_SESSION['message']=$this->message;
                     $this->redirectToRoute('home');
                 }
             } else{
-                $this->message[]=['type' => 'warning', 'message' => "L'email et le mot de passe saisie ne correspondent pas."];
+                $this->message[]=['type' => 'warning', 'message' => "L'email et le mot de passe saisis ne correspondent pas."];
                 $_SESSION['message']=$this->message;
                 $this->redirectToRoute('home');
             }
@@ -188,6 +188,7 @@ class AuthentificationController extends Controller
                 $this->user->update(['token' => null],$user_token['id']);
                 $this->message[] = ['type' => 'success', 'message' => "Votre compte a bien été activée."];
                 $_SESSION['message']=$this->message;
+                $this->auth->logUserIn($user_token);
                 $this->redirectToRoute('profile.home');
             } else {
                 

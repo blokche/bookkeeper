@@ -33,14 +33,9 @@ class DefaultController extends Controller
 
 		$perPage = 10;
 
-		if ($user) {
-			$books_reading_list=$this->user->getAllBookWithReadingList('DESC',$perPage);
-			
-			$this->show('default/home', ['books_reading_list' => $books_reading_list]);
-		} else {
-			$books = $this->book->findAll('id', "DESC", $perPage);
-			$this->show('default/home', ['books' => $books]);
-		}
+		$books = $this->book->findAll('id', 'DESC', $perPage);
+
+		$this->show('default/home', ['books' => $books,'user_model' => $this->user]);
 	}
 
 	
@@ -71,14 +66,10 @@ class DefaultController extends Controller
 		if ($offset<0){
 			$offset=0;
 		}
+		
+		$books = $this->book->findAll('id', 'DESC', $perPage, $offset);
 
-		if ($user) {
-			$books_reading_list=$this->user->getAllBookWithReadingList('DESC',$perPage,$offset);
-			$this->show('default/books', ['books_reading_list' => $books_reading_list, 'nbpages' => $nbPages, 'page' => $page]);
-		} else {
-			$books = $this->book->findAll('id', 'DESC', $perPage, $offset);
-			$this->show('default/books', ['books' => $books, 'nbpages' => $nbPages, 'page' => $page]);
-		}
+		$this->show('default/books', ['books' => $books,'user_model' => $this->user, 'nbpages' => $nbPages, 'page' => $page]);
 	}
 
 	
@@ -89,28 +80,12 @@ class DefaultController extends Controller
 	public function bookById($id)
 	{
 		$user=$this->getUser();
-
-		//var_dump($user);
-
-		//die();
-
-		if($user){
-			$ReadingList=$this->user->getFromReadingListByBookId($id,$user);
-		}
-
-		//var_dump($ReadingList);
+		
 
 		$book = $this->book->find($id);
 
 		if ($book) {
-
-			if ($user) {
-
-				$this->show('default/viewbook.php', ['book' => $book, 'ReadingList' => $ReadingList]);
-			} else {
-
-				$this->show('default/viewbook.php', ['book' => $book]);
-			}
+			$this->show('default/viewbook', ['book' => $book,'user_model' => $this->user]);
 		} else {
 
 			$this->showNotFound();
