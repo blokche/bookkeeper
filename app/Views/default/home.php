@@ -50,6 +50,7 @@
                             <div class="row ">
                                 <div class="form-group col-xs-11">
                                     <h1>S’enregistrer</h1>
+                                    <p>Tous les champs sont obligatoires.</p>
                                 </div>
                                 <div class="form-group col-xs-11">
                                     <input id="username" name="username" type="text" class="form-control input-register" placeholder="Votre Pseudo">

@@ -1,6 +1,8 @@
-<?php $this->layout('layout', ['title' => 'Reset Password']) ?>
+<?php $this->layout('layout', ['title' => 'Réinitialisation du mot de passe']) ?>
 
 <?php $this->start('main_content') ?>
+
+<h1>Réinitialisation du mot de passe </h1>
 
     <form action="<?= $this->url('auth.resetpassword') ?>" method="POST">
         

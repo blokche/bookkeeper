@@ -16,7 +16,7 @@
         <div class="row booklist">
             <?php if (isset($books)) : ?>
                 <?php foreach ($books as $book) : ?>
-                    <a class=" col-xs-6 col-sm-4 col-md-2 href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
+                    <a class=" col-xs-6 col-sm-4 col-md-2" href="<?php echo $this->url('public.view', ['id' => $book['id']]); ?>">
                         <div class=" vignette">
                             <div class="cover">
                                 <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.jpg'; ?>

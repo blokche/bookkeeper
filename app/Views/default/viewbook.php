@@ -16,7 +16,7 @@ $this->start('main_content'); ?>
         <div class="col-xs-12 col-md-6 ">
             <?php $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
             <img src="<?php echo $this->assetUrl('/../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
-            <?php if ($ReadingList) : ?>
+            <?php if (isset($ReadingList)) : ?>
                 <?php if ($ReadingList['read_status'] == 1) : ?>
                     <img class="macaron" src="<?= $this->assetUrl('img/lu.svg') ?>" alt="">
                 <?php else: ?>
@@ -34,7 +34,7 @@ $this->start('main_content'); ?>
 
     if ($w_user) :
 
-        if ($ReadingList) : ?>
+        if (isset($ReadingList)) : ?>
             <p><a href=" <?php echo $this->url('profile.book.delete', ['id' => $ReadingList['book_id']]) ?>  " class="btn btn-warning label-perso">Retirer de ma liste</a></p>
 
             <?php

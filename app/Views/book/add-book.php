@@ -6,8 +6,7 @@
     <div class="row">
         <ol class="breadcrumb">
           <li><a href="  <?php echo $this->url('home') ?>   ">Accueil</a></li>
-          <li><a href="<?php echo $this->url('profile.home') ?>">Mon profil</a></li>
-          <li><a href="<?php echo $this->url('profile.bookunread',['page'=> 1]) ?>">Mes livres non lus</a></li>
+          <li><a href="<?php echo $this->url('public.book',['page'=> 1]) ?>">Liste des livres</a></li>
           <li class="active">Ajouter un livre</li>
         </ol>
 
