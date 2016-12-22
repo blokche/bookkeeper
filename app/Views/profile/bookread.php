@@ -24,9 +24,10 @@
                             <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.png';?>
                             <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
                         </div>
-
-                        <h3><?php echo $book['title'] ?></h3>
-                        <h4><?php echo $book['author'] ?></h4>
+                        <div class="titre-auteur">
+                            <h3><?php echo $book['title'] ?></h3>
+                            <h4><?php echo $book['author'] ?></h4>
+                        </div>
                     </a>
 
                     <a href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-warning btn-block">Retirer de ma liste</a>

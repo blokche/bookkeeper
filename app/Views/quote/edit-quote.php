@@ -16,6 +16,7 @@
             <textarea required id="content" name="content" class="form-control" type="text"><?= $quote['content'] ?></textarea>
         </div>
 
+        <?php if (count($books) > 0) : ?>
         <div class="form-group">
             <label for="linkedbook">Associer l'extrait / la citation à un livre <small>(facultatif)</small></label>
             <select name="linkedbook" id="linkedbook" class="form-control">
@@ -27,6 +28,7 @@
                 </optgroup>
             </select>
         </div>
+        <?php endif; ?>
 
         <div class=" form-group">
             <label for="author">Modifier l'auteur <small>(facultatif)</small></label>
