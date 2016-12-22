@@ -23,7 +23,6 @@
                         <h3><?php echo $book['title'] ?></h3>
                         <h4><?php echo $book['author'] ?></h4>
                     </a>
-
                     <a  href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-warning btn-block">Retirer de ma liste</a>
                     <a  href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 1]) ?>  " class="btn btn-success btn-block" >Marquer lu</a>
 
@@ -48,6 +47,6 @@
             <?php echo "<p class='text-center' >Page : ". $page."/".$nbPages."</p>"; ?>
         </div>
     <?php else : ?>
-    <h3>Aucun livre dans votre liste de livres non lus, <a href="  <?php echo $this->url('public.book',['page' => 1]) ?>  " > vous en pouvez en ajouter.</a></h3>
+      <h3>Aucun livre dans votre liste de livres non lus, <a href="  <?php echo $this->url('public.book',['page' => 1]) ?>  " > vous en pouvez en ajouter.</a></h3>
     <?php endif; ?>
 <?php $this->stop('main_content') ?>
