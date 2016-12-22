@@ -155,7 +155,6 @@ class AuthentificationController extends Controller
                 $this->message[]=['type' => 'success', 'message' => 'Vous etes bien inscrit.'];
                 $retour=$this->envoieMailActivation($user_connected);
 
-                //var_dump(isset($retour['errors-mail']));
 
                 if ($retour['type']=="success") {
 
