@@ -13,8 +13,8 @@
         <div id="quotes">
             <div class="form-group">
                 <input style="margin-bottom:1em;margin-top:1em;" class="form-control search" placeholder="Rechercher..." />
-                <button class="btn btn-default sort" data-sort="author">Trier par auteur</button>
-                <button class="btn btn-default sort" data-sort="book">Trier par livre</button>
+                <button class="btn btn-primary sort" data-sort="author">Trier par auteur</button>
+                <button class="btn btn-primary sort" data-sort="book">Trier par livre</button>
             </div>
 
             <table class="table table-responsive table-striped">

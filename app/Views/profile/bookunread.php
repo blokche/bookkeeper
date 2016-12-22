@@ -11,41 +11,42 @@
         <h2>Liste des livres à lire:</h2>
     </div>
 
-    <div class="row booklist">
-        <?php
-        foreach ($bookUnRead as $book) : ?>
-            <div class=" vignette col-xs-6 col-sm-4 col-md-2">
-                <a href="    <?php echo $this->url('public.view', ['id' => $book['book_id']]) ?>    ">
-                    <div class="cover">
-                        <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.png';?>
-                        <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
-                    </div>
-                    <div class="titre-auteur">
+    <?php if (!empty($bookUnRead)) : ?>
+        <div class="row booklist">
+            <?php foreach ($bookUnRead as $book) : ?>
+                <div class=" vignette col-xs-6 col-sm-4 col-md-2">
+                    <a href="    <?php echo $this->url('public.view', ['id' => $book['book_id']]) ?>    ">
+                        <div class="cover">
+                            <?php $cover = (!empty($book['cover'])) ? $book['cover'] : 'default.png';?>
+                            <img src="<?php echo $this->assetUrl('../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
+                        </div>
                         <h3><?php echo $book['title'] ?></h3>
                         <h4><?php echo $book['author'] ?></h4>
-                    </div>
-                </a>
+                    </a>
+                    <a  href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-warning btn-block">Retirer de ma liste</a>
+                    <a  href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 1]) ?>  " class="btn btn-success btn-block" >Marquer lu</a>
 
-                <a  href="  <?php echo $this->url('profile.book.delete', ['id' => $book['book_id']]) ?>  " class="btn btn-warning btn-block">Retirer de ma liste</a>
-                <a  href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['book_id'],'status' => 1]) ?>  " class="btn btn-success btn-block" >Marquer lu</a>
+                </div>
+            <?php endforeach; ?>
+        </div>
 
-            </div>
-        <?php endforeach; ?>
-    </div>
-
-    <div class="row">
-        <?php
-        $previousPage = $page -1;
-        $nextPage = $page +1;
-        ?>
-        <div class="pagination pager">
+        <div class="row">
+            <?php if ($nbPages==0)
+            $page=0;
+            $previousPage = $page -1;
+            $nextPage = $page +1;
+            ?>
             <?php if ($page > 1) : ?>
-                <li><a href="<?php echo $this->url('profile.bookunread', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
+                <a class="pull-left btn-info btn-info btn" href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
             <?php endif; ?>
             <?php if ($page < $nbPages) : ?>
-                <li><a href="<?php echo $this->url('profile.bookunread', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
+                <a class="pull-right btn-info btn" href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
             <?php endif; ?>
-            <?php echo "<p>Page : ". $page."/".$nbPages."</p>"; ?>
         </div>
-    </div>
+        <div class="row">
+            <?php echo "<p class='text-center' >Page : ". $page."/".$nbPages."</p>"; ?>
+        </div>
+    <?php else : ?>
+      <h3>Aucun livre dans votre liste de livres non lus, <a href="  <?php echo $this->url('public.book',['page' => 1]) ?>  " > vous en pouvez en ajouter.</a></h3>
+    <?php endif; ?>
 <?php $this->stop('main_content') ?>

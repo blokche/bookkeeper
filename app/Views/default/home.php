@@ -70,8 +70,9 @@
                                 </div>
                             </div>
                             <div class="row">
+
                                 <div class="col-xs-2 ">
-                                    <button name="register" type="submit" class="btn-subscribe">Inscription</button>
+                                    <button  name="register" type="submit" class="btn-subscribe">Inscription</button>
                                 </div>
                             </div>
                         </form>

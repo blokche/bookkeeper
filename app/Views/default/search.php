@@ -24,7 +24,7 @@ $this->start('main_content');
                         <label for="search">Effectuer une recherche</label>
                         <input id="search" type="search" name="q" id="q" class="form-control" placeholder="Rechercher">
                     </div>
-                    <input type="submit" class="btn btn-default" name="search" value="Rechercher">
+                    <input type="submit" class="btn btn-success pull-right" name="search" value="Rechercher">
                 </form>
             </div>
         </div>

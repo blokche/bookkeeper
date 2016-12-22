@@ -20,7 +20,7 @@ $this->start('main_content');?>
                     <input id="active" type="checkbox" name="active" <?php echo ($user['status'] == 1) ? 'checked' : null ;?>>
                     <label for="active">Actif ?</label>
                 </div>
-                <a href="<?php echo $this->url("admin.user.view", ['id' => $user['id']]); ?>" class="btn btn-default">Retour au profil de l'utilisateur</a>
+                <a href="<?php echo $this->url("admin.user.view", ['id' => $user['id']]); ?>" class="btn btn-primary">Retour au profil de l'utilisateur</a>
                 <input name="edit" class="btn btn-success" type="submit" value="Enregistrer les modifications">
             </form>
         </div>

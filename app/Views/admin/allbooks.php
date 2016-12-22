@@ -6,8 +6,8 @@ $this->start('main_content');?>
     <div id="books">
         <div class="form-group">
             <input style="margin-bottom:1em;" class="search form-control" placeholder="Recherche..." />
-            <button class="sort btn btn-default" data-sort="author">Trier par auteur</button>
-            <button class="sort btn btn-default" data-sort="title">Trier par titre</button>
+            <button class="sort btn btn-primary" data-sort="author">Trier par auteur</button>
+            <button class="sort btn btn-primary" data-sort="title">Trier par titre</button>
         </div>
         <table class="table table-responsive table-striped">
             <thead>
@@ -25,7 +25,7 @@ $this->start('main_content');?>
                     <td class="title"><?php echo $book['title']; ?></td>
                     <td class="author"><?php echo $book['author']; ?></td>
                     <td>
-                        <a class="btn btn-default" href="<?php echo $this->url('admin.book.view', ['id' => $book['id']]) ?>">Consulter</a>
+                        <a class="btn btn-primary" href="<?php echo $this->url('admin.book.view', ['id' => $book['id']]) ?>">Consulter</a>
                         <a class="btn btn-primary" href="<?php echo $this->url('admin.book.edit', ['id' => $book['id']]) ?>">Éditer</a></li>
                     </td>
                 </tr>

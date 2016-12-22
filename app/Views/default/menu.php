@@ -22,6 +22,7 @@
                             <a href="<?= $this->url('public.search') ?>">Recherche</a>
                         </li>
                         <?php if ($w_user): ?>
+                            <li role="separator" class="divider"></li>
                             <li <?php if ($w_current_route=="profile.book.add") { echo "class='active'"; } ?>  >
                                 <a href="<?= $this->url('profile.book.add') ?>">Ajouter un livre</a>
                             </li>
@@ -97,8 +98,8 @@
                         </div>
                 </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer la fenêtre</button>
-                        <button name="login" class="btn btn-default">Se connecter</button>
+                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Fermer la fenêtre</button>
+                        <button name="login" class="btn btn-success">Se connecter</button>
                     </div>
             </form>
         </div>

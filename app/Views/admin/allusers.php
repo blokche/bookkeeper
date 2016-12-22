@@ -20,8 +20,8 @@ $this->start('main_content');?>
                         <td><?php echo $user['id'] ;?></td>
                         <td><?php echo $user['username'] ;?></td>
                         <td>
-                            <a class="btn btn-default" href="<?php echo $this->url("admin.user.view", ['id' => $user['id']]); ?>">Consulter</a>
-                            <a class="btn btn-default" href="<?php echo $this->url('admin.user.edit', ['id' => $user['id']]) ?>" class="btn">Editer</a>
+                            <a class="btn btn-primary" href="<?php echo $this->url("admin.user.view", ['id' => $user['id']]); ?>">Consulter</a>
+                            <a class="btn btn-primary" href="<?php echo $this->url('admin.user.edit', ['id' => $user['id']]) ?>" class="btn">Editer</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
