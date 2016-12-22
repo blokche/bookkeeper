@@ -162,15 +162,17 @@
 
                             <?php if ($w_user) : ?>
                                 <?php $status=$user_model->getFromReadingListByBookId($book['id'],$w_user); ?>
-                                <?php if ($status): ?>
                                 <td>
-                                    <?php if ($status['read_status'] == 1) : ?>
-                                        <span class="label label-success">Lu</span>
-                                    <?php else: ?>
-                                        <span class="label label-danger">Non lu</span>
+                                    <?php if ($status): ?>
+
+                                        <?php if ($status['read_status'] == 1) : ?>
+                                            <span class="label label-success">Lu</span>
+                                        <?php else: ?>
+                                            <span class="label label-danger">Non lu</span>
+                                        <?php endif; ?>
+                                    
                                     <?php endif; ?>
                                 </td>
-                                <?php endif; ?>
                             <?php endif; ?>
                         </tr>
                         <?php endforeach; ?>

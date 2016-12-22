@@ -37,10 +37,10 @@
             $nextPage = $page +1;
             ?>
             <?php if ($page > 1) : ?>
-                <a class="pull-left btn-info btn-info btn" href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
+                <a class="pull-left btn-info btn-info btn" href="<?php echo $this->url('profile.bookunread', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
             <?php endif; ?>
             <?php if ($page < $nbPages) : ?>
-                <a class="pull-right btn-info btn" href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
+                <a class="pull-right btn-info btn" href="<?php echo $this->url('profile.bookunread', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
             <?php endif; ?>
         </div>
         <div class="row">
