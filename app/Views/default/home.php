@@ -12,11 +12,10 @@
 
     <?php $this->insert('default/menu') ;?>
 
-            <div class="container-fluid">
-                <section>
-                    <div class="container">
-                        <div class="row">
+
                             <?php if ( isset($_SESSION['message'])) : ?>
+    <div class="container-fluid alert-position">
+            <div class="row">
                                 <?php foreach ($_SESSION['message'] as $message): ?>
                                     <div class="alert alert-<?= $message['type'] ?> alert-dismissible" role="alert">
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -27,10 +26,9 @@
                             endif;
                             ?>
                         </div>
-                    </div>
-                    <?= $this->section('main_content') ?>
-                </section>
             </div>
+                    <?= $this->section('main_content') ?>
+
 
     <?php if(empty($w_user)) :?>
         
