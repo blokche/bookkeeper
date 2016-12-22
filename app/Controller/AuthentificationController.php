@@ -109,6 +109,7 @@ class AuthentificationController extends Controller
         //var_dump(count($retour['errors-mail']));
     }
 
+
     public function register () {
 
         // Inscription
@@ -155,20 +156,9 @@ class AuthentificationController extends Controller
                 $this->message[]=['type' => 'success', 'message' => 'Vous etes bien inscrit.'];
                 $retour=$this->envoieMailActivation($user_connected);
 
-                //var_dump(isset($retour['errors-mail']));
-
-                if ($retour['type']=="success") {
-
-                    $this->message[]=$retour;
-                    $_SESSION['message']=$this->message;
-                    $this->redirectToRoute('home');
-
-                } else{
-
-                    $this->message[]=$retour;
-                    $_SESSION['message']=$this->message;
-                    $this->redirectToRoute('home');
-                }
+                $this->message[]=$retour;
+                $_SESSION['message']=$this->message;
+                $this->redirectToRoute('home');
             } else{
                 $_SESSION['message']=$this->message;
                 $this->show('default/home');
