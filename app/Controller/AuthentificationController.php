@@ -175,7 +175,7 @@ class AuthentificationController extends Controller
 
             if ($user_token) {
 
-                $this->user->update(['token' => null],$user_token['id']);
+                $this->user->update(['token' => null,'status' => 1],$user_token['id']);
                 $this->message[] = ['type' => 'success', 'message' => "Votre compte a bien été activée."];
                 $_SESSION['message']=$this->message;
                 $this->auth->logUserIn($user_token);
