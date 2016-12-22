@@ -16,48 +16,38 @@ $this->start('main_content'); ?>
         <div class="col-xs-12 col-md-6 ">
             <?php $cover = (!empty($book['cover'])) ? $book['cover'] : $this->assetUrl('../upload/cover/default.png'); ?>
             <img src="<?php echo $this->assetUrl('/../upload/cover')."/".$cover ?>" alt="cover de <?php echo $book['title'] ?>">
-            <?php if ($ReadingList) : ?>
-                <?php if ($ReadingList['read_status'] == 1) : ?>
-                    <img class="macaron" src="<?= $this->assetUrl('img/lu.svg') ?>" alt="">
-                <?php else: ?>
-                    <img class="macaron" src="<?= $this->assetUrl('img/nonlu.svg') ?>" alt="">
-                <?php endif ?>
-            <?php endif ?>
+
+
+            <?php if ($w_user) : ?>
+                <?php $status=$user_model->getFromReadingListByBookId($book['id'],$w_user); ?>
+                <?php if ($status): ?>
+                    <?php if ($status['read_status'] == 1) : ?>
+                        <img class="macaron" src="<?= $this->assetUrl('img/lu.svg') ?>" alt="">
+                    <?php else: ?>
+                        <img class="macaron" src="<?= $this->assetUrl('img/nonlu.svg') ?>" alt="">
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>
         <div class="col-xs-12 col-md-6">
-    <h2><?php echo $book['title'] ?></h2>
-    <h3><?php echo $book['author'] ?></h3>
+            <h2><?php echo $book['title'] ?></h2>
+            <h3><?php echo $book['author'] ?></h3>
 
+            <?php if ($w_user) : ?>
+                <?php if ($status): ?>
+                    <p><a href=" <?php echo $this->url('profile.book.delete', ['id' => $book['id']]) ?>  " class="btn btn-warning label-perso">Retirer de ma liste</a></p>
 
-
-    <?php
-
-    if ($w_user) :
-
-        if ($ReadingList) : ?>
-            <p><a href=" <?php echo $this->url('profile.book.delete', ['id' => $ReadingList['book_id']]) ?>  " class="btn btn-warning label-perso">Retirer de ma liste</a></p>
-
-            <?php
-
-            if ($ReadingList['read_status'] == 1) : ?>
-
-                <p><a  href="  <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 0]); ?>  " class="btn btn-info label-perso" >Marquer non lu</a></p>
-
-                <?php
-            else : ?>
-                <p><a  href=" <?php echo $this->url('profile.book.toggleread', ['id' => $ReadingList['book_id'], 'status' => 1]) ?> " class="btn btn-success label-perso" >Marquer lu</a></p>
-                <?php
-            endif;
-        else : ?>
-
-            <p><a  href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 0]); ?> "  class="btn btn-info label-perso" >Ajouter comme non lu</a></p>
-            <p><a  href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 1]); ?>  " class="btn btn-success label-perso">Ajouter comme lu</a></p>
-            <?php
-        endif;
-    endif;
-    $this->stop('main_content')
-
-    ?>
-        </div
+                    <?php if ($status['read_status'] == 1) : ?>
+                        <p><a  href="  <?php echo $this->url('profile.book.toggleread', ['id' => $book['id'], 'status' => 0]); ?>  " class="btn btn-info label-perso" >Marquer non lu</a></p>
+                    <?php else : ?>
+                        <p><a  href=" <?php echo $this->url('profile.book.toggleread', ['id' => $book['id'], 'status' => 1]) ?> " class="btn btn-success label-perso" >Marquer lu</a></p>
+                    <?php endif; ?>
+                <?php else : ?>
+                    <p><a  href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 0]); ?> "  class="btn btn-info label-perso" >Ajouter comme non lu</a></p>
+                    <p><a  href="  <?php echo $this->url('profile.readinglist.add', ['id' => $book['id'], 'status' => 1]); ?>  " class="btn btn-success label-perso">Ajouter comme lu</a></p>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
+<?php $this->stop('main_content') ?>
