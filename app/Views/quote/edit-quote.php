@@ -32,7 +32,7 @@
             <label for="author">Modifier l'auteur <small>(facultatif)</small></label>
             <input value="<?php echo (isset($quote['book_id']) && $quote['book_id'] > 0) ? '' : $quote['author']; ?>" id="author" name="author" class="form-control" type="text">
         </div>
-        <a href="<?php echo $this->url('profile.quote'); ?>" class="btn btn-primary">Retour aux citations</a>
+        <a href="<?php echo $this->url('profile.quote'); ?>" class="btn btn-info">Retour aux citations</a>
         <input type="submit" name="editQuote" class="btn btn-success pull-right" value="Modifier la citation" />
 
     </form>

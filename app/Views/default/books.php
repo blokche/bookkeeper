@@ -39,20 +39,22 @@
                         </div>
                     </a>
                 <?php endforeach; ?>
+            <?php else : ?>
+                <p>Aucun livre n'est present.</p>
             <?php endif; ?>
         </div>
         <div class="row">
             <?php $previousPage = $page -1; ?>
             <?php $nextPage = $page +1; ?>
-            <div class="pagination pager">
-                <?php if ($page > 1) : ?>
-                    <li><a href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
-                <?php endif; ?>
-                <?php if ($page < $nbpages) : ?>
-                    <li><a href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
-                <?php endif; ?>
-                <?php echo "<p>Page : ". $page."/".$nbpages."</p>"; ?>
-            </div>
+            <?php if ($page > 1) : ?>
+                <a class="pull-left btn-info btn-primary btn" href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
+            <?php endif; ?>
+            <?php if ($page < $nbpages) : ?>
+                <a class="pull-right btn-primary btn" href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
+            <?php endif; ?>
+        </div>
+        <div class="row">
+            <?php echo "<p class='text-center' >Page : ". $page."/".$nbpages."</p>"; ?>
         </div>
     </div>
 </div>

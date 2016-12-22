@@ -26,7 +26,8 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <input class="btn btn-success" type="submit" value="Ajouter" name="addbook">
+                <a href=" <?php echo $this->url('admin.book') ?> " class="btn btn-primary pull-left" >Revenir à la liste des livres</a>
+                <input class="btn btn-success pull-right" type="submit" value="Ajouter" name="addbook">
             </form>
         </div>
     </div>

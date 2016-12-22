@@ -28,7 +28,8 @@ $this->start('main_content');?>
                     <td><?php echo $user['status'] ? "Actif" : "Inactif"; ?></td>
                 </tr>
             </table>
-            <a class="btn btn-default" href="<?php echo $this->url('admin.user.edit', ['id' => $user['id']]) ?>" class="btn btn-default">Éditer l'utilisateur</a>
+            <a class="btn btn-primary" href="<?php echo $this->url('admin.user') ?> " class="btn btn-default">Revenir à la liste des utilisateurs</a>
+            <a class="btn btn-primary pull-right" href="<?php echo $this->url('admin.user.edit', ['id' => $user['id']]) ?>" class="btn btn-default">Éditer l'utilisateur</a>
         </div>
     </div>
 <?php $this->stop('main_content') ?>

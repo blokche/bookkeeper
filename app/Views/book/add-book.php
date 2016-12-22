@@ -42,6 +42,7 @@
                      lu
                 </label>
             </div>
+            <a class="btn btn-primary pull-left " href="  <?php echo $this->url('public.book',['page' => 1]) ?>   " >Revenir à la liste des livres</a>
             <button name="addBook" class="btn btn-success pull-right">Ajouter un livre</button>
         </form>
     </div>

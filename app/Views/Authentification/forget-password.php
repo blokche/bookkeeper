@@ -8,6 +8,6 @@
             <input id="email" name="email" type="text" class="form-control">
         </div>
 
-        <button name="forget-password" class="btn btn-default">Changer mon mot de passe</button>
+        <button name="forget-password" class="btn btn-success pull-right">Changer mon mot de passe</button>
     </form>
 <?php $this->stop('main_content') ?>

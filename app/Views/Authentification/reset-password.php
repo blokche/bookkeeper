@@ -2,7 +2,7 @@
 
 <?php $this->start('main_content') ?>
 
-<h1>Réinitialisation du mot de passe </h1>
+    <h1>Réinitialisation du mot de passe </h1>
 
     <form action="<?= $this->url('auth.resetpassword') ?>" method="POST">
         
@@ -17,6 +17,6 @@
             <input type="hidden" value="<?= $id ?>" name="id">
         </div>
 
-        <button name="reset-password" class="btn btn-default">Changer mon mot de passe</button>
+        <button name="reset-password" class="btn btn-success pull-right">Changer mon mot de passe</button>
     </form>
 <?php $this->stop('main_content') ?>
