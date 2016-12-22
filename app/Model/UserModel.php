@@ -60,9 +60,9 @@ class UserModel extends UsersModel {
     public  function getFromReadingListByBookId($id,$user){
 
 
-        $sql="SELECT reading_list.read_status FROM books INNER JOIN reading_list ON books.id=reading_list.book_id INNER JOIN users on users.id=reading_list.user_id 
+        $sql="SELECT reading_list.read_status FROM books INNER JOIN reading_list ON books.id=reading_list.book_id
           WHERE 
-          users.id= :user_id
+          reading_list.user_id = :user_id
           AND 
           reading_list.book_id = :book_id
           LIMIT 1";

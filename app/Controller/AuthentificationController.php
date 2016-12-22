@@ -209,16 +209,17 @@ class AuthentificationController extends Controller
 
                     $retour=$this->envoieMailResetPassword($this->user->getUserByUsernameOrEmail($email));
 
-                    //if (!isset($retour['errors-mail'])){
                     if ($retour['type']=="success") {
+                        $this->message[]=$retour;
+                        $_SESSION['message']=$this->message;
                         $this->redirectToRoute('home');
                     } else{
-
+                        $this->message[]=$retour;
+                        $_SESSION['message']=$this->message;
                         $this->show('Authentification/forget-password');
                     }
                     
-                    $this->message[]=$retour;
-                    $_SESSION['message']=$this->message;
+
                     
                 } else {
 
