@@ -15,7 +15,7 @@
     <h2>Liste des livres lus:</h2>
 </div>
 
-<?php if (empty($bookRead)) : ?>
+<?php if (!empty($bookRead)) : ?>
     <div class="row booklist">
             <?php foreach ($bookRead as $book): ?>
                 <div class=" vignette col-xs-6 col-sm-4 col-md-2">
@@ -45,10 +45,10 @@
         $nextPage = $page +1;
         ?>
         <?php if ($page > 1) : ?>
-            <a class="pull-left btn-info btn-info btn" href="<?php echo $this->url('public.book', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
+            <a class="pull-left btn-info btn-info btn" href="<?php echo $this->url('profile.bookread', ['page' => $previousPage]) ?>">Résultats précédents</a></li>
         <?php endif; ?>
         <?php if ($page < $nbPages) : ?>
-            <a class="pull-right btn-info btn" href="<?php echo $this->url('public.book', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
+            <a class="pull-right btn-info btn" href="<?php echo $this->url('profile.bookread', ['page' => $nextPage]) ?>">Résultats suivants</a></li>
         <?php endif; ?>
     </div>
     <div class="row">
